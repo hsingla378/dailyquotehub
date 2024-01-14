@@ -7,7 +7,8 @@ import Authors from "./components/Authors";
 import Header from "./components/Navbar";
 import Quotes from "./components/Quotes.jsx";
 import Categories from "./components/Categories";
-import QOTD from "./components/QOTD";
+import LandingPage from "./components/LandingPage";
+import QOTD from "./components/QOTD.jsx";
 import Quote from "./components/Quote";
 import Author from "./components/Author";
 import Category from "./components/Category";
@@ -20,7 +21,15 @@ const appRouter = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <QOTD />,
+        element: <LandingPage />,
+      },
+      {
+        path: "/qotd",
+        element: <Quotes />,
+      },
+      {
+        path: "/quote",
+        element: <Quote />,
       },
       {
         path: "/quotes",
