@@ -1,12 +1,14 @@
 import React from "react";
-import Header from "./Header";
+import Header from "./Navbar";
 import Footer from "./Footer";
+import HeadSection from "./HeadSection";
 
 const LandingPage = () => {
   let blogPosts = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   return (
     <>
       <Header />
+      <HeadSection />
       <section className="bg-white dark:bg-gray-900">
         <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6 ">
           <div className="mx-auto max-w-screen-sm text-center mb-8 lg:mb-16">

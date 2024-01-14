@@ -1,6 +1,6 @@
 import "./App.css";
 import Authors from "./components/Authors";
-import Header from "./components/Header";
+import Header from "./components/Navbar";
 import LandingPage from "./components/LandingPage";
 
 function App() {
