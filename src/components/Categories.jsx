@@ -5,8 +5,7 @@ import HeadSection from "./HeadSection";
 
 const Categories = () => {
   return (
-    <div className="bg-white dark:bg-gray-900 ">
-      <Header />
+    <div>
       <HeadSection />
       <section className="bg-white dark:bg-gray-900 py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6 flex flex-wrap gap-4">
         <button className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
@@ -116,7 +115,6 @@ const Categories = () => {
           </span>
         </button>
       </section>
-      <Footer />
     </div>
   );
 };

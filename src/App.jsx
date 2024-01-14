@@ -1,18 +1,16 @@
 import "./App.css";
-import Authors from "./components/Authors";
-import Header from "./components/Navbar";
-import LandingPage from "./components/LandingPage";
-import Categories from "./components/Categories";
-import QOTD from "./components/QOTD";
-import Quote from "./components/Quote";
-import Author from "./components/Author";
-import Category from "./components/Category";
+import "flowbite";
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 function App() {
   return (
-    <>
-      <Category />
-    </>
+    <div className="bg-white dark:bg-gray-900">
+      <Navbar />
+      <Outlet />
+      <Footer />
+    </div>
   );
 }
 

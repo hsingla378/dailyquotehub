@@ -6,9 +6,8 @@ import Footer from "./Footer";
 const Authors = () => {
   return (
     <>
-      <Navbar />
       <HeadSection />
-      <section className="bg-white dark:bg-gray-900">
+      <section>
         <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-6">
           <div className="grid gap-8 lg:gap-16 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             <div className="text-center text-gray-500 dark:text-gray-400">
@@ -694,7 +693,6 @@ const Authors = () => {
           </div>
         </div>
       </section>
-      <Footer />
     </>
   );
 };

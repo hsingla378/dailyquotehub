@@ -1,26 +1,15 @@
 import React from "react";
-import HeadSection from "./HeadSection";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import HeadSection from "./HeadSection";
 
-const Category = () => {
+const LandingPage = () => {
   let blogPosts = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
   return (
-    <div>
+    <>
       <HeadSection />
-      {/*  Heading - Related Quotes */}
-      <section className="bg-white dark:bg-gray-900 py-4 px-4 mx-auto max-w-screen-xl lg:py-4 lg:px-6 flex flex-wrap gap-4 justify-center">
-        <h1 className="my-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
-          <span className="underline underline-offset-3 decoration-8 decoration-blue-400 dark:decoration-blue-600">
-            Tag
-          </span>{" "}
-          Page
-        </h1>
-      </section>
-      {/* Quotes */}
       <section>
-        <div className="py-4 px-4 mx-auto max-w-screen-xl lg:py-4 lg:px-6 ">
+        <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6 ">
           <div className="grid gap-8 mb-6 lg:mb-16 md:grid-cols-4 sm:grid-cols-4">
             {blogPosts.map((post) => {
               return (
@@ -137,8 +126,8 @@ const Category = () => {
           </ul>
         </nav>
       </section>
-    </div>
+    </>
   );
 };
 
-export default Category;
+export default LandingPage;

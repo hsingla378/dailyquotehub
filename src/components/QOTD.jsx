@@ -9,11 +9,10 @@ const QOTD = () => {
   let blogPosts = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   return (
-    <div className="bg-white dark:bg-gray-900 ">
-      <Navbar />
+    <div>
       <HeadSection />
       {/* Authors */}
-      <section className="bg-white dark:bg-gray-900">
+      <section>
         <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-6">
           <div className="grid gap-8 lg:gap-16 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             <div className="text-center text-gray-500 dark:text-gray-400">
@@ -709,7 +708,7 @@ const QOTD = () => {
         </h1>
       </section>
       {/* Quotes */}
-      <section className="bg-white dark:bg-gray-900">
+      <section>
         <div className="py-4 px-4 mx-auto max-w-screen-xl lg:py-4 lg:px-6 ">
           <div className="grid gap-8 mb-6 lg:mb-16 md:grid-cols-4 sm:grid-cols-4">
             {blogPosts.map((post) => {
@@ -885,7 +884,6 @@ const QOTD = () => {
           </span>
         </button>
       </section>
-      <Footer />
     </div>
   );
 };

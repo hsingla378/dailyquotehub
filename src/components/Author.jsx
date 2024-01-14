@@ -7,8 +7,7 @@ const Author = () => {
   let blogPosts = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   return (
-    <div className="bg-white dark:bg-gray-900">
-      <Navbar />
+    <div>
       <HeadSection />
       {/* Author Details */}
       <section className="bg-white dark:bg-gray-900 py-4">
@@ -169,7 +168,6 @@ const Author = () => {
           </div>
         </div>
       </section>
-      <Footer />
     </div>
   );
 };

@@ -6,10 +6,9 @@ const Quote = () => {
   let blogPosts = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   return (
-    <div className="bg-white dark:bg-gray-900">
-      <Navbar />
+    <div>
       {/* Quote Details */}
-      <section className="bg-white dark:bg-gray-900">
+      <section>
         <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
           <div className=" lg:mt-0 lg:col-span-5 lg:flex">
             <img
@@ -187,7 +186,7 @@ const Quote = () => {
         </h1>
       </section>
       {/* Related Quotes */}
-      <section className="bg-white dark:bg-gray-900">
+      <section>
         <div className=" px-4 mx-auto max-w-screen-xl  lg:px-4 ">
           <div className="grid gap-8 mb-6 lg:mb-16 md:grid-cols-4 grid-cols-2">
             {blogPosts.map((post) => {
@@ -305,7 +304,6 @@ const Quote = () => {
           </ul>
         </nav>
       </section>
-      <Footer />
     </div>
   );
 };
