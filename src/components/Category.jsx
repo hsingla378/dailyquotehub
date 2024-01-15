@@ -1,7 +1,14 @@
+import { useParams } from "react-router-dom";
 import HeadSection from "./HeadSection";
+import { quotes } from "../utils/constants";
 
 const Category = () => {
-  let blogPosts = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  const { category } = useParams();
+  console.log("categoryName", category);
+  let filteredQuotes = quotes.filter((quote) =>
+    quote.categories.includes(category)
+  );
+  console.log("filteredQuotes", filteredQuotes);
 
   return (
     <div>
@@ -19,7 +26,7 @@ const Category = () => {
       <section>
         <div className="py-4 px-4 mx-auto max-w-screen-xl lg:py-4 lg:px-6 ">
           <div className="grid gap-8 mb-6 lg:mb-16 md:grid-cols-4 sm:grid-cols-4">
-            {blogPosts.map((post) => {
+            {filteredQuotes.map((post) => {
               return (
                 <div
                   key={post}

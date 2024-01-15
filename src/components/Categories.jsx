@@ -1,7 +1,5 @@
-
 import HeadSection from "./HeadSection";
-
-import { categories } from "../utils/constants";
+import { uniqueCategories } from "../utils/constants";
 import CategoriesContainer from "./CategoriesContainer";
 
 const Categories = () => {
@@ -13,7 +11,7 @@ const Categories = () => {
           "Navigate through our curated categories to find the perfect quote that resonates with you."
         }
       />
-      <CategoriesContainer categories={categories} />
+      <CategoriesContainer categories={uniqueCategories} />
     </div>
   );
 };

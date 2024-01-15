@@ -1,8 +1,9 @@
 import HeadSection from "./HeadSection";
-import { authors } from "../utils/constants";
 import AuthorsContainer from "./AuthorsContainer";
+import { authors } from "../utils/constants";
 
 const Authors = () => {
+  
   return (
     <>
       <HeadSection

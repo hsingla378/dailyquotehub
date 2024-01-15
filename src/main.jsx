@@ -28,7 +28,7 @@ const appRouter = createBrowserRouter([
         element: <Quotes />,
       },
       {
-        path: "/quote",
+        path: "/quotes/:id",
         element: <Quote />,
       },
       {
@@ -36,7 +36,7 @@ const appRouter = createBrowserRouter([
         element: <Quotes />,
       },
       {
-        path: "/author",
+        path: "/authors/:author",
         element: <Author />,
       },
       {
@@ -44,7 +44,7 @@ const appRouter = createBrowserRouter([
         element: <Authors />,
       },
       {
-        path: "/category",
+        path: "/categories/:category",
         element: <Category />,
       },
       {
