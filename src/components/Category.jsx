@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import HeadSection from "./HeadSection";
 import { quotes } from "../utils/constants";
+import Heading from "./Heading";
 
 const Category = () => {
   const { category } = useParams();
@@ -12,19 +13,11 @@ const Category = () => {
 
   return (
     <div>
-      <HeadSection />
-      {/*  Heading - Related Quotes */}
-      <section className="bg-white dark:bg-gray-900 py-4 px-4 mx-auto max-w-screen-xl lg:py-4 lg:px-6 flex flex-wrap gap-4 justify-center">
-        <h1 className="my-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
-          <span className="underline underline-offset-3 decoration-8 decoration-blue-400 dark:decoration-blue-600">
-            Tag
-          </span>{" "}
-          Page
-        </h1>
-      </section>
+      <HeadSection heading={"Quotes on " + category} />
+      {/* <Heading /> */}
       {/* Quotes */}
       <section>
-        <div className="py-4 px-4 mx-auto max-w-screen-xl lg:py-4 lg:px-6 ">
+        <div className="py-4 px-4 mx-auto max-w-screen-xl lg:py-4 lg:px-6 mt-4">
           <div className="grid gap-8 mb-6 lg:mb-16 md:grid-cols-4 sm:grid-cols-4">
             {filteredQuotes.map((post) => {
               return (
