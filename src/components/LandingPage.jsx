@@ -1,19 +1,17 @@
 import QOTD from "./QOTD";
 import AuthorsContainer from "./AuthorsContainer";
 import QuotesContainer from "./QuotesContainer";
-import { quotes, authors, uniqueCategories } from "../utils/constants";
+import { authors, uniqueCategories } from "../utils/constants";
 import Heading from "./Heading";
 import CategoriesContainer from "./CategoriesContainer";
+import useAllQuotes from "../utils/useAllQuotes";
 
 const LandingPage = () => {
-  // const [randomQuote, setRandomQuote] = useState("");
+  const quotes = useAllQuotes();
 
-  // useEffect(() => {
-  //   const currentDate = new Date();
-  //   const dayOfMonth = currentDate.getDate();
-  //   const randomIndex = dayOfMonth % quotes.length;
-  //   setRandomQuote(quotes[randomIndex]);
-  // }, []);
+  console.log("quotes", quotes);
+
+  if (!quotes.length) return <div>Loading...</div>;
 
   return (
     <div>

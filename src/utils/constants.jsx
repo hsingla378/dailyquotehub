@@ -11,6 +11,7 @@ export const quotes = [
     title: "Life's Beauty",
     description: "Discover the beauty in every moment.",
     categories: ["life", "inspiration"],
+    bookName: "Life's Beauty",
     amazonLink: "https://www.amazon.com",
     thumbnail:
       "https://i.pinimg.com/564x/a0/ef/35/a0ef352c96992ef65c5e8e65c3614807.jpg",
@@ -20,14 +21,6 @@ export const quotes = [
       description: "Sophie is an inspirational speaker based in London.",
       avatar:
         "https://i.pinimg.com/564x/a0/ef/35/a0ef352c96992ef65c5e8e65c3614807.jpg",
-      socialLinks: {
-        facebook: "https://www.facebook.com/sophie.adams",
-        twitter: "https://www.twitter.com/sophieadams",
-        github: "https://www.github.com/sophieadams",
-        dribble: "https://www.dribble.com/sophieadams",
-        instagram: "https://www.instagram.com/sophie.adams",
-        linkedin: "https://www.linkedin.com/in/sophie-adams",
-      },
     },
   },
   {

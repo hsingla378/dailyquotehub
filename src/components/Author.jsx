@@ -1,13 +1,10 @@
 import { Link, useParams } from "react-router-dom";
 import HeadSection from "./HeadSection";
-import { FaFacebook, FaGithub, FaTwitter } from "react-icons/fa";
-import { IoLogoWhatsapp } from "react-icons/io";
 import Heading from "./Heading";
 import QuotesContainer from "./QuotesContainer";
 import { quotes } from "../utils/constants";
 
 const Author = () => {
-  let blogPosts = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   let { author } = useParams();
   author = author.split("-").join(" ");
 
