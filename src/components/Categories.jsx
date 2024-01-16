@@ -1,8 +1,9 @@
 import HeadSection from "./HeadSection";
-import { uniqueCategories } from "../utils/constants";
 import CategoriesContainer from "./CategoriesContainer";
+import useAllCategories from "../utils/useAllCategories";
 
 const Categories = () => {
+  let categories = useAllCategories();
   return (
     <div>
       <HeadSection
@@ -11,7 +12,7 @@ const Categories = () => {
           "Navigate through our curated categories to find the perfect quote that resonates with you."
         }
       />
-      <CategoriesContainer categories={uniqueCategories} />
+      {categories.length && <CategoriesContainer categories={categories} />}
     </div>
   );
 };

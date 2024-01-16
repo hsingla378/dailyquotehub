@@ -1,9 +1,9 @@
 import HeadSection from "./HeadSection";
 import AuthorsContainer from "./AuthorsContainer";
-import { authors } from "../utils/constants";
+import useAllAuthors from "../utils/useAllAuthors";
 
 const Authors = () => {
-  
+  const authors = useAllAuthors();
   return (
     <>
       <HeadSection
@@ -12,7 +12,7 @@ const Authors = () => {
           "Meet the brilliant minds whose words have the power to inspire, comfort, and enlighten."
         }
       />
-      <AuthorsContainer authors={authors} />
+      {authors.length && <AuthorsContainer authors={authors} />}
     </>
   );
 };

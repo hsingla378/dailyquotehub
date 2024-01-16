@@ -1,27 +1,26 @@
-import { useEffect, useState } from "react";
-import { quotes } from "./constants";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
-const useQuoteInfo = (id) => {
-  const [quoteInfo, setQuoteInfo] = useState(null);
-  console.log(id);
+const useQuoteInfo = (quoteId) => {
+  const [quoteInfo, setQuoteInfo] = useState([]);
 
-  useEffect(() => {
-    console.log("before useeffect");
-    fetchQuoteInfo();
-    console.log("after useeffect");
-  }, []);
-
-  const fetchQuoteInfo = () => {
-    console.log("quotes", quotes);
-    const data = quotes.filter((quote) => quote.id === id);
-    console.log("data", data);
-    setQuoteInfo(data[0]);
-    // let data = await fetch(MENU_API + resId);
-    // const json = await data.json();
-    // setResInfo(json?.data);
+  const getQuoteInfo = async () => {
+    try {
+      let response = await axios.get(
+        import.meta.env.VITE_BACKEND_URL + "/quotes/" + quoteId
+      );
+      let data = await response.data;
+      setQuoteInfo(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  //return restaurant menu
+  useEffect(() => {
+    getQuoteInfo();
+    window.scrollTo(0, 0);
+  }, [quoteId]);
+
   return quoteInfo;
 };
 

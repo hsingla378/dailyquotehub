@@ -9,17 +9,9 @@ exports.getAllQuotes = async (req, res) => {
   }
 };
 
-exports.getQuotesByAuthor = async (req, res) => {
-  try {
-    const quotes = await Quote.find({ "author.name": req.params.authorName });
-    res.json(quotes);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
-
 exports.searchQuotes = async (req, res) => {
-  const query = req.params.query;
+  console.log(req.params);
+  const query = req.query.query; // Change this line to use req.query.query
   try {
     const quotes = await Quote.find({
       $or: [
@@ -27,15 +19,6 @@ exports.searchQuotes = async (req, res) => {
         { description: { $regex: query, $options: "i" } },
       ],
     });
-    res.json(quotes);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
-
-exports.getQuotesByCategory = async (req, res) => {
-  try {
-    const quotes = await Quote.find({ categories: req.params.category });
     res.json(quotes);
   } catch (err) {
     res.status(500).json({ message: err.message });

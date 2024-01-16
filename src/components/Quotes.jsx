@@ -1,12 +1,13 @@
 import HeadSection from "./HeadSection";
-import { quotes } from "../utils/constants";
 import QuotesContainer from "./QuotesContainer";
 import Pagination from "./Pagination";
 import { useState } from "react";
+import useAllQuotes from "../utils/useAllQuotes";
 
 const ITEMS_PER_PAGE = 10;
 
 const Quotes = () => {
+  const quotes = useAllQuotes();
   const [currentPage, setCurrentPage] = useState(1);
 
   // Calculate the range of items to display on the current page

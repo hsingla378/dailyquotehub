@@ -3,19 +3,17 @@ import HeadSection from "./HeadSection";
 import Heading from "./Heading";
 import QuotesContainer from "./QuotesContainer";
 import { quotes } from "../utils/constants";
+import useAuthorData from "../utils/useAuthorData";
 
 const Author = () => {
   let { author } = useParams();
-  author = author.split("-").join(" ");
+  const authorData = useAuthorData(author);
 
-  const authorInfo = quotes.filter(
-    (quote) => quote.author.name.toLowerCase() == author.toLowerCase()
-  )[0].author;
-  // console.log("authorInfo", authorInfo);
-  const authorQuotes = quotes.filter(
-    (quote) => quote.author.name.toLowerCase() == author.toLowerCase()
-  );
-  // console.log("authorQuotes", authorQuotes);
+  if (!authorData.length) return <div>Loading...</div>;
+
+  const authorInfo = authorData[0].author;
+  console.log("authorInfo", authorInfo);
+  console.log("authorData", authorData);
 
   return (
     <div>
@@ -49,7 +47,7 @@ const Author = () => {
       {/* Heading - His/Her Quotes */}
       <Heading middle={"Quotes By"} right={authorInfo.name} />
       {/* Author Posts */}
-      <QuotesContainer quotes={authorQuotes} />
+      <QuotesContainer quotes={authorData} />
     </div>
   );
 };

@@ -1,17 +1,18 @@
 import QOTD from "./QOTD";
 import AuthorsContainer from "./AuthorsContainer";
 import QuotesContainer from "./QuotesContainer";
-import { authors, uniqueCategories } from "../utils/constants";
 import Heading from "./Heading";
 import CategoriesContainer from "./CategoriesContainer";
 import useAllQuotes from "../utils/useAllQuotes";
+import useAllAuthors from "../utils/useAllAuthors";
+import useAllCategories from "../utils/useAllCategories";
 
 const LandingPage = () => {
   const quotes = useAllQuotes();
+  const authors = useAllAuthors();
+  const categories = useAllCategories();
 
-  console.log("quotes", quotes);
-
-  if (!quotes.length) return <div>Loading...</div>;
+  if (!quotes.length && !authors.length) return <div>Loading...</div>;
 
   return (
     <div>
@@ -23,7 +24,7 @@ const LandingPage = () => {
       {/*  Heading - Tag or Cat */}
       <Heading left="Tag" middle={" or "} right={"Cat"} />
       {/* Categories */}
-      <CategoriesContainer categories={uniqueCategories.slice(0, 20)} />
+      <CategoriesContainer categories={categories.slice(0, 20)} />
     </div>
   );
 };
