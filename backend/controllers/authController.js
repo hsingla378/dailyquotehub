@@ -3,18 +3,18 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-exports.signup = async (req, res) => {
-  const { username, password } = req.body;
+// exports.signup = async (req, res) => {
+//   const { username, password } = req.body;
 
-  try {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const user = new User({ username, password: hashedPassword });
-    await user.save();
-    res.status(201).json({ message: "User created successfully" });
-  } catch (err) {
-    res.status(400).json({ message: err.message });
-  }
-};
+//   try {
+//     const hashedPassword = await bcrypt.hash(password, 10);
+//     const user = new User({ username, password: hashedPassword });
+//     await user.save();
+//     res.status(201).json({ message: "User created successfully" });
+//   } catch (err) {
+//     res.status(400).json({ message: err.message });
+//   }
+// };
 
 exports.login = async (req, res) => {
   const { username, password } = req.body;
