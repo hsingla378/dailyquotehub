@@ -27,13 +27,15 @@ const Quotes = () => {
           "Embark on a Journey of Enlightenment with Our Handpicked Quotes"
         }
       />
-      <QuotesContainer quotes={currentQuotes} />
-      <Pagination
-        currentPage={currentPage}
-        itemsPerPage={ITEMS_PER_PAGE}
-        totalItems={quotes.length}
-        onPageChange={handlePageChange}
-      />
+      {quotes.length && <QuotesContainer quotes={currentQuotes} />}
+      {quotes.length && (
+        <Pagination
+          currentPage={currentPage}
+          itemsPerPage={ITEMS_PER_PAGE}
+          totalItems={quotes.length}
+          onPageChange={handlePageChange}
+        />
+      )}
     </>
   );
 };

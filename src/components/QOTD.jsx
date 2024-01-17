@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import PropTypes from 'prop-types';
+
 
 const QOTD = ({ quote }) => {
   const generateAuthorLink = (author) => {
@@ -37,7 +39,7 @@ const QOTD = ({ quote }) => {
           <figcaption className="flex items-center justify-center mt-6 space-x-3 rtl:space-x-reverse">
             <img
               className="w-6 h-6 rounded-full"
-              src={quote.thumbnail}
+              src={quote.author.avatar}
               alt="profile picture"
             />
 

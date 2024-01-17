@@ -24,7 +24,8 @@ const LandingPage = () => {
       {/* Authors */}
       {authors.length && <AuthorsContainer authors={authors.slice(0, 10)} />}
       {/*  Heading - Featured Quotes */}
-      {quotes.length && <QuotesContainer quotes={quotes.slice(0, 8)} />}
+      {quotes.length && <Heading right={"Quotes"} />}
+      {quotes.length && <QuotesContainer quotes={quotes.slice(0, 10)} />}
       {/*  Heading - Tag or Cat */}
       {categories.length && <Heading right={"Categories"} />}
       {/* Categories */}
