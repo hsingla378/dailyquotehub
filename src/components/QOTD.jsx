@@ -1,4 +1,21 @@
+import { Link } from "react-router-dom";
+
 const QOTD = ({ quote }) => {
+  const generateAuthorLink = (author) => {
+    return `/authors/${author.split(" ").join("-").toLowerCase()}`;
+  };
+
+  const capitalizeTitle = function (title) {
+    return title
+      .split(" ")
+      .map((item) =>
+        item.length <= 2
+          ? item.toLowerCase()
+          : `${item[0].toUpperCase()}${item.slice(1).toLowerCase()}`
+      )
+      .join(" ");
+  };
+
   return (
     <section className="p-10 bg-center bg-no-repeat bg-[url('https://flowbite.s3.amazonaws.com/docs/jumbotron/conference.jpg')] bg-gray-700 bg-blend-multiply">
       <figure className="max-w-screen-md mx-auto text-center">
@@ -16,22 +33,24 @@ const QOTD = ({ quote }) => {
             {quote.description}
           </p>
         </blockquote>
-        <figcaption className="flex items-center justify-center mt-6 space-x-3 rtl:space-x-reverse">
-          <img
-            className="w-6 h-6 rounded-full"
-            src={quote.thumbnail}
-            alt="profile picture"
-          />
-          <div className="flex items-center divide-x-2 rtl:divide-x-reverse divide-gray-500 dark:divide-gray-700">
-            <cite className="pe-3 font-medium text-gray-900 dark:text-white">
-              {console.log("quote.author", quote.author.name)}
-              {quote.author.name}
-            </cite>
-            {/* <cite className="ps-3 text-sm text-gray-500 dark:text-gray-400">
+        <Link to={generateAuthorLink(quote.author.name)}>
+          <figcaption className="flex items-center justify-center mt-6 space-x-3 rtl:space-x-reverse">
+            <img
+              className="w-6 h-6 rounded-full"
+              src={quote.thumbnail}
+              alt="profile picture"
+            />
+
+            <div className="flex items-center divide-x-2 rtl:divide-x-reverse divide-gray-500 dark:divide-gray-700">
+              <cite className="pe-3 font-medium text-gray-900 dark:text-white">
+                {capitalizeTitle(quote.author.name)}
+              </cite>
+              {/* <cite className="ps-3 text-sm text-gray-500 dark:text-gray-400">
               CEO at Google
             </cite> */}
-          </div>
-        </figcaption>
+            </div>
+          </figcaption>
+        </Link>
       </figure>
     </section>
   );

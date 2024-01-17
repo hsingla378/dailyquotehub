@@ -31,6 +31,17 @@ const Quote = () => {
     return `/authors/${author.split(" ").join("-").toLowerCase()}`;
   };
 
+  const capitalizeTitle = function (title) {
+    return title
+      .split(" ")
+      .map((item) =>
+        item.length <= 2
+          ? item.toLowerCase()
+          : `${item[0].toUpperCase()}${item.slice(1).toLowerCase()}`
+      )
+      .join(" ");
+  };
+
   return (
     <div>
       {/* Quote Details */}
@@ -56,40 +67,49 @@ const Quote = () => {
                 >
                   <path d="M6 0H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4v1a3 3 0 0 1-3 3H2a1 1 0 0 0 0 2h1a5.006 5.006 0 0 0 5-5V2a2 2 0 0 0-2-2Zm10 0h-4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4v1a3 3 0 0 1-3 3h-1a1 1 0 0 0 0 2h1a5.006 5.006 0 0 0 5-5V2a2 2 0 0 0-2-2Z" />
                 </svg>
-                <p>{quoteInfo.description}</p>
+                <p>{quoteInfo.title}</p>
               </blockquote>
 
               {/* Author */}
-              <Link to={generateAuthorLink(quoteInfo.author.name)}>
-                <figcaption className="flex items-center my-6 space-x-3 rtl:space-x-reverse">
-                  <img
-                    className="w-6 h-6 rounded-full"
-                    src={quoteInfo.thumbnail}
-                    alt="profile picture"
-                  />
-                  <div className="flex items-center divide-x-2 rtl:divide-x-reverse divide-gray-300 dark:divide-gray-700">
-                    <cite className="pe-3 font-medium text-gray-900 dark:text-white">
-                      {quoteInfo.author.name}
-                    </cite>
-                  </div>
-                </figcaption>
-              </Link>
+              {quoteInfo.author.name && (
+                <Link to={generateAuthorLink(quoteInfo.author.name)}>
+                  <figcaption className="flex items-center my-6 space-x-3 rtl:space-x-reverse">
+                    <img
+                      className="w-6 h-6 rounded-full"
+                      src={quoteInfo.thumbnail}
+                      alt="profile picture"
+                    />
+                    <div className="flex items-center divide-x-2 rtl:divide-x-reverse divide-gray-300 dark:divide-gray-700">
+                      <cite className="pe-3 font-medium text-gray-900 dark:text-white">
+                        {capitalizeTitle(quoteInfo.author.name)}
+                      </cite>
+                    </div>
+                  </figcaption>
+                </Link>
+              )}
 
               {/* Amazon Book Reference */}
-              <Link to={quoteInfo.amazonLink} target="_blank">
-                <div className="items-center bg-gray-50 rounded-lg shadow sm:flex dark:bg-gray-800 dark:border-gray-700 px-4 my-6 w-max flex">
-                  <FaAmazon className="text-5xl text-white mx-auto" />
+              {quoteInfo.book.amazonLink && (
+                <Link to={quoteInfo.book.amazonLink} target="_blank">
+                  <div className="items-center bg-gray-50 rounded-lg shadow sm:flex dark:bg-gray-800 dark:border-gray-700 px-4 my-6 w-max flex">
+                    {quoteInfo.book.image ? (
+                      <img src={quoteInfo.book.image} className="w-11 rounded-md" />
+                    ) : (
+                      <FaAmazon className="text-5xl text-white mx-auto" />
+                    )}
 
-                  <div className="p-5">
-                    <h3 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
-                      Bonnie Green
-                    </h3>
-                    <span className="text-gray-500 dark:text-gray-400">
-                      Book Reference Basically
-                    </span>
+                    <div className="p-5">
+                      <h3 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        {quoteInfo.book.name}
+                      </h3>
+                      <span className="text-gray-500 dark:text-gray-400">
+                        Buy from Amazon
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </Link>
+                </Link>
+              )}
+
               {/* Quote Categories */}
               <div>
                 {" "}
@@ -101,7 +121,7 @@ const Quote = () => {
                   >
                     <button className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
                       <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                        {category}
+                        {capitalizeTitle(category)}
                       </span>
                     </button>
                   </Link>

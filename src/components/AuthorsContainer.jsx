@@ -7,6 +7,17 @@ const AuthorsContainer = ({ authors }) => {
     return `/authors/${author.split(" ").join("-").toLowerCase()}`;
   };
 
+  const capitalizeTitle = function (title) {
+    return title
+      .split(" ")
+      .map((item) =>
+        item.length <= 2
+          ? item.toLowerCase()
+          : `${item[0].toUpperCase()}${item.slice(1).toLowerCase()}`
+      )
+      .join(" ");
+  };
+
   return (
     <section>
       <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-6">
@@ -21,7 +32,7 @@ const AuthorsContainer = ({ authors }) => {
                     alt="Bonnie Avatar"
                   />
                   <h3 className="mb-1 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
-                    {author.name}
+                    {capitalizeTitle(author.name)}
                   </h3>
                   <p>{author.description}</p>
                 </div>

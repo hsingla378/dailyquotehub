@@ -1,6 +1,17 @@
 import { Link } from "react-router-dom";
 
 const QuotesContainer = ({ quotes }) => {
+  const capitalizeTitle = function (title) {
+    return title
+      .split(" ")
+      .map((item) =>
+        item.length <= 2
+          ? item.toLowerCase()
+          : `${item[0].toUpperCase()}${item.slice(1).toLowerCase()}`
+      )
+      .join(" ");
+  };
+
   return (
     <section>
       <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6 ">
@@ -12,17 +23,16 @@ const QuotesContainer = ({ quotes }) => {
                   <img
                     className="w-full rounded-lg"
                     src={quote.thumbnail}
-                    alt={quote.author.name}
+                    alt={capitalizeTitle(quote.author.name)}
                   />
 
                   <div className="p-5">
-                    <a href="#">
-                      <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                        {quote.title}
-                      </h5>
-                    </a>
+                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                      {quote.title}
+                    </h5>
+
                     <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                      {quote.author.name}
+                      {capitalizeTitle(quote.author.name)}
                     </p>
                     {/* <a
                     href="#"

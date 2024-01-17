@@ -9,9 +9,20 @@ const Category = () => {
   let categoryData = useCategoryData(category);
   console.log("categoryData", categoryData);
 
+  const capitalizeTitle = function (title) {
+    return title
+      .split(" ")
+      .map((item) =>
+        item.length <= 2
+          ? item.toLowerCase()
+          : `${item[0].toUpperCase()}${item.slice(1).toLowerCase()}`
+      )
+      .join(" ");
+  };
+
   return (
     <div>
-      <HeadSection heading={"Quotes on " + category} />
+      <HeadSection heading={"Quotes on " + capitalizeTitle(category)} />
       {/* <Heading /> */}
       {/* Quotes */}
       <section>

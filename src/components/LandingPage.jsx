@@ -12,19 +12,25 @@ const LandingPage = () => {
   const authors = useAllAuthors();
   const categories = useAllCategories();
 
+  // console.log(quotes, authors, categories);
+
   if (!quotes.length && !authors.length) return <div>Loading...</div>;
 
   return (
     <div>
-      <QOTD quote={quotes[Math.floor(Math.random() * quotes.length)]} />
+      {quotes.length && (
+        <QOTD quote={quotes[Math.floor(Math.random() * quotes.length)]} />
+      )}
       {/* Authors */}
-      <AuthorsContainer authors={authors.slice(0, 5)} />
+      {authors.length && <AuthorsContainer authors={authors.slice(0, 10)} />}
       {/*  Heading - Featured Quotes */}
-      <QuotesContainer quotes={quotes.slice(0, 8)} />
+      {quotes.length && <QuotesContainer quotes={quotes.slice(0, 8)} />}
       {/*  Heading - Tag or Cat */}
-      <Heading left="Tag" middle={" or "} right={"Cat"} />
+      {categories.length && <Heading right={"Categories"} />}
       {/* Categories */}
-      <CategoriesContainer categories={categories.slice(0, 20)} />
+      {categories.length && (
+        <CategoriesContainer categories={categories.slice(0, 20)} />
+      )}
     </div>
   );
 };

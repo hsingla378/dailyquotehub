@@ -4,7 +4,7 @@ const quoteController = require("../controllers/quoteController");
 const authMiddleware = require("../middleware/authMiddleware");
 
 router.get("/", quoteController.getAllQuotes);
-router.get("/search/:query", quoteController.searchQuotes);
+router.get("/search", quoteController.searchQuotes);
 
 router.get("/:id", quoteController.getQuoteById);
 router.post("/", authMiddleware, quoteController.createQuote);

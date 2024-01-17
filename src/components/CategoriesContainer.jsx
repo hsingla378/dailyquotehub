@@ -10,6 +10,17 @@ const getRandomColor = () => {
   return color;
 };
 
+const capitalizeTitle = function (title) {
+  return title
+    .split(" ")
+    .map((item) =>
+      item.length <= 2
+        ? item.toLowerCase()
+        : `${item[0].toUpperCase()}${item.slice(1).toLowerCase()}`
+    )
+    .join(" ");
+};
+
 const CategoriesContainer = ({ categories }) => {
   return (
     <section className="bg-white dark:bg-gray-900 py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6 flex flex-wrap gap-4 justify-center">
@@ -22,7 +33,7 @@ const CategoriesContainer = ({ categories }) => {
             }}
           >
             <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-              {category}
+              {capitalizeTitle(category)}
             </span>
           </button>
         </Link>
