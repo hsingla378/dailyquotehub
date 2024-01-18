@@ -21,7 +21,7 @@ const AuthorsContainer = ({ authors }) => {
   return (
     <section>
       <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-6">
-        <div className="grid gap-8 lg:gap-16 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+        <div className="grid gap-8 lg:gap-16 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
           {authors.map((author) => {
             return (
               <Link to={generateAuthorLink(author.name)} key={author.name}>

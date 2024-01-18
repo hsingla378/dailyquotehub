@@ -126,7 +126,7 @@ const Quote = () => {
                     </button>
                   </Link>
                 ))}
-                ={" "}
+                {" "}
               </div>
 
               {/* Social Share Icons */}
