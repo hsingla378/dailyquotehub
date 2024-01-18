@@ -101,7 +101,12 @@ const Search = () => {
 
   return (
     <div className="my-4">
-      {query && <Heading middle={`Search results for "${query}"`} />}
+      {filteredQuotes.length === 0 ? (
+        <Heading middle={`No results found for "${query}"`} />
+      ) : (
+        <Heading middle={`Search results for "${query}"`} />
+      )}
+
       {authors.length > 0 && (
         <>
           <Heading right={"Authors"} />

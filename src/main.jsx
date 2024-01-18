@@ -17,6 +17,10 @@ import Login from "./components/Dashboard/Login.jsx";
 import Register from "./components/Dashboard/Register.jsx";
 import Dashboard from "./components/Dashboard/Dashboard.jsx";
 import Search from "./components/Search.jsx";
+// import function to register Swiper custom elements
+import { register } from "swiper/element/bundle";
+// register Swiper custom elements
+register();
 
 const appRouter = createBrowserRouter([
   {
