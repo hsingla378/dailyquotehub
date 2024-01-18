@@ -349,6 +349,7 @@ const Dashboard = () => {
                           }
                           className="cursor-pointer text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
                         >
+                          <option value="">Select</option>
                           <option value="edit">Edit</option>
                           <option value="preview">Preview</option>
                           <option value="delete">Delete</option>

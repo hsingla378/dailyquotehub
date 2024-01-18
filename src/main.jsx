@@ -16,6 +16,7 @@ import Error from "./components/Error";
 import Login from "./components/Dashboard/Login.jsx";
 import Register from "./components/Dashboard/Register.jsx";
 import Dashboard from "./components/Dashboard/Dashboard.jsx";
+import Search from "./components/Search.jsx";
 
 const appRouter = createBrowserRouter([
   {
@@ -57,6 +58,10 @@ const appRouter = createBrowserRouter([
       {
         path: "/qotd",
         element: <QOTD />,
+      },
+      {
+        path: "/quotes/search",
+        element: <Search />,
       },
       {
         path: "/login",

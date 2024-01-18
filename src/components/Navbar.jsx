@@ -1,14 +1,37 @@
-import { Link, useLocation } from "react-router-dom";
+import React, { useState } from "react";
+import {
+  Link,
+  createSearchParams,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { navLinks } from "../utils/constants";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const location = useLocation();
+  const [searchQuery, setSearchQuery] = useState("");
 
   const isLinkActive = (path) => location.pathname === path;
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     window.location.href = "/";
+  };
+
+  const params = { value: searchQuery };
+
+  const handleSearch = (e) => {
+    // navigate({
+    //   pathname: "/quotes/search",
+    //   search: `?${createSearchParams(params)}`,
+    // });
+    // navigate({
+    //   pathname: "/quotes/search",
+    //   search: "?sort=date&order=" + searchQuery,
+    // });
+    e.preventDefault();
+    navigate(`/quotes/search?value=${searchQuery}`);
   };
 
   return (
@@ -66,12 +89,16 @@ const Navbar = () => {
               </svg>
               <span className="sr-only">Search icon</span>
             </div>
-            <input
-              type="text"
-              id="search-navbar"
-              className="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="Search..."
-            />
+            <form onSubmit={handleSearch}>
+              {" "}
+              <input
+                type="text"
+                id="search-navbar"
+                className="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Search..."
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </form>
           </div>
 
           <button
@@ -139,6 +166,7 @@ const Navbar = () => {
               id="search-navbar"
               className="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Search..."
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
 

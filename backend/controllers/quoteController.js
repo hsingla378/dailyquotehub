@@ -10,13 +10,13 @@ exports.getAllQuotes = async (req, res) => {
 };
 
 exports.searchQuotes = async (req, res) => {
-  console.log(req.params);
-  const query = req.query.query; // Change this line to use req.query.query
+  const value = req.query.value; // Change this line to use req.query.query
   try {
     const quotes = await Quote.find({
       $or: [
-        { title: { $regex: query, $options: "i" } },
-        { description: { $regex: query, $options: "i" } },
+        { title: { $regex: value, $options: "i" } },
+        { "author.name": { $regex: value, $options: "i" } },
+        { categories: { $in: [new RegExp(value, "i")] } },
       ],
     });
     res.json(quotes);
