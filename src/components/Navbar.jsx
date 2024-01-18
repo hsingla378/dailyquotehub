@@ -13,7 +13,7 @@ const Navbar = () => {
           to="/"
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
-          <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+          <span className="self-center text-2xl font-semibold whitespace-nowrap">
             DailyQuoteHub
           </span>
         </Link>
@@ -129,9 +129,9 @@ const Navbar = () => {
                   to={link.path}
                   className={`block py-4 px-4 ${
                     isLinkActive(link.path)
-                      ? "text-white md:dark:text-blue-700 bg-blue-700 md:bg-transparent"
+                      ? "text-black md:dark:text-blue-700 bg-blue-700 md:bg-transparent"
                       : "text-gray-900 dark:text-white"
-                  } rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500  dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700`}
+                  } rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 hover:text-gray-900 md:p-0 md:dark:hover:text-blue-500  dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700`}
                 >
                   {link.text}
                 </Link>

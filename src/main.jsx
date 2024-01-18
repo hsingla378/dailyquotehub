@@ -13,9 +13,9 @@ import Quote from "./components/Quote";
 import Author from "./components/Author";
 import Category from "./components/Category";
 import Error from "./components/Error";
-import Admin from "./components/Admin.jsx";
-import Login from "./components/Login.jsx";
-import Register from "./components/Register.jsx";
+import Login from "./components/Dashboard/Login.jsx";
+import Register from "./components/Dashboard/Register.jsx";
+import Dashboard from "./components/Dashboard/Dashboard.jsx";
 
 const appRouter = createBrowserRouter([
   {
@@ -63,8 +63,8 @@ const appRouter = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: "/admin",
-        element: <Admin />,
+        path: "/dashboard",
+        element: <Dashboard />,
       },
     ],
     errorElement: <Error />,
