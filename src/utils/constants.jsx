@@ -1,3 +1,6 @@
+import axios from "axios";
+import { enqueueSnackbar } from "notistack";
+
 export const navLinks = [
   { path: "/", text: "Home" },
   { path: "/quotes", text: "Quotes" },
@@ -6,120 +9,6 @@ export const navLinks = [
 ];
 
 export const quotes = [
-  {
-    author: {
-      name: "socrates",
-      designation: "Philosopher",
-      description: "Ancient Greek philosopher",
-      avatar:
-        "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/bonnie-green.png",
-    },
-    book: {
-      name: "Book Name 1",
-      image:
-        "https://m.media-amazon.com/images/I/41wVYuZMNTL._SY445_SX342_.jpg",
-      amazonLink: "https://www.amazon.com/books/wisdom-quote-1",
-    },
-    _id: "65a7ae12e5c45954c01074f1",
-    title: "Wisdom Quote 1",
-    description: "The only true wisdom is in knowing you know nothing.",
-    categories: ["wisdom", "philosophy"],
-    thumbnail:
-      "https://i.pinimg.com/564x/a0/ef/35/a0ef352c96992ef65c5e8e65c3614807.jpg",
-    __v: 0,
-  },
-  {
-    author: {
-      name: "plato",
-      designation: "Philosopher",
-      description: "Ancient Greek philosopher",
-      avatar:
-        "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/bonnie-green.png",
-    },
-    book: {
-      name: "Book Name 2",
-      image:
-        "https://m.media-amazon.com/images/I/41wVYuZMNTL._SY445_SX342_.jpg",
-      amazonLink: "https://www.amazon.com/books/wisdom-quote-2",
-    },
-    _id: "65a7ae1ae5c45954c01074f3",
-    title: "Wisdom Quote 2",
-    description:
-      "True wisdom lies in understanding the depth of one's ignorance.",
-    categories: ["wisdom", "knowledge"],
-    thumbnail:
-      "https://i.pinimg.com/564x/a0/ef/35/a0ef352c96992ef65c5e8e65c3614807.jpg",
-    __v: 0,
-  },
-  {
-    author: {
-      name: "aristotle",
-      designation: "Philosopher",
-      description: "Ancient Greek philosopher",
-      avatar:
-        "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/bonnie-green.png",
-    },
-    book: {
-      name: "Book Name 3",
-      image:
-        "https://m.media-amazon.com/images/I/41wVYuZMNTL._SY445_SX342_.jpg",
-      amazonLink: "https://www.amazon.com/books/wisdom-quote-3",
-    },
-    _id: "65a7ae2fe5c45954c01074f5",
-    title: "Wisdom Quote 3",
-    description:
-      "Knowledge is the key to unlocking the mysteries of the universe.",
-    categories: ["wisdom", "learning"],
-    thumbnail:
-      "https://i.pinimg.com/564x/a0/ef/35/a0ef352c96992ef65c5e8e65c3614807.jpg",
-    __v: 0,
-  },
-  {
-    author: {
-      name: "aristotle",
-      designation: "Philosopher",
-      description: "Ancient Greek philosopher",
-      avatar:
-        "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/bonnie-green.png",
-    },
-    book: {
-      name: "Book Name 3",
-      image:
-        "https://m.media-amazon.com/images/I/41wVYuZMNTL._SY445_SX342_.jpg",
-      amazonLink: "https://www.amazon.com/books/wisdom-quote-3",
-    },
-    _id: "65a7bd5bc654b4d1d905a3c6",
-    title: "Wisdom Quote 3",
-    description:
-      "Knowledge is the key to unlocking the mysteries of the universe.",
-    categories: ["life", "love"],
-    thumbnail:
-      "https://i.pinimg.com/564x/a0/ef/35/a0ef352c96992ef65c5e8e65c3614807.jpg",
-    __v: 0,
-  },
-  {
-    author: {
-      name: "aristotle",
-      designation: "Philosopher",
-      description: "Ancient Greek philosopher",
-      avatar:
-        "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/bonnie-green.png",
-    },
-    book: {
-      name: "Book Name 3",
-      image:
-        "https://m.media-amazon.com/images/I/41wVYuZMNTL._SY445_SX342_.jpg",
-      amazonLink: "https://www.amazon.com/books/wisdom-quote-3",
-    },
-    _id: "65a7bfd1c654b4d1d905a4eb",
-    title: "test 1 ",
-    description:
-      "Knowledge is the key to unlocking the mysteries of the universe.",
-    categories: ["category1", "category2"],
-    thumbnail:
-      "https://i.pinimg.com/564x/a0/ef/35/a0ef352c96992ef65c5e8e65c3614807.jpg",
-    __v: 0,
-  },
   {
     author: {
       name: "zenobia smith",
@@ -437,3 +326,51 @@ quotes.forEach((quote) => {
 
 // Converting sets to arrays if needed
 export const uniqueCategories = Array.from(allCategories);
+
+export const deleteQuote = (token, quoteId) => {
+  let data = "";
+
+  if (!token) {
+    enqueueSnackbar("Kindly login!", {
+      variant: "success",
+      persist: false,
+    });
+    return;
+  }
+
+  let config = {
+    method: "delete",
+    maxBodyLength: Infinity,
+    url: import.meta.env.VITE_BACKEND_URL + "/quotes/" + quoteId,
+    headers: {
+      Authorization: token,
+    },
+    data: data,
+  };
+
+  axios
+    .request(config)
+    .then((response) => {
+      enqueueSnackbar(response.data.message, {
+        variant: "success",
+        persist: false,
+      });
+    })
+    .catch((error) => {
+      enqueueSnackbar(error, {
+        variant: "error",
+        persist: false,
+      });
+    });
+};
+
+export const capitalizeTitle = function (title) {
+  return title
+    .split(" ")
+    .map((item) =>
+      item.length <= 2
+        ? item.toLowerCase()
+        : `${item[0].toUpperCase()}${item.slice(1).toLowerCase()}`
+    )
+    .join(" ");
+};
