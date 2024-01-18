@@ -10,6 +10,55 @@ import { IoLogoWhatsapp } from "react-icons/io";
 import { FaAmazon } from "react-icons/fa";
 import useQuoteInfo from "../utils/useQuoteInfo";
 import useAllQuotes from "../utils/useAllQuotes";
+import {
+  EmailShareButton,
+  FacebookShareButton,
+  FacebookShareCount,
+  GabShareButton,
+  HatenaShareButton,
+  InstapaperShareButton,
+  LineShareButton,
+  LinkedinShareButton,
+  LivejournalShareButton,
+  MailruShareButton,
+  OKShareButton,
+  PinterestShareButton,
+  PocketShareButton,
+  RedditShareButton,
+  TelegramShareButton,
+  TumblrShareButton,
+  TwitterShareButton,
+  ViberShareButton,
+  VKShareButton,
+  WhatsappShareButton,
+  WorkplaceShareButton,
+} from "react-share";
+
+import {
+  EmailIcon,
+  FacebookIcon,
+  FacebookMessengerIcon,
+  GabIcon,
+  HatenaIcon,
+  InstapaperIcon,
+  LineIcon,
+  LinkedinIcon,
+  LivejournalIcon,
+  MailruIcon,
+  OKIcon,
+  PinterestIcon,
+  PocketIcon,
+  RedditIcon,
+  TelegramIcon,
+  TumblrIcon,
+  TwitterIcon,
+  ViberIcon,
+  VKIcon,
+  WeiboIcon,
+  WhatsappIcon,
+  WorkplaceIcon,
+  XIcon,
+} from "react-share";
 
 const Quote = () => {
   const { id } = useParams();
@@ -93,7 +142,10 @@ const Quote = () => {
                 <Link to={quoteInfo.book.amazonLink} target="_blank">
                   <div className="items-center bg-gray-50 rounded-lg shadow sm:flex dark:bg-gray-800 dark:border-gray-700 px-4 my-6 w-max flex">
                     {quoteInfo.book.image ? (
-                      <img src={quoteInfo.book.image} className="w-11 rounded-md" />
+                      <img
+                        src={quoteInfo.book.image}
+                        className="w-11 rounded-md"
+                      />
                     ) : (
                       <FaAmazon className="text-5xl text-white mx-auto" />
                     )}
@@ -125,43 +177,47 @@ const Quote = () => {
                       </span>
                     </button>
                   </Link>
-                ))}
-                {" "}
+                ))}{" "}
               </div>
 
               {/* Social Share Icons */}
-              <ul className="flex space-x-4 my-6">
+
+              <ul className="flex space-x-2 my-6">
                 <li>
-                  <Link
-                    href="/"
-                    className="text-gray-500 hover:text-gray-900 dark:hover:text-white w-5 h-5"
+                  <FacebookShareButton
+                    url={window.location.href}
+                    quote={"Dummy text!"}
+                    hashtag="#muo"
                   >
-                    <FaFacebook />
-                  </Link>
+                    <FacebookIcon size={32} round />
+                  </FacebookShareButton>
                 </li>
                 <li>
-                  <Link
-                    href="/"
-                    className="text-gray-500 hover:text-gray-900 dark:hover:text-white w-5 h-5"
+                  <TwitterShareButton
+                    url={window.location.href}
+                    quote={"Dummy text!"}
+                    hashtag="#muo"
                   >
-                    <FaTwitter />
-                  </Link>
+                    <TwitterIcon size={32} round />
+                  </TwitterShareButton>
                 </li>
                 <li>
-                  <Link
-                    href="/"
-                    className="text-gray-500 hover:text-gray-900 dark:hover:text-white w-5 h-5"
+                  <EmailShareButton
+                    url={window.location.href}
+                    quote={"Dummy text!"}
+                    hashtag="#muo"
                   >
-                    <FaGithub />
-                  </Link>
+                    <EmailIcon size={32} round />
+                  </EmailShareButton>
                 </li>
                 <li>
-                  <Link
-                    href="/"
-                    className="text-gray-500 hover:text-gray-900 dark:hover:text-white w-5 h-5"
+                  <WhatsappShareButton
+                    url={window.location.href}
+                    quote={"Dummy text!"}
+                    hashtag="#muo"
                   >
-                    <IoLogoWhatsapp />
-                  </Link>
+                    <WhatsappIcon size={32} round />
+                  </WhatsappShareButton>
                 </li>
               </ul>
             </div>
