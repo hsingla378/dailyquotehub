@@ -6,6 +6,11 @@ const Navbar = () => {
 
   const isLinkActive = (path) => location.pathname === path;
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    window.location.href = "/";
+  };
+
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -17,7 +22,7 @@ const Navbar = () => {
             DailyQuoteHub
           </span>
         </Link>
-        <div className="flex md:order-2">
+        <div className="flex md:order-2 gap-4">
           <button
             type="button"
             data-collapse-toggle="navbar-search"
@@ -68,6 +73,7 @@ const Navbar = () => {
               placeholder="Search..."
             />
           </div>
+
           <button
             data-collapse-toggle="navbar-search"
             type="button"
@@ -92,6 +98,19 @@ const Navbar = () => {
               />
             </svg>
           </button>
+          {localStorage.getItem("token") && (
+            <div className="flex gap-4">
+              <li className="hidden md:block py-1 px-4 bg-blue-600 rounded-lg text-white cursor-pointer hover:bg-blue-500">
+                <Link to="/dashboard">Dashboard</Link>
+              </li>
+              <li
+                className=" md:block hidden py-1 px-4 bg-red-600 rounded-lg text-white cursor-pointer hover:bg-red-500"
+                onClick={handleLogout}
+              >
+                Logout
+              </li>
+            </div>
+          )}
         </div>
         <div
           className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
@@ -122,14 +141,15 @@ const Navbar = () => {
               placeholder="Search..."
             />
           </div>
-          <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+
+          <ul className="flex flex-col justify-center md:items-center p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             {navLinks.map((link) => (
               <li key={link.path}>
                 <Link
                   to={link.path}
-                  className={`block py-4 px-4 ${
+                  className={`block py-3 px-4 ${
                     isLinkActive(link.path)
-                      ? "text-black md:dark:text-blue-700 bg-blue-700 md:bg-transparent"
+                      ? "text-black  md:dark:text-blue-700 bg-blue-700 md:bg-transparent"
                       : "text-gray-900 dark:text-white"
                   } rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 hover:text-gray-900 md:p-0 md:dark:hover:text-blue-500  dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700`}
                 >
@@ -137,6 +157,21 @@ const Navbar = () => {
                 </Link>
               </li>
             ))}
+            {localStorage.getItem("token") && (
+              <Link to="/dashboard">
+                <li className="block md:hidden py-3 px-4 bg-gray-600 rounded text-white cursor-pointer hover:bg-gray-500">
+                  Dashboard
+                </li>
+              </Link>
+            )}
+            {localStorage.getItem("token") && (
+              <li
+                className=" md:hidden block py-3 px-4 bg-red-600 rounded text-white cursor-pointer hover:bg-red-500"
+                onClick={handleLogout}
+              >
+                Logout
+              </li>
+            )}
           </ul>
         </div>
       </div>
