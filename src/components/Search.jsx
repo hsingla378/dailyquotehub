@@ -1,15 +1,12 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import AuthorsContainer from "./AuthorsContainer";
 import QuotesContainer from "./QuotesContainer";
 import Heading from "./Heading";
 import CategoriesContainer from "./CategoriesContainer";
 import useAllQuotes from "../utils/useAllQuotes";
-import useAllAuthors from "../utils/useAllAuthors";
-import useAllCategories from "../utils/useAllCategories";
 import { enqueueSnackbar } from "notistack";
 import axios from "axios";
-import { useParams, useLocation } from "react-router-dom";
-import Quotes from "./Quotes";
+import { useLocation } from "react-router-dom";
 
 const Search = () => {
   const quotes = useAllQuotes();
@@ -94,10 +91,6 @@ const Search = () => {
     filterAuthors(value);
     filterCategories(value);
   }, [filteredQuotes]);
-
-  //   console.log(filteredQuotes);
-
-  console.log("categories", categories);
 
   return (
     <div className="my-4">

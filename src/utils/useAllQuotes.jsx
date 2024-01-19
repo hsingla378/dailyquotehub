@@ -1,12 +1,14 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const useAllQuotes = () => {
   const [quotes, setQuotes] = useState([]);
 
   const getQuotes = async () => {
     try {
-      let response = await axios.get(import.meta.env.VITE_BACKEND_URL + "/quotes");
+      let response = await axios.get(
+        import.meta.env.VITE_BACKEND_URL + "/quotes"
+      );
       let data = await response.data;
       setQuotes(data);
     } catch (error) {

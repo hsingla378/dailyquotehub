@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { capitalizeTitle } from "../utils/constants";
 
 // Function to generate a random hex color
 const getRandomColor = () => {
@@ -10,20 +11,9 @@ const getRandomColor = () => {
   return color;
 };
 
-const capitalizeTitle = function (title) {
-  return title
-    .split(" ")
-    .map((item) =>
-      item.length <= 2
-        ? item.toLowerCase()
-        : `${item[0].toUpperCase()}${item.slice(1).toLowerCase()}`
-    )
-    .join(" ");
-};
-
 const CategoriesContainer = ({ categories }) => {
   return (
-    <section className="bg-white dark:bg-gray-900 py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6 flex flex-wrap gap-4 justify-center">
+    <section className="bg-white dark:bg-gray-900 py-4 px-4 mx-auto max-w-screen-xl lg:py-8 lg:px-6 flex flex-wrap gap-4 justify-center">
       {categories.map((category) => (
         <Link to={"/categories/" + category} key={category}>
           <button

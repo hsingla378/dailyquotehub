@@ -1,6 +1,5 @@
 import axios from "axios";
 import { enqueueSnackbar } from "notistack";
-import React from "react";
 
 const useDeleteQuote = ({ token, quoteId }) => {
   let data = "";

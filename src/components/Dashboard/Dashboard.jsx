@@ -1,18 +1,14 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import useAllCategories from "../../utils/useAllCategories";
 import useAllAuthors from "../../utils/useAllAuthors";
-import { Link } from "react-router-dom";
 import axios from "axios";
-import { SnackbarProvider, enqueueSnackbar } from "notistack";
-import useAllQuotes from "../../utils/useAllQuotes";
+import { SnackbarProvider } from "notistack";
 import { capitalizeTitle } from "../../utils/constants";
 import { deleteQuote } from "../../utils/constants";
 
 const Dashboard = () => {
-  // const quotes = useAllQuotes();
   const [quotes, setQuotes] = useState([]);
   const [filteredQuotes, setFilteredQuotes] = useState([]);
-  // const [quotes, setQuotes] = useState([]);
   const categories = useAllCategories();
   const authors = useAllAuthors();
   const token = localStorage.getItem("token");

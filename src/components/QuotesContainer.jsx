@@ -14,12 +14,12 @@ const QuotesContainer = ({ quotes }) => {
 
   return (
     <section>
-      <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6 ">
-        <div className="grid gap-8 mb-6 lg:mb-16 grid-cols-2 md:grid-cols-5 sm:grid-cols-3">
+      <div className="pt-4 px-4 mx-auto max-w-screen-xl lg:pt-8 lg:px-6 ">
+        <div className="grid gap-8 mb-6 lg:mb-8 grid-cols-2 md:grid-cols-5 sm:grid-cols-3 items-stretch justify-center">
           {quotes.map((quote) => {
             return (
               <Link to={`/quotes/${quote._id}`} key={quote._id}>
-                <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                <div className="max-w-sm bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 shadow-md h-full">
                   <img
                     className="w-full rounded-lg"
                     src={quote.thumbnail}

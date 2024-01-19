@@ -1,6 +1,5 @@
-import { FaFacebook, FaGithub, FaTwitter } from "react-icons/fa";
-import { IoLogoWhatsapp } from "react-icons/io";
 import { Link } from "react-router-dom";
+import { capitalizeTitle } from "../utils/constants";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Pagination, Autoplay, Navigation } from "swiper/modules";
 
@@ -8,30 +7,15 @@ import { FreeMode, Pagination, Autoplay, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
-import { useRef } from "react";
 
 const AuthorsContainer = ({ authors }) => {
-  const progressCircle = useRef(null);
-  const progressContent = useRef(null);
-
   const generateAuthorLink = (author) => {
     return `/authors/${author.split(" ").join("-").toLowerCase()}`;
   };
 
-  const capitalizeTitle = function (title) {
-    return title
-      .split(" ")
-      .map((item) =>
-        item.length <= 2
-          ? item.toLowerCase()
-          : `${item[0].toUpperCase()}${item.slice(1).toLowerCase()}`
-      )
-      .join(" ");
-  };
-
   return (
     <section>
-      <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-6">
+      <div className="mt-8 py-4 px-4 mx-auto max-w-screen-xl text-center lg:py-4 lg:px-6">
         <div>
           <Swiper
             autoplay={{
@@ -67,7 +51,7 @@ const AuthorsContainer = ({ authors }) => {
               return (
                 <SwiperSlide key={author.name}>
                   <Link to={generateAuthorLink(author.name)}>
-                    <div className="text-center text-gray-500 dark:text-gray-400">
+                    <div className="text-center text-gray-500 dark:text-gray-400 h-full">
                       <img
                         className="mx-auto mb-4 rounded-full w-24 h-24 object-cover"
                         src={author.avatar}

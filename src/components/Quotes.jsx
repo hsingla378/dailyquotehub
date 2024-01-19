@@ -1,4 +1,3 @@
-import HeadSection from "./HeadSection";
 import QuotesContainer from "./QuotesContainer";
 import Pagination from "./Pagination";
 import { useState } from "react";
@@ -21,12 +20,6 @@ const Quotes = () => {
 
   return (
     <>
-      <HeadSection
-        heading={"Journey Through Quotes"}
-        subheading={
-          "Embark on a Journey of Enlightenment with Our Handpicked Quotes"
-        }
-      />
       {quotes.length && <QuotesContainer quotes={currentQuotes} />}
       {quotes.length && (
         <Pagination

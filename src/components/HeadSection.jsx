@@ -1,4 +1,4 @@
-const HeadSection = ({ heading, subheading }) => {
+const HeadSection = ({ heading, subheading, image }) => {
   return (
     <section className="bg-center bg-no-repeat bg-[url('https://flowbite.s3.amazonaws.com/docs/jumbotron/conference.jpg')] bg-gray-700 bg-blend-multiply">
       <div className="px-4 mx-auto max-w-screen-xl text-center py-8 lg:py-10">

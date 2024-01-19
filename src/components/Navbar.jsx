@@ -1,10 +1,5 @@
-import React, { useState } from "react";
-import {
-  Link,
-  createSearchParams,
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
+import { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { navLinks } from "../utils/constants";
 
 const Navbar = () => {
@@ -19,17 +14,7 @@ const Navbar = () => {
     window.location.href = "/";
   };
 
-  const params = { value: searchQuery };
-
   const handleSearch = (e) => {
-    // navigate({
-    //   pathname: "/quotes/search",
-    //   search: `?${createSearchParams(params)}`,
-    // });
-    // navigate({
-    //   pathname: "/quotes/search",
-    //   search: "?sort=date&order=" + searchQuery,
-    // });
     e.preventDefault();
     navigate(`/quotes/search?value=${searchQuery}`);
   };

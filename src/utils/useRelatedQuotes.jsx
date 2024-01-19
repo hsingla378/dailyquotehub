@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import useCategoryData from "./useCategoryData";
+import axios from "axios";
 
 const useRelatedQuotes = (categories) => {
   const [relatedQuotes, setRelatedQuotes] = useState([]);
   let allCategoriesData = [];
 
-  const getCategoryData = async () => {
+  const getCategoryData = async (category) => {
     try {
       let response = await axios.get(
         import.meta.env.VITE_BACKEND_URL + "/categories/" + category

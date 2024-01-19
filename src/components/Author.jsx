@@ -1,9 +1,9 @@
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import HeadSection from "./HeadSection";
 import Heading from "./Heading";
 import QuotesContainer from "./QuotesContainer";
-import { quotes } from "../utils/constants";
 import useAuthorData from "../utils/useAuthorData";
+import { capitalizeTitle } from "../utils/constants";
 
 const Author = () => {
   let { author } = useParams();
@@ -12,25 +12,14 @@ const Author = () => {
   if (!authorData.length) return <div>Loading...</div>;
 
   const authorInfo = authorData[0].author;
-  console.log("authorInfo", authorInfo);
-  console.log("authorData", authorData);
-
-  const capitalizeTitle = function (title) {
-    return title
-      .split(" ")
-      .map((item) =>
-        item.length <= 2
-          ? item.toLowerCase()
-          : `${item[0].toUpperCase()}${item.slice(1).toLowerCase()}`
-      )
-      .join(" ");
-  };
 
   return (
     <div>
       <HeadSection
         heading={"Author Spotlight"}
-        subheading={"Unveiling the Creative Mind of " + authorInfo.name}
+        subheading={
+          "Unveiling the Creative Mind of " + capitalizeTitle(authorInfo.name)
+        }
       />
       {/* Author Details */}
       <section className="bg-white dark:bg-gray-900 py-4">

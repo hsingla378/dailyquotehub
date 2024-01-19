@@ -1,11 +1,10 @@
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import HeadSection from "./HeadSection";
-import { quotes } from "../utils/constants";
-import Heading from "./Heading";
 import useCategoryData from "../utils/useCategoryData";
 import QuotesContainer from "./QuotesContainer";
 import Pagination from "./Pagination";
 import { useState } from "react";
+import { capitalizeTitle } from "../utils/constants";
 
 const ITEMS_PER_PAGE = 10;
 
@@ -24,21 +23,9 @@ const Category = () => {
     setCurrentPage(newPage);
   };
 
-  const capitalizeTitle = function (title) {
-    return title
-      .split(" ")
-      .map((item) =>
-        item.length <= 2
-          ? item.toLowerCase()
-          : `${item[0].toUpperCase()}${item.slice(1).toLowerCase()}`
-      )
-      .join(" ");
-  };
-
   return (
     <div>
       <HeadSection heading={"Quotes on " + capitalizeTitle(category)} />
-      {/* <Heading /> */}
       {/* Quotes */}
       <QuotesContainer quotes={currentCategories} />
       {/* Pagination */}

@@ -1,63 +1,24 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import QuotesContainer from "./QuotesContainer";
 import Pagination from "./Pagination";
 import Heading from "./Heading";
 import { Link, useParams } from "react-router-dom";
-import { FaFacebook } from "react-icons/fa";
-import { FaTwitter } from "react-icons/fa";
-import { FaGithub } from "react-icons/fa";
-import { IoLogoWhatsapp } from "react-icons/io";
 import { FaAmazon } from "react-icons/fa";
 import useQuoteInfo from "../utils/useQuoteInfo";
 import useAllQuotes from "../utils/useAllQuotes";
+import { capitalizeTitle } from "../utils/constants";
 import {
   EmailShareButton,
   FacebookShareButton,
-  FacebookShareCount,
-  GabShareButton,
-  HatenaShareButton,
-  InstapaperShareButton,
-  LineShareButton,
-  LinkedinShareButton,
-  LivejournalShareButton,
-  MailruShareButton,
-  OKShareButton,
-  PinterestShareButton,
-  PocketShareButton,
-  RedditShareButton,
-  TelegramShareButton,
-  TumblrShareButton,
   TwitterShareButton,
-  ViberShareButton,
-  VKShareButton,
   WhatsappShareButton,
-  WorkplaceShareButton,
 } from "react-share";
 
 import {
   EmailIcon,
   FacebookIcon,
-  FacebookMessengerIcon,
-  GabIcon,
-  HatenaIcon,
-  InstapaperIcon,
-  LineIcon,
-  LinkedinIcon,
-  LivejournalIcon,
-  MailruIcon,
-  OKIcon,
-  PinterestIcon,
-  PocketIcon,
-  RedditIcon,
-  TelegramIcon,
-  TumblrIcon,
   TwitterIcon,
-  ViberIcon,
-  VKIcon,
-  WeiboIcon,
   WhatsappIcon,
-  WorkplaceIcon,
-  XIcon,
 } from "react-share";
 
 const Quote = () => {
@@ -78,17 +39,6 @@ const Quote = () => {
 
   const generateAuthorLink = (author) => {
     return `/authors/${author.split(" ").join("-").toLowerCase()}`;
-  };
-
-  const capitalizeTitle = function (title) {
-    return title
-      .split(" ")
-      .map((item) =>
-        item.length <= 2
-          ? item.toLowerCase()
-          : `${item[0].toUpperCase()}${item.slice(1).toLowerCase()}`
-      )
-      .join(" ");
   };
 
   return (
