@@ -7,6 +7,7 @@ import { FreeMode, Pagination, Autoplay, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
+import Loading from "./Loading";
 
 const AuthorsContainer = ({ authors }) => {
   const generateAuthorLink = (author) => {
@@ -47,25 +48,29 @@ const AuthorsContainer = ({ authors }) => {
             className="mySwiper"
             grabCursor={true}
           >
-            {authors.map((author) => {
-              return (
-                <SwiperSlide key={author.name}>
-                  <Link to={generateAuthorLink(author.name)}>
-                    <div className="text-center text-gray-500 dark:text-gray-400 h-full">
-                      <img
-                        className="mx-auto mb-4 rounded-full w-24 h-24 object-cover"
-                        src={author.avatar}
-                        alt="Bonnie Avatar"
-                      />
-                      <h3 className="mb-1 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
-                        {capitalizeTitle(author.name)}
-                      </h3>
-                      <p>{author.designation}</p>
-                    </div>
-                  </Link>
-                </SwiperSlide>
-              );
-            })}
+            {authors.length ? (
+              authors.map((author) => {
+                return (
+                  <SwiperSlide key={author.name}>
+                    <Link to={generateAuthorLink(author.name)}>
+                      <div className="text-center text-gray-500 dark:text-gray-400 h-full">
+                        <img
+                          className="mx-auto mb-4 rounded-full w-24 h-24 object-cover"
+                          src={author.avatar}
+                          alt="Bonnie Avatar"
+                        />
+                        <h3 className="mb-1 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+                          {capitalizeTitle(author.name)}
+                        </h3>
+                        <p>{author.designation}</p>
+                      </div>
+                    </Link>
+                  </SwiperSlide>
+                );
+              })
+            ) : (
+              <Loading />
+            )}
           </Swiper>
         </div>
       </div>

@@ -38,13 +38,13 @@ const Footer = () => {
                   </Link>
                 </li>
                 <li className="mb-4">
-                  <Link to={"/categories/love"} className="hover:underline">
-                    Love
+                  <Link to={"/categories/infinity"} className="hover:underline">
+                    Infinity
                   </Link>
                 </li>
                 <li className="mb-4">
-                  <Link to={"/categories/life"} className="hover:underline">
-                    Life
+                  <Link to={"/categories/puzzles"} className="hover:underline">
+                    Puzzles
                   </Link>
                 </li>
               </ul>

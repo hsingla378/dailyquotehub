@@ -20,6 +20,7 @@ import {
   TwitterIcon,
   WhatsappIcon,
 } from "react-share";
+import Loading from "./Loading";
 
 const Quote = () => {
   const { id } = useParams();
@@ -40,6 +41,8 @@ const Quote = () => {
   const generateAuthorLink = (author) => {
     return `/authors/${author.split(" ").join("-").toLowerCase()}`;
   };
+
+  if (!quotes.length) return <Loading />;
 
   return (
     <div>

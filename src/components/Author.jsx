@@ -3,15 +3,18 @@ import HeadSection from "./HeadSection";
 import Heading from "./Heading";
 import QuotesContainer from "./QuotesContainer";
 import useAuthorData from "../utils/useAuthorData";
-import { capitalizeTitle } from "../utils/constants";
+import { authors, capitalizeTitle } from "../utils/constants";
+import Loading from "./Loading";
 
 const Author = () => {
   let { author } = useParams();
   const authorData = useAuthorData(author);
-
-  if (!authorData.length) return <div>Loading...</div>;
+  
+  if (!authorData.length) return <Loading />;
 
   const authorInfo = authorData[0].author;
+
+  if (!authorData) return <Loading />;
 
   return (
     <div>

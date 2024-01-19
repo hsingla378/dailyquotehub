@@ -7,15 +7,14 @@ import useAllQuotes from "../utils/useAllQuotes";
 import useAllAuthors from "../utils/useAllAuthors";
 import useAllCategories from "../utils/useAllCategories";
 import { Link } from "react-router-dom";
+import Loading from "./Loading";
 
 const LandingPage = () => {
   const quotes = useAllQuotes();
   const authors = useAllAuthors();
   const categories = useAllCategories();
 
-  // console.log(quotes, authors, categories);
-
-  if (!quotes.length && !authors.length) return <div>Loading...</div>;
+  if (!quotes.length) return <Loading />;
 
   return (
     <div>

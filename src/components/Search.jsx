@@ -7,6 +7,7 @@ import useAllQuotes from "../utils/useAllQuotes";
 import { enqueueSnackbar } from "notistack";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
+import Loading from "./Loading";
 
 const Search = () => {
   const quotes = useAllQuotes();
@@ -15,6 +16,7 @@ const Search = () => {
   const [categories, setCategories] = useState([]);
   const [query, setQuery] = useState("");
   const location = useLocation();
+  const [loading, setLoading] = useState(true);
 
   const filterAuthors = (text) => {
     const filteredAuthors = quotes
@@ -40,6 +42,7 @@ const Search = () => {
 
   const performSearch = async (text) => {
     try {
+      setLoading(true);
       const response = await axios.get(
         `${import.meta.env.VITE_BACKEND_URL}/quotes/search?value=${text}`
       );
@@ -76,6 +79,7 @@ const Search = () => {
         );
       }
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -93,32 +97,43 @@ const Search = () => {
   }, [filteredQuotes]);
 
   return (
-    <div className="my-4">
-      {filteredQuotes.length === 0 ? (
-        <Heading middle={`No results found for "${query}"`} />
+    <>
+      {" "}
+      {loading ? (
+        <Loading />
       ) : (
-        <Heading middle={`Search results for "${query}"`} />
-      )}
+        <div className="my-4">
+          {filteredQuotes.length === 0 ? (
+            <Heading middle={`No results found for "${query}"`} />
+          ) : (
+            <>
+              <Heading middle={`Search results for "${query}"`} />
+            </>
+          )}
 
-      {authors.length > 0 && (
-        <>
-          <Heading right={"Authors"} />
-          <AuthorsContainer authors={authors} />
-        </>
+          {authors.length > 0 && (
+            <>
+              <Heading right={"Authors"} />
+              <AuthorsContainer authors={authors} />
+            </>
+          )}
+
+          {filteredQuotes.length > 0 && (
+            <>
+              <Heading right={"Quotes"} />
+              <QuotesContainer quotes={filteredQuotes} />
+            </>
+          )}
+
+          {categories.length > 0 && (
+            <>
+              <Heading right={"Categories"} />
+              <CategoriesContainer categories={categories} />
+            </>
+          )}
+        </div>
       )}
-      {filteredQuotes.length > 0 && (
-        <>
-          <Heading right={"Quotes"} />
-          <QuotesContainer quotes={filteredQuotes} />
-        </>
-      )}
-      {categories.length > 0 && (
-        <>
-          <Heading right={"Categories"} />
-          <CategoriesContainer categories={categories} />
-        </>
-      )}
-    </div>
+    </>
   );
 };
 

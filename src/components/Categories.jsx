@@ -3,6 +3,7 @@ import CategoriesContainer from "./CategoriesContainer";
 import useAllCategories from "../utils/useAllCategories";
 import Pagination from "./Pagination";
 import { useState } from "react";
+import Loading from "./Loading";
 
 const ITEMS_PER_PAGE = 50;
 
@@ -27,16 +28,18 @@ const Categories = () => {
           "Navigate through our curated categories to find the perfect quote that resonates with you."
         }
       />
-      {categories.length && (
-        <CategoriesContainer categories={currentCategories} />
-      )}
-      {categories.length && (
-        <Pagination
-          currentPage={currentPage}
-          itemsPerPage={ITEMS_PER_PAGE}
-          totalItems={categories.length}
-          onPageChange={handlePageChange}
-        />
+      {categories.length ? (
+        <>
+          <CategoriesContainer categories={currentCategories} />
+          <Pagination
+            currentPage={currentPage}
+            itemsPerPage={ITEMS_PER_PAGE}
+            totalItems={categories.length}
+            onPageChange={handlePageChange}
+          />
+        </>
+      ) : (
+        <Loading />
       )}
     </div>
   );

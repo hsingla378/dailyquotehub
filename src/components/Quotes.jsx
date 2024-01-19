@@ -2,6 +2,7 @@ import QuotesContainer from "./QuotesContainer";
 import Pagination from "./Pagination";
 import { useState } from "react";
 import useAllQuotes from "../utils/useAllQuotes";
+import Loading from "./Loading";
 
 const ITEMS_PER_PAGE = 10;
 
@@ -17,6 +18,8 @@ const Quotes = () => {
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
   };
+
+  if (!quotes.length) return <Loading />;
 
   return (
     <>

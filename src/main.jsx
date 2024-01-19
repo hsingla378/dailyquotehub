@@ -18,6 +18,7 @@ import Search from "./components/Search.jsx";
 // import function to register Swiper custom elements
 import { register } from "swiper/element/bundle";
 import PrivacyPolicy from "./components/PrivacyPolicy.jsx";
+import Loading from "./components/Loading.jsx";
 // register Swiper custom elements
 register();
 
