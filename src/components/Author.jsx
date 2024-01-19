@@ -9,7 +9,7 @@ import Loading from "./Loading";
 const Author = () => {
   let { author } = useParams();
   const authorData = useAuthorData(author);
-  
+
   if (!authorData.length) return <Loading />;
 
   const authorInfo = authorData[0].author;
@@ -26,29 +26,34 @@ const Author = () => {
       />
       {/* Author Details */}
       <section className="bg-white dark:bg-gray-900 py-4">
-        <div className="flex justify-center flex-col md:grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 sm:grid-cols-12">
-          <div className="my-4 lg:mt-0 sm:col-span-6">
+        <div className="flex justify-center flex-col md:grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-8 sm:grid-cols-12">
+          <div className="my-4 lg:mt-0 sm:col-span-6 ">
             <img
-              className="max-w-[90%] m-auto"
+              className="max-w-[90%] m-auto p-2 shadow-xl rounded md:mr-[3rem]"
               src={authorInfo.avatar}
               alt="Bonnie Avatar"
             />
           </div>
           <div className="mx-auto md:m-[unset] md:mr-auto place-self-center sm:col-span-6 text-center md:text-left ">
-            <h2 className="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white">
+            <h2 className="max-w-2xl mb-4 text-2xl font-extrabold tracking-tight leading-none md:text-3xl xl:text-4xl dark:text-white">
               {capitalizeTitle(authorInfo.name)}
             </h2>
-            <h3 className="max-w-2xl mb-4 text-xl font-semibold tracking-tight leading-none md:text-xl xl:text-xl dark:text-white">
+            <h3 className="max-w-2xl mb-4 text-sm font-semibold tracking-tight leading-none md:text-base xl:text-lg dark:text-white">
               {authorInfo.designation}
             </h3>
-            <p className="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
+            <p className="max-w-2xl mb-6 text-sm font-light text-gray-500 lg:mb-8 md:text-base lg:text-lg dark:text-gray-400">
               {authorInfo.description}
             </p>
           </div>
         </div>
       </section>
       {/* Heading - His/Her Quotes */}
-      <Heading middle={"Quotes By"} right={capitalizeTitle(authorInfo.name)} />
+      <div className="flex items-baseline mb-8 mt-8 m-auto justify-between max-w-[90%] xl:lg:max-w-6xl">
+        <Heading
+          middle={"Quotes By"}
+          right={capitalizeTitle(authorInfo.name)}
+        />
+      </div>
       {/* Author Posts */}
       <QuotesContainer quotes={authorData} />
     </div>

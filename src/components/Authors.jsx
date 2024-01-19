@@ -41,16 +41,16 @@ const Authors = () => {
               {currentAuthors.map((author) => {
                 return (
                   <Link to={generateAuthorLink(author.name)} key={author.name}>
-                    <div className="text-center text-gray-500 dark:text-gray-400">
+                    <div className="text-center text-gray-500 dark:text-gray-400 h-full">
                       <img
                         className="mx-auto mb-4 rounded-full w-24 h-24 object-cover"
                         src={author.avatar}
                         alt="Bonnie Avatar"
                       />
-                      <h3 className="mb-1 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+                      <h3 className="mb-1 text-md font-bold tracking-tight text-gray-900 dark:text-white">
                         {capitalizeTitle(author.name)}
                       </h3>
-                      <p>{author.description}</p>
+                      <p className="text-sm">{author.designation}</p>
                     </div>
                   </Link>
                 );

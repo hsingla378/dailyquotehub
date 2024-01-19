@@ -104,30 +104,40 @@ const Search = () => {
       ) : (
         <div className="my-4">
           {filteredQuotes.length === 0 ? (
-            <Heading middle={`No results found for "${query}"`} />
+            <div className="flex items-baseline mb-8 mt-16 m-auto justify-between max-w-[90%] xl:lg:max-w-6xl">
+              <Heading middle={`No results found for "${query}"`} />
+            </div>
           ) : (
             <>
-              <Heading middle={`Search results for "${query}"`} />
+              <div className="flex items-baseline mb-8 mt-16 m-auto justify-between max-w-[90%] xl:lg:max-w-6xl">
+                <Heading middle={`Search results for "${query}"`} />
+              </div>
             </>
           )}
 
           {authors.length > 0 && (
             <>
-              <Heading right={"Authors"} />
+              <div className="flex items-baseline mb-8 mt-16 m-auto justify-center max-w-[90%] xl:lg:max-w-6xl">
+                <Heading right={"Authors"} />
+              </div>
               <AuthorsContainer authors={authors} />
             </>
           )}
 
           {filteredQuotes.length > 0 && (
             <>
-              <Heading right={"Quotes"} />
+              <div className="flex items-baseline mb-8 mt-16 m-auto justify-center max-w-[90%] xl:lg:max-w-6xl">
+                <Heading right={"Quotes"} />
+              </div>
               <QuotesContainer quotes={filteredQuotes} />
             </>
           )}
 
           {categories.length > 0 && (
             <>
-              <Heading right={"Categories"} />
+              <div className="flex items-baseline mb-8 mt-16 m-auto justify-center max-w-[90%] xl:lg:max-w-6xl">
+                <Heading right={"Categories"} />
+              </div>
               <CategoriesContainer categories={categories} />
             </>
           )}

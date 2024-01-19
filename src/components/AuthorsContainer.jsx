@@ -59,10 +59,10 @@ const AuthorsContainer = ({ authors }) => {
                           src={author.avatar}
                           alt="Bonnie Avatar"
                         />
-                        <h3 className="mb-1 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        <h3 className="mb-1 text-md font-bold tracking-tight text-gray-900 dark:text-white">
                           {capitalizeTitle(author.name)}
                         </h3>
-                        <p>{author.designation}</p>
+                        <p className="text-sm">{author.designation}</p>
                       </div>
                     </Link>
                   </SwiperSlide>

@@ -48,18 +48,18 @@ const Quote = () => {
     <div>
       {/* Quote Details */}
       {quoteInfo.title && (
-        <section>
-          <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
-            <div className="lg:mt-0 lg:col-span-6 lg:flex">
+        <section className="bg-white dark:bg-gray-900 py-4">
+          <div className="flex justify-center flex-col items-center md:grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-8 sm:grid-cols-12">
+            <div className="my-4 lg:mt-0 sm:col-span-6 flex items-center">
               <img
                 src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/hero/phone-mockup.png"
                 alt="mockup"
-                className="max-w-[85%]"
+                className="max-w-96 m-auto p-2 rounded md:mr-[3rem]"
               />
             </div>
-            <div className="place-self-center lg:col-span-6">
+            <div className="flex justify-center flex-col items-center md:block mx-auto md:m-[unset] md:mr-auto place-self-center sm:col-span-6 text-center md:text-left ">
               {/* Quote */}
-              <blockquote className="text-xl italic font-semibold text-gray-900 dark:text-white">
+              <blockquote className="text-xl italic font-semibold text-gray-900 dark:text-white flex justify-center flex-col items-center md:block">
                 <svg
                   className="w-8 h-8 text-gray-400 dark:text-gray-600 mb-4"
                   aria-hidden="true"
@@ -124,10 +124,11 @@ const Quote = () => {
                     to={"/categories/" + category}
                     className="inline-flex items-center justify-center text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900"
                   >
-                    <button className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
-                      <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                        {capitalizeTitle(category)}
-                      </span>
+                    <button
+                      type="button"
+                      className="text-black bg-gray-300 hover:bg-gray-400 focus:ring-4 focus:ring-blue-300 font-normal rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none"
+                    >
+                      {capitalizeTitle(category)}
                     </button>
                   </Link>
                 ))}{" "}
@@ -177,7 +178,10 @@ const Quote = () => {
           </div>
         </section>
       )}
-      <Heading left={"Tag"} middle={"or"} right={"Cat"} />
+      <div className="flex items-baseline mb-8 mt-16 m-auto justify-between max-w-[90%] xl:lg:max-w-6xl">
+        <Heading middle={"Related"} right={"Quotes"} />
+      </div>
+
       {/* Related Quotes */}
       <QuotesContainer quotes={currentQuotes} />
       <Pagination

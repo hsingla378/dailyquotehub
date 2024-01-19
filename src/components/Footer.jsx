@@ -23,7 +23,7 @@ const Footer = () => {
               <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
                 Featured Categories
               </h2>
-              <ul className="text-gray-500 dark:text-gray-400 font-medium">
+              <ul className="text-gray-500 text-sm dark:text-gray-400 font-medium">
                 <li className="mb-4 ">
                   <Link
                     to={"/categories/adventure"}
@@ -53,7 +53,7 @@ const Footer = () => {
               <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
                 Authors
               </h2>
-              <ul className="text-gray-500 dark:text-gray-400 font-medium">
+              <ul className="text-gray-500 text-sm dark:text-gray-400 font-medium">
                 <li className="mb-4">
                   <Link
                     to={"/authors/athena-weaver"}
@@ -92,7 +92,7 @@ const Footer = () => {
               <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
                 Legal
               </h2>
-              <ul className="text-gray-500 dark:text-gray-400 font-medium">
+              <ul className="text-gray-500 text-sm dark:text-gray-400 font-medium">
                 <li className="mb-4">
                   <Link to={"/privacy-policy"} className="hover:underline">
                     Privacy Policy
@@ -103,7 +103,7 @@ const Footer = () => {
           </div>
         </div>
         <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
-        <div className="sm:flex sm:items-center sm:justify-between">
+        <div className="flex items-center justify-between">
           <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
             © 2024{" "}
             <Link to="/" className="hover:underline">
@@ -111,7 +111,7 @@ const Footer = () => {
             </Link>
             . All Rights Reserved.
           </span>
-          <div className="flex mt-4 sm:justify-center sm:mt-0">
+          <div className="flex justify-center items-center">
             <Link
               to={"https://pin.it/kGVIZTISA"}
               className="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5"

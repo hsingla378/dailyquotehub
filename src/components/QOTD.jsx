@@ -7,7 +7,7 @@ const QOTD = ({ quote }) => {
   };
 
   return (
-    <section className="p-10 bg-center bg-no-repeat bg-[url('https://flowbite.s3.amazonaws.com/docs/jumbotron/conference.jpg')] bg-gray-700 bg-blend-multiply text-white">
+    <section className="p-10 bg-center bg-no-repeat bg-cover bg-[url('https://cdn.britannica.com/42/163042-131-6AC5D943/greeting-guests-Agathon-canvas-oil-Platos-Symposium-1869.jpg')] bg-gray-700 bg-blend-multiply text-white">
       <figure className="max-w-screen-md mx-auto text-center">
         <svg
           className="w-10 h-10 mx-auto mb-3 text-gray-400 dark:text-gray-600"

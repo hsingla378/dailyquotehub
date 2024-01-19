@@ -111,16 +111,16 @@ const Navbar = () => {
             </svg>
           </button>
           {localStorage.getItem("token") && (
-            <div className="flex gap-4">
-              <li className="hidden md:block py-1 px-4 bg-blue-600 rounded-lg text-white cursor-pointer hover:bg-blue-500">
+            <div className="flex gap-4 text-sm text-white">
+              <button className="hidden md:block py-1 px-4 bg-blue-600 rounded-lg  hover:bg-blue-500">
                 <Link to="/dashboard">Dashboard</Link>
-              </li>
-              <li
-                className=" md:block hidden py-1 px-4 bg-red-600 rounded-lg text-white cursor-pointer hover:bg-red-500"
+              </button>
+              <button
+                className=" md:block hidden py-1 px-4 bg-red-600 rounded-lg hover:bg-red-500"
                 onClick={handleLogout}
               >
                 Logout
-              </li>
+              </button>
             </div>
           )}
         </div>

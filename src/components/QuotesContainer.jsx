@@ -18,7 +18,7 @@ const QuotesContainer = ({ quotes }) => {
       {quotes.length ? (
         <section>
           <div className="pt-4 px-4 mx-auto max-w-screen-xl lg:pt-8 lg:px-6 ">
-            <div className="grid gap-8 mb-6 lg:mb-8 grid-cols-2 md:grid-cols-5 sm:grid-cols-3 items-stretch justify-center">
+            <div className="grid gap-8 mb-6 lg:mb-8 grid-cols-2 lg:grid-cols-5 sm:grid-cols-3 items-stretch justify-center">
               {quotes.map((quote) => {
                 return (
                   <Link to={`/quotes/${quote._id}`} key={quote._id}>
@@ -30,11 +30,11 @@ const QuotesContainer = ({ quotes }) => {
                       />
 
                       <div className="p-5">
-                        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        <h5 className="mb-2 font-bold tracking-tight text-gray-900 dark:text-white">
                           {quote.title}
                         </h5>
 
-                        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                        <p className="mb-3 text-sm font-normal text-gray-700 dark:text-gray-400">
                           {capitalizeTitle(quote.author.name)}
                         </p>
                         {/* <a
