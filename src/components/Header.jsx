@@ -29,7 +29,7 @@ const Header = () => {
           </span>
         </Link>
       </Navbar.Brand>
-      <div className="flex md:order-2">
+      <div className="flex md:order-2 gap-4">
         {/* <Button>Get started</Button> */}
         <div className="relative hidden md:block">
           <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -61,6 +61,19 @@ const Header = () => {
             />
           </form>
         </div>
+        {localStorage.getItem("token") && (
+          <div className="flex gap-4 text-sm text-white">
+            <button className="hidden md:block py-1 px-4 bg-blue-600 rounded-lg  hover:bg-blue-500">
+              <Link to="/dashboard">Dashboard</Link>
+            </button>
+            <button
+              className=" md:block hidden py-1 px-4 bg-red-600 rounded-lg hover:bg-red-500"
+              onClick={handleLogout}
+            >
+              Logout
+            </button>
+          </div>
+        )}
         <Navbar.Toggle />
       </div>
       <Navbar.Collapse>
@@ -101,6 +114,19 @@ const Header = () => {
             </form>
           </div>
         </Navbar.Link>
+        {localStorage.getItem("token") && (
+          <div className="flex justify-center gap-4 my-3 w-full">
+            <div className=" bg-blue-600 rounded-lg hover:bg-blue-500 text-white block md:hidden py-2 px-4 text-base flex-grow">
+              <Link to="/dashboard">Dashboard</Link>
+            </div>
+            <div
+              onClick={handleLogout}
+              className=" bg-red-600 rounded-lg hover:bg-red-500 text-white block md:hidden py-2 px-4 text-base flex-grow"
+            >
+              Logout
+            </div>
+          </div>
+        )}
       </Navbar.Collapse>
     </Navbar>
   );

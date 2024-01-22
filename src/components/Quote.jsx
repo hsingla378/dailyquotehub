@@ -23,6 +23,7 @@ import {
 import Loading from "./Loading";
 import axios from "axios";
 import { FaRegCopy } from "react-icons/fa";
+import { SnackbarProvider, enqueueSnackbar } from "notistack";
 
 const Quote = () => {
   const { id } = useParams();
@@ -91,6 +92,9 @@ const Quote = () => {
       .then(() => {
         // Optional: You can add some UI feedback here, such as a toast or alert.
         console.log("Text copied to clipboard:", textToCopy);
+        enqueueSnackbar("Quote Copied!", {
+          persist: false,
+        });
       })
       .catch((error) => {
         console.error("Unable to copy text to clipboard.", error);
@@ -106,6 +110,9 @@ const Quote = () => {
           {/* Quote Details */}
           {quoteInfo.title && (
             <section className="bg-white dark:bg-gray-900 py-4">
+              <SnackbarProvider
+                anchorOrigin={{ vertical: "top", horizontal: "center" }}
+              />
               <div className="flex justify-center flex-col items-center md:grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-8 sm:grid-cols-12">
                 <div className="my-4 lg:mt-0 sm:col-span-6 flex items-center">
                   <img
