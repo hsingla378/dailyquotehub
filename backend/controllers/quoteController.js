@@ -2,7 +2,7 @@ const Quote = require("../models/quote");
 
 exports.getAllQuotes = async (req, res) => {
   try {
-    const quotes = await Quote.find().sort({ x: 1 });
+    const quotes = await Quote.find().sort({ x: -1 });
     res.json(quotes);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -18,7 +18,7 @@ exports.searchQuotes = async (req, res) => {
         { "author.name": { $regex: value, $options: "i" } },
         { categories: { $in: [new RegExp(value, "i")] } },
       ],
-    }).sort({ x: 1 });
+    }).sort({ x: -1 });
     res.json(quotes);
   } catch (err) {
     res.status(500).json({ message: err.message });
