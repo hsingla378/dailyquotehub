@@ -3,6 +3,7 @@
 import axios from "axios";
 import { SnackbarProvider, enqueueSnackbar } from "notistack";
 import React, { useState, useEffect } from "react";
+import useQuoteInfo from "../../utils/useQuoteInfo";
 
 const fetchCategoriesFromAPI = async () => {
   try {
@@ -28,8 +29,9 @@ const fetchAuthorsFromAPI = async () => {
   }
 };
 
-const UpdateQote = () => {
+const UpdateQoute = ({ quoteId }) => {
   const [step, setStep] = useState(1);
+  const quoteInfo = useQuoteInfo(quoteId);
   const [quoteDetails, setQuoteDetails] = useState({
     title: "",
     description: "",
@@ -58,6 +60,26 @@ const UpdateQote = () => {
     description: "",
     avatar: "",
   });
+
+  useEffect(() => {
+    if (quoteInfo) {
+      setQuoteDetails((prevDetails) => ({
+        ...prevDetails,
+        title: quoteInfo.title,
+        description: quoteInfo.description,
+        thumbnail: quoteInfo.thumbnail,
+        categories: quoteInfo.categories,
+        author: {
+          ...prevDetails.author,
+          ...quoteInfo.author,
+        },
+        book: {
+          ...prevDetails.book,
+          ...quoteInfo.book,
+        },
+      }));
+    }
+  }, [quoteInfo]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -245,18 +267,31 @@ const UpdateQote = () => {
   };
 
   const handleSubmit = async () => {
+    // Create a copy of the original quote details
+    const originalQuoteDetails = { ...quoteInfo };
+
+    // Iterate through each field and check for changes
+    Object.keys(quoteDetails).forEach((field) => {
+      if (
+        JSON.stringify(quoteDetails[field]) ===
+        JSON.stringify(originalQuoteDetails[field])
+      ) {
+        // If the value is the same as the original, remove it from the update payload
+        delete quoteDetails[field];
+      }
+    });
+
+    // Build the payload for the API
+    const updatePayload = { ...quoteDetails };
+
     let config = {
-      method: "post",
+      method: "put",
       maxBodyLength: Infinity,
-      url: import.meta.env.VITE_BACKEND_URL + "/quotes",
+      url: import.meta.env.VITE_BACKEND_URL + "/quotes/" + quoteId,
       headers: {
-        Authorization:
-          localStorage.getItem("token") !== null
-            ? `Bearer ${localStorage.getItem("token")}`
-            : "",
-        "Content-Type": "application/json",
+        Authorization: localStorage.getItem("token"),
       },
-      data: quoteDetails,
+      data: updatePayload,
     };
 
     try {
@@ -264,46 +299,37 @@ const UpdateQote = () => {
       const response = await axios.request(config);
       console.log(JSON.stringify(response.data));
 
-      if (response.ok) {
-        // Reset form and show success message
-        setQuoteDetails({
-          title: "",
-          description: "",
-          thumbnail: "",
-          categories: [],
-          author: {
-            name: "",
-            designation: "",
-            description: "",
-            avatar: "",
-          },
-          book: {
-            name: "",
-            image: "",
-            amazonLink: "",
-          },
-        });
-        setSelectedAuthor(null);
-        setNewAuthor({
+      // Reset form and show success message
+      setQuoteDetails({
+        title: "",
+        description: "",
+        thumbnail: "",
+        categories: [],
+        author: {
           name: "",
           designation: "",
           description: "",
           avatar: "",
-        });
-        setStep(1);
-        enqueueSnackbar("Quote details submitted successfully", {
-          variant: "success",
-          persist: false,
-        });
-        // console.log("Quote details submitted successfully");
-      } else {
-        // Handle error response
-        enqueueSnackbar(response.statusText, {
-          variant: "error",
-          persist: false,
-        });
-        console.error("Error submitting quote details:", response.statusText);
-      }
+        },
+        book: {
+          name: "",
+          image: "",
+          amazonLink: "",
+        },
+      });
+      setSelectedAuthor(null);
+      setNewAuthor({
+        name: "",
+        designation: "",
+        description: "",
+        avatar: "",
+      });
+      setStep(1);
+      enqueueSnackbar("Quote details submitted successfully", {
+        variant: "success",
+        persist: false,
+      });
+      // console.log("Quote details submitted successfully");
     } catch (error) {
       // Handle fetch or other errors
       enqueueSnackbar(error, {
@@ -366,6 +392,23 @@ const UpdateQote = () => {
                   description: e.target.value,
                 }))
               }
+              rows="4"
+              className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+            ></textarea>
+          </div>
+
+          {/* Previous Thumbnail */}
+          <div className="mb-4">
+            <label
+              htmlFor="previousThumbnail"
+              className="block text-sm font-medium text-gray-600"
+            >
+              Previous Thumbnail
+            </label>
+            <textarea
+              id="previousThumbnail"
+              name="previousThumbnail"
+              value={quoteDetails.thumbnail}
               rows="4"
               className="mt-1 p-2 border border-gray-300 rounded-md w-full"
             ></textarea>
@@ -532,7 +575,7 @@ const UpdateQote = () => {
               onChange={(e) => handleAuthorChange(e.target.value)}
               className="mt-1 p-2 border border-gray-300 rounded-md w-full"
             >
-              <option selected value="">
+              <option selected value="" disabled>
                 Select an existing author
               </option>
               {existingAuthors.map((author) => (
@@ -545,133 +588,146 @@ const UpdateQote = () => {
           </div>
 
           {/* Conditional Rendering for New Author Form */}
-          {selectedAuthor === "other" && (
-            <div className="mb-4">
-              <h2 className="text-lg font-semibold mb-2">
-                Create a New Author
-              </h2>
+          {/* {selectedAuthor === "other" && ( */}
+          <div className="mb-4">
+            <h2 className="text-lg font-semibold mb-2">Create a New Author</h2>
 
-              {/* New Author Details */}
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label
-                    htmlFor="newAuthorName"
-                    className="block text-sm font-medium text-gray-600"
-                  >
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    id="newAuthorName"
-                    name="name"
-                    value={quoteDetails.author.name}
-                    onChange={(e) =>
-                      setQuoteDetails((prevDetails) => ({
-                        ...prevDetails,
-                        author: {
-                          ...prevDetails.author,
-                          name: e.target.value,
-                        },
-                      }))
-                    }
-                    className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-                  />
-                </div>
-                <div>
-                  <label
-                    htmlFor="newAuthorDesignation"
-                    className="block text-sm font-medium text-gray-600"
-                  >
-                    Designation
-                  </label>
-                  <input
-                    type="text"
-                    id="newAuthorDesignation"
-                    name="designation"
-                    value={quoteDetails.author.designation}
-                    onChange={(e) =>
-                      setQuoteDetails((prevDetails) => ({
-                        ...prevDetails,
-                        author: {
-                          ...prevDetails.author,
-                          designation: e.target.value,
-                        },
-                      }))
-                    }
-                    className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-                  />
-                </div>
-                <div className="col-span-2">
-                  <label
-                    htmlFor="newAuthorDescription"
-                    className="block text-sm font-medium text-gray-600"
-                  >
-                    Description
-                  </label>
-                  <textarea
-                    id="newAuthorDescription"
-                    name="description"
-                    value={quoteDetails.author.description}
-                    onChange={(e) =>
-                      setQuoteDetails((prevDetails) => ({
-                        ...prevDetails,
-                        author: {
-                          ...prevDetails.author,
-                          description: e.target.value,
-                        },
-                      }))
-                    }
-                    rows="4"
-                    className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-                  ></textarea>
-                </div>
-                <div className="col-span-2">
-                  <label
-                    htmlFor="newAuthorAvatar"
-                    className="block text-sm font-medium text-gray-600"
-                  >
-                    Avatar (Image Upload)
-                  </label>
-                  <input
-                    type="file"
-                    id="newAuthorAvatar"
-                    name="avatar"
-                    accept="image/*"
-                    onChange={(e) => {
-                      const data = new FormData();
-                      data.append("file", e.target.files[0]);
-                      data.append(
-                        "upload_preset",
-                        import.meta.env.VITE_UPLOAD_PRESET
-                      );
-                      data.append(
-                        "cloud_name",
-                        import.meta.env.VITE_CLOUD_NAME
-                      );
+            {/* New Author Details */}
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label
+                  htmlFor="newAuthorName"
+                  className="block text-sm font-medium text-gray-600"
+                >
+                  Name
+                </label>
+                <input
+                  type="text"
+                  id="newAuthorName"
+                  name="name"
+                  value={quoteDetails.author.name}
+                  onChange={(e) =>
+                    setQuoteDetails((prevDetails) => ({
+                      ...prevDetails,
+                      author: {
+                        ...prevDetails.author,
+                        name: e.target.value,
+                      },
+                    }))
+                  }
+                  className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="newAuthorDesignation"
+                  className="block text-sm font-medium text-gray-600"
+                >
+                  Designation
+                </label>
+                <input
+                  type="text"
+                  id="newAuthorDesignation"
+                  name="designation"
+                  value={quoteDetails.author.designation}
+                  onChange={(e) =>
+                    setQuoteDetails((prevDetails) => ({
+                      ...prevDetails,
+                      author: {
+                        ...prevDetails.author,
+                        designation: e.target.value,
+                      },
+                    }))
+                  }
+                  className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                />
+              </div>
+              <div className="col-span-2">
+                <label
+                  htmlFor="newAuthorDescription"
+                  className="block text-sm font-medium text-gray-600"
+                >
+                  Description
+                </label>
+                <textarea
+                  id="newAuthorDescription"
+                  name="description"
+                  value={quoteDetails.author.description}
+                  onChange={(e) =>
+                    setQuoteDetails((prevDetails) => ({
+                      ...prevDetails,
+                      author: {
+                        ...prevDetails.author,
+                        description: e.target.value,
+                      },
+                    }))
+                  }
+                  rows="4"
+                  className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                ></textarea>
+              </div>
 
-                      fetch(import.meta.env.VITE_CLOUDINARY_URL, {
-                        method: "post",
-                        body: data,
+              {/* Previous Avatar */}
+              <div className="col-span-2">
+                <label
+                  htmlFor="previousAuthorAvatar"
+                  className="block text-sm font-medium text-gray-600"
+                >
+                  Previous Avatar
+                </label>
+                <textarea
+                  id="previousAuthorAvatar"
+                  name="description"
+                  value={quoteDetails.author.avatar}
+                  rows="4"
+                  className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                ></textarea>
+              </div>
+
+              <div className="col-span-2">
+                <label
+                  htmlFor="newAuthorAvatar"
+                  className="block text-sm font-medium text-gray-600"
+                >
+                  Avatar (Image Upload)
+                </label>
+                <input
+                  type="file"
+                  id="newAuthorAvatar"
+                  name="avatar"
+                  accept="image/*"
+                  onChange={(e) => {
+                    const data = new FormData();
+                    data.append("file", e.target.files[0]);
+                    data.append(
+                      "upload_preset",
+                      import.meta.env.VITE_UPLOAD_PRESET
+                    );
+                    data.append("cloud_name", import.meta.env.VITE_CLOUD_NAME);
+
+                    fetch(import.meta.env.VITE_CLOUDINARY_URL, {
+                      method: "post",
+                      body: data,
+                    })
+                      .then((res) => res.json())
+                      .then((data) => {
+                        console.log(data);
+                        setQuoteDetails((prevDetails) => ({
+                          ...prevDetails,
+                          author: {
+                            ...prevDetails.author,
+                            avatar: data.url,
+                          },
+                        }));
                       })
-                        .then((res) => res.json())
-                        .then((data) => {
-                          console.log(data);
-                          setQuoteDetails((prevDetails) => ({
-                            ...prevDetails,
-                            author: {
-                              ...prevDetails.author,
-                              avatar: data.url,
-                            },
-                          }));
-                        })
-                        .catch((err) => console.log(err));
-                    }}
-                    className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-                  />
-                </div>
+                      .catch((err) => console.log(err));
+                  }}
+                  className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                />
               </div>
             </div>
-          )}
+          </div>
+          {/* )} */}
 
           {/* Navigation Buttons */}
           <div className="mt-4 flex justify-between">
@@ -716,13 +772,30 @@ const UpdateQote = () => {
             />
           </div>
 
+          {/* Previous Book Image */}
+          <div className="mb-4">
+            <label
+              htmlFor="bookName"
+              className="block text-sm font-medium text-gray-600"
+            >
+              Previous Books Image
+            </label>
+            <input
+              type="text"
+              id="bookName"
+              name="bookName"
+              value={quoteDetails.book.image}
+              className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+            />
+          </div>
+
           {/* Thumbnail Upload */}
           <div className="mb-4">
             <label
               htmlFor="thumbnail"
               className="block text-sm font-medium text-gray-600"
             >
-              Thumbnail (Book Image)
+              Book Image
             </label>
             <input
               type="file"
@@ -801,4 +874,4 @@ const UpdateQote = () => {
   );
 };
 
-export default UpdateQote;
+export default UpdateQoute;

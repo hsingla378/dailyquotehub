@@ -264,46 +264,37 @@ const AddQuote = () => {
       const response = await axios.request(config);
       console.log(JSON.stringify(response.data));
 
-      if (response.ok) {
-        // Reset form and show success message
-        setQuoteDetails({
-          title: "",
-          description: "",
-          thumbnail: "",
-          categories: [],
-          author: {
-            name: "",
-            designation: "",
-            description: "",
-            avatar: "",
-          },
-          book: {
-            name: "",
-            image: "",
-            amazonLink: "",
-          },
-        });
-        setSelectedAuthor(null);
-        setNewAuthor({
+      // Reset form and show success message
+      setQuoteDetails({
+        title: "",
+        description: "",
+        thumbnail: "",
+        categories: [],
+        author: {
           name: "",
           designation: "",
           description: "",
           avatar: "",
-        });
-        setStep(1);
-        enqueueSnackbar("Quote details submitted successfully", {
-          variant: "success",
-          persist: false,
-        });
-        // console.log("Quote details submitted successfully");
-      } else {
-        // Handle error response
-        enqueueSnackbar(response.statusText, {
-          variant: "error",
-          persist: false,
-        });
-        console.error("Error submitting quote details:", response.statusText);
-      }
+        },
+        book: {
+          name: "",
+          image: "",
+          amazonLink: "",
+        },
+      });
+      setSelectedAuthor(null);
+      setNewAuthor({
+        name: "",
+        designation: "",
+        description: "",
+        avatar: "",
+      });
+      setStep(1);
+      enqueueSnackbar("Quote details submitted successfully", {
+        variant: "success",
+        persist: false,
+      });
+      // console.log("Quote details submitted successfully");
     } catch (error) {
       // Handle fetch or other errors
       enqueueSnackbar(error, {
