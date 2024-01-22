@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { navLinks } from "../utils/constants";
 import { Button, Navbar } from "flowbite-react";
+import Cookies from "js-cookie";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -11,7 +12,7 @@ const Header = () => {
   const isLinkActive = (path) => location.pathname === path;
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    Cookies.remove("token");
     window.location.href = "/";
   };
 
@@ -61,7 +62,7 @@ const Header = () => {
             />
           </form>
         </div>
-        {localStorage.getItem("token") && (
+        {Cookies.get("token") && (
           <div className="flex gap-4 text-sm text-white">
             <button className="hidden md:block py-1 px-4 bg-blue-600 rounded-lg  hover:bg-blue-500">
               <Link to="/dashboard">Dashboard</Link>
@@ -114,7 +115,7 @@ const Header = () => {
             </form>
           </div>
         </Navbar.Link>
-        {localStorage.getItem("token") && (
+        {Cookies.get("token") && (
           <div className="flex justify-center gap-4 my-3 w-full">
             <div className=" bg-blue-600 rounded-lg hover:bg-blue-500 text-white block md:hidden py-2 px-4 text-base flex-grow">
               <Link to="/dashboard">Dashboard</Link>

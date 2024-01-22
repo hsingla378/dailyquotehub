@@ -8,6 +8,7 @@ import { deleteQuote } from "../../utils/constants";
 import AddQuote from "./AddQuote";
 import { Button, Dropdown } from "flowbite-react";
 import UpdateQoute from "./UpdateQuote";
+import Cookies from "js-cookie";
 
 const Dashboard = () => {
   const [quotes, setQuotes] = useState([]);
@@ -16,7 +17,7 @@ const Dashboard = () => {
   const [currentQuuoteId, setCurrentQuoteId] = useState(null);
   const categories = useAllCategories();
   const authors = useAllAuthors();
-  const token = localStorage.getItem("token");
+  const token = Cookies.get("token");
 
   const fetchQuotes = async () => {
     try {

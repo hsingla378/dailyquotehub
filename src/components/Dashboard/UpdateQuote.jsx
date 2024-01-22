@@ -4,6 +4,7 @@ import axios from "axios";
 import { SnackbarProvider, enqueueSnackbar } from "notistack";
 import React, { useState, useEffect } from "react";
 import useQuoteInfo from "../../utils/useQuoteInfo";
+import Cookies from "js-cookie";
 
 const fetchCategoriesFromAPI = async () => {
   try {
@@ -289,7 +290,7 @@ const UpdateQoute = ({ quoteId }) => {
       maxBodyLength: Infinity,
       url: import.meta.env.VITE_BACKEND_URL + "/quotes/" + quoteId,
       headers: {
-        Authorization: localStorage.getItem("token"),
+        Authorization: Cookies.get("token"),
       },
       data: updatePayload,
     };

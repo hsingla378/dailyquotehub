@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { SnackbarProvider, enqueueSnackbar } from "notistack";
+import Cookies from "js-cookie";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -16,7 +17,11 @@ const Login = () => {
         import.meta.env.VITE_BACKEND_URL + "/auth/login",
         formData
       );
-      localStorage.setItem("token", response.data.token);
+      let inOneHour = new Date(new Date().getTime() + 60 * 60 * 1000);
+      Cookies.set("token", response.data.token, {
+        expires: inOneHour,
+        secure: true,
+      });
       enqueueSnackbar("Login successful!", {
         variant: "success",
         persist: false,

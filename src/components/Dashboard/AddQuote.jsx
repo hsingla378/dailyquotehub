@@ -1,6 +1,7 @@
 // MultiStepForm.jsx
 
 import axios from "axios";
+import Cookies from "js-cookie";
 import { SnackbarProvider, enqueueSnackbar } from "notistack";
 import React, { useState, useEffect } from "react";
 
@@ -251,9 +252,7 @@ const AddQuote = () => {
       url: import.meta.env.VITE_BACKEND_URL + "/quotes",
       headers: {
         Authorization:
-          localStorage.getItem("token") !== null
-            ? `Bearer ${localStorage.getItem("token")}`
-            : "",
+          Cookies.get("token") !== null ? `Bearer ${Cookies.get("token")}` : "",
         "Content-Type": "application/json",
       },
       data: quoteDetails,
