@@ -1,5 +1,4 @@
 import HeadSection from "./HeadSection";
-import AuthorsContainer from "./AuthorsContainer";
 import useAllAuthors from "../utils/useAllAuthors";
 import Pagination from "./Pagination";
 import { useState } from "react";

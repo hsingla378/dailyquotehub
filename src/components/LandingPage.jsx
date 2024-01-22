@@ -6,7 +6,6 @@ import CategoriesContainer from "./CategoriesContainer";
 import useAllQuotes from "../utils/useAllQuotes";
 import useAllAuthors from "../utils/useAllAuthors";
 import useAllCategories from "../utils/useAllCategories";
-import { Link } from "react-router-dom";
 import Loading from "./Loading";
 import ExploreMore from "./ExploreMore";
 

@@ -11,7 +11,6 @@ const ITEMS_PER_PAGE = 10;
 const Category = () => {
   const { category } = useParams();
   let categoryData = useCategoryData(category);
-  console.log("categoryData", categoryData);
   const [currentPage, setCurrentPage] = useState(1);
 
   // Calculate the range of items to display on the current page

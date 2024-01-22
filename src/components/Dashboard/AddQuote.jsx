@@ -3,7 +3,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 import { SnackbarProvider, enqueueSnackbar } from "notistack";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 const fetchCategoriesFromAPI = async () => {
   try {
@@ -53,20 +53,6 @@ const AddQuote = () => {
 
   const [existingAuthors, setExistingAuthors] = useState([]);
   const [selectedAuthor, setSelectedAuthor] = useState(null);
-  const [newAuthor, setNewAuthor] = useState({
-    name: "",
-    designation: "",
-    description: "",
-    avatar: "",
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setQuoteDetails((prevDetails) => ({
-      ...prevDetails,
-      [name]: value,
-    }));
-  };
 
   useEffect(() => {
     // Fetch existing categories from the API when the component mounts
@@ -155,94 +141,12 @@ const AddQuote = () => {
     }
   };
 
-  const handleNewAuthorChange = (e) => {
-    // Update the details for the new author
-    const { name, value } = e.target;
-    setNewAuthor((prevAuthor) => ({
-      ...prevAuthor,
-      [name]: value,
-    }));
-  };
-
-  const handleAvatarChange = (e) => {
-    // Handle avatar (file) upload for the new author
-    const file = e.target.files[0];
-    const reader = new FileReader();
-
-    reader.onloadend = () => {
-      setNewAuthor((prevAuthor) => ({
-        ...prevAuthor,
-        avatar: reader.result,
-      }));
-    };
-
-    if (file) {
-      reader.readAsDataURL(file);
-    }
-  };
-
   const handleNext = () => {
     setStep(step + 1);
   };
 
   const handlePrev = () => {
     setStep(step - 1);
-  };
-
-  const validateQuoteDetails = () => {
-    if (quoteDetails.title === "") {
-      return false;
-    }
-    // else if (quoteDetails.description === "") {
-    //   return false;
-    // }
-    else if (quoteDetails.thumbnail === "") {
-      return false;
-    }
-    return true;
-  };
-
-  const validateCategories = () => {
-    if (quoteDetails.categories.length === 0) {
-      return false;
-    }
-    return true;
-  };
-
-  const validateAuthorDetails = () => {
-    if (selectedAuthor === "other") {
-      if (newAuthor.name === "") {
-        return false;
-      } else if (newAuthor.designation === "") {
-        return false;
-      } else if (newAuthor.description === "") {
-        return false;
-      } else if (newAuthor.avatar === "") {
-        return false;
-      }
-    } else {
-      if (quoteDetails.author.name === "") {
-        return false;
-      } else if (quoteDetails.author.designation === "") {
-        return false;
-      } else if (quoteDetails.author.description === "") {
-        return false;
-      } else if (quoteDetails.author.avatar === "") {
-        return false;
-      }
-    }
-    return true;
-  };
-
-  const validateBookDetails = () => {
-    if (quoteDetails.book.name === "") {
-      return false;
-    } else if (quoteDetails.book.image === "") {
-      return false;
-    } else if (quoteDetails.book.amazonLink === "") {
-      return false;
-    }
-    return true;
   };
 
   const handleSubmit = async () => {
@@ -260,8 +164,7 @@ const AddQuote = () => {
 
     try {
       // Implement your logic to submit the quote details to the backend API
-      const response = await axios.request(config);
-      console.log(JSON.stringify(response.data));
+      await axios.request(config);
 
       // Reset form and show success message
       setQuoteDetails({
@@ -282,29 +185,19 @@ const AddQuote = () => {
         },
       });
       setSelectedAuthor(null);
-      setNewAuthor({
-        name: "",
-        designation: "",
-        description: "",
-        avatar: "",
-      });
       setStep(1);
       enqueueSnackbar("Quote details submitted successfully", {
         variant: "success",
         persist: false,
       });
-      // console.log("Quote details submitted successfully");
     } catch (error) {
       // Handle fetch or other errors
       enqueueSnackbar(error, {
         variant: "error",
         persist: false,
       });
-      console.log(error);
     }
   };
-
-  console.log("quoteDetails", quoteDetails);
 
   return (
     <div className="max-w-md mx-auto my-8 p-8 bg-white rounded shadow">
@@ -389,7 +282,6 @@ const AddQuote = () => {
                 })
                   .then((res) => res.json())
                   .then((data) => {
-                    console.log(data);
                     setQuoteDetails((prevDetails) => ({
                       ...prevDetails,
                       thumbnail: data.url,
@@ -645,7 +537,6 @@ const AddQuote = () => {
                       })
                         .then((res) => res.json())
                         .then((data) => {
-                          console.log(data);
                           setQuoteDetails((prevDetails) => ({
                             ...prevDetails,
                             author: {
@@ -734,7 +625,6 @@ const AddQuote = () => {
                 })
                   .then((res) => res.json())
                   .then((data) => {
-                    console.log(data);
                     setQuoteDetails((prevDetails) => ({
                       ...prevDetails,
                       book: {

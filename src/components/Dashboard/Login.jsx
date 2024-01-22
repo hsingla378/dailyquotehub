@@ -10,7 +10,6 @@ const Login = () => {
 
   const handleLogin = async (e, formData) => {
     e.preventDefault();
-    console.log(formData);
     if (!validateInput(formData)) return;
     try {
       const response = await axios.post(

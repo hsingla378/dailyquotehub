@@ -2,16 +2,6 @@ import { Link } from "react-router-dom";
 import { capitalizeTitle } from "../utils/constants";
 import Loading from "./Loading";
 
-// Function to generate a random hex color
-const getRandomColor = () => {
-  const letters = "0123456789ABCDEF";
-  let color = "#";
-  for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
-};
-
 const CategoriesContainer = ({ categories }) => {
   return (
     <>

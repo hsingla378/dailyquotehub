@@ -1,5 +1,3 @@
-import React from "react";
-
 const Loading = () => {
   return (
     <div className="text-center h-[25vh] w-[25vw] flex justify-center items-center m-auto">

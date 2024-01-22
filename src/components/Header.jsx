@@ -1,15 +1,12 @@
 import { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { navLinks } from "../utils/constants";
-import { Button, Navbar } from "flowbite-react";
+import { Navbar } from "flowbite-react";
 import Cookies from "js-cookie";
 
 const Header = () => {
   const navigate = useNavigate();
-  const location = useLocation();
   const [searchQuery, setSearchQuery] = useState("");
-
-  const isLinkActive = (path) => location.pathname === path;
 
   const handleLogout = () => {
     Cookies.remove("token");

@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import useCategoryData from "./useCategoryData";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 const useRelatedQuotes = (categories) => {

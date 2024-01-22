@@ -3,7 +3,7 @@ import HeadSection from "./HeadSection";
 import Heading from "./Heading";
 import QuotesContainer from "./QuotesContainer";
 import useAuthorData from "../utils/useAuthorData";
-import { authors, capitalizeTitle } from "../utils/constants";
+import { capitalizeTitle } from "../utils/constants";
 import Loading from "./Loading";
 
 const Author = () => {

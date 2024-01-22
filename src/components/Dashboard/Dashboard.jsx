@@ -6,7 +6,7 @@ import { SnackbarProvider } from "notistack";
 import { capitalizeTitle } from "../../utils/constants";
 import { deleteQuote } from "../../utils/constants";
 import AddQuote from "./AddQuote";
-import { Button, Dropdown } from "flowbite-react";
+import {  Dropdown } from "flowbite-react";
 import UpdateQoute from "./UpdateQuote";
 import Cookies from "js-cookie";
 
@@ -36,19 +36,7 @@ const Dashboard = () => {
     fetchQuotes();
   }, []);
 
-  const handleQuoteDropDown = (value, quoteId) => {
-    if (value === "edit") {
-      console.log("edit");
-    } else if (value === "preview") {
-      window.open("/quotes/" + quoteId, "_blank");
-    } else if (value === "delete") {
-      confirm("Are you sure you want to delete this quote?") &&
-        deleteQuote(token, quoteId);
-    }
-  };
-
   const performSearch = (searchTerm) => {
-    console.log(searchTerm);
     if (searchTerm === "") {
       setFilteredQuotes(quotes);
       return;

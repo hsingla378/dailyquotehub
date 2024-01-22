@@ -4,8 +4,6 @@ import Pagination from "./Pagination";
 import Heading from "./Heading";
 import { Link, useParams } from "react-router-dom";
 import { FaAmazon } from "react-icons/fa";
-import useQuoteInfo from "../utils/useQuoteInfo";
-import useAllQuotes from "../utils/useAllQuotes";
 import { capitalizeTitle } from "../utils/constants";
 import {
   EmailShareButton,
@@ -90,14 +88,14 @@ const Quote = () => {
     navigator.clipboard
       .writeText(textToCopy)
       .then(() => {
-        // Optional: You can add some UI feedback here, such as a toast or alert.
-        console.log("Text copied to clipboard:", textToCopy);
         enqueueSnackbar("Quote Copied!", {
           persist: false,
         });
       })
       .catch((error) => {
-        console.error("Unable to copy text to clipboard.", error);
+        enqueueSnackbar(error, {
+          persist: false,
+        });
       });
   };
 
