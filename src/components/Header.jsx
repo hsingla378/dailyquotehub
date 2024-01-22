@@ -23,13 +23,14 @@ const Header = () => {
 
   return (
     <Navbar fluid rounded className="max-w-screen-xl m-auto">
-      <Navbar.Brand>
-        <Link to={"/"}>
-          <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-            DailyQuoteHub
-          </span>
+      <div>
+        <Link
+          to={"/"}
+          className="self-center whitespace-nowrap text-xl font-semibold dark:text-white"
+        >
+          DailyQuoteHub
         </Link>
-      </Navbar.Brand>
+      </div>
       <div className="flex md:order-2 gap-4">
         {/* <Button>Get started</Button> */}
         <div className="relative hidden md:block">
@@ -79,11 +80,15 @@ const Header = () => {
       </div>
       <Navbar.Collapse>
         {navLinks.map((link) => (
-          <Link to={link.path} key={link.path}>
-            <Navbar.Link to="/">{link.text}</Navbar.Link>
+          <Link
+            to={link.path}
+            key={link.path}
+            className="py-2 px-3 md:px-0 w-full"
+          >
+            {link.text}
           </Link>
         ))}
-        <Navbar.Link>
+        <div className="py-2 px-4 w-full">
           <div className="relative md:hidden">
             <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
               <svg
@@ -114,7 +119,7 @@ const Header = () => {
               />
             </form>
           </div>
-        </Navbar.Link>
+        </div>
         {Cookies.get("token") && (
           <div className="flex justify-center gap-4 my-3 w-full">
             <div className=" bg-blue-600 rounded-lg hover:bg-blue-500 text-white block md:hidden py-2 px-4 text-base flex-grow">
