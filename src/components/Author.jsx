@@ -26,7 +26,7 @@ const Author = () => {
       />
       {/* Author Details */}
       <section className="bg-white dark:bg-gray-900 py-4">
-        <div className="flex justify-center flex-col md:grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-8 sm:grid-cols-12">
+        <div className="flex justify-center flex-col md:grid max-w-5xl px-4 py-8 lg:gap-8 xl:gap-0 lg:py-8 sm:grid-cols-12 sm:ml-0">
           <div className="my-4 lg:mt-0 sm:col-span-6 ">
             <img
               className="max-w-[90%] m-auto p-2 shadow-xl rounded md:mr-[3rem]"
@@ -34,7 +34,7 @@ const Author = () => {
               alt="Bonnie Avatar"
             />
           </div>
-          <div className="mx-auto md:m-[unset] md:mr-auto place-self-center sm:col-span-6 text-center md:text-left ">
+          <div className="mx-auto md:m-[unset] md:mr-auto place-self-top pt-6 sm:col-span-6 text-center md:text-left ">
             <h2 className="max-w-2xl mb-4 text-2xl font-extrabold tracking-tight leading-none md:text-3xl xl:text-4xl dark:text-white">
               {capitalizeTitle(authorInfo.name)}
             </h2>

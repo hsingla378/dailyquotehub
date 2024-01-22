@@ -1,10 +1,11 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import useAllCategories from "../../utils/useAllCategories";
 import useAllAuthors from "../../utils/useAllAuthors";
 import axios from "axios";
 import { SnackbarProvider } from "notistack";
 import { capitalizeTitle } from "../../utils/constants";
 import { deleteQuote } from "../../utils/constants";
+import AddQuote from "./AddQuote";
 
 const Dashboard = () => {
   const [quotes, setQuotes] = useState([]);
@@ -269,16 +270,16 @@ const Dashboard = () => {
                     >
                       <th
                         scope="row"
-                        className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                        className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white truncate max-w-[12rem]"
                       >
                         {quote.title}
                       </th>
-                      <td className="px-4 py-3">
+                      <td className="px-4 py-3 truncate max-w-[12rem]">
                         {quote.categories
                           .map((category) => capitalizeTitle(category))
                           .join(", ")}
                       </td>
-                      <td className="px-4 py-3">
+                      <td className="px-4 py-3 truncate max-w-[12rem]">
                         {capitalizeTitle(quote.author.name)}
                       </td>
                       <td className="px-4 py-3 max-w-[12rem] truncate">
@@ -473,7 +474,7 @@ const Dashboard = () => {
             {/* <!-- Modal header --> */}
             <div className="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                Add Product
+                Add Quote
               </h3>
               <button
                 type="button"
@@ -498,7 +499,7 @@ const Dashboard = () => {
               </button>
             </div>
             {/* <!-- Modal body --> */}
-            <form action="#">
+            {/* <form action="#">
               <div className="grid gap-4 mb-4 sm:grid-cols-2">
                 <div>
                   <label
@@ -600,7 +601,9 @@ const Dashboard = () => {
                 </svg>
                 Add new product
               </button>
-            </form>
+            </form> */}
+
+            <AddQuote />
           </div>
         </div>
       </div>

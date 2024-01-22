@@ -19,6 +19,7 @@ import Search from "./components/Search.jsx";
 import { register } from "swiper/element/bundle";
 import PrivacyPolicy from "./components/PrivacyPolicy.jsx";
 import Loading from "./components/Loading.jsx";
+import AddQuote from "./components/Dashboard/AddQuote.jsx";
 // register Swiper custom elements
 register();
 
@@ -78,6 +79,10 @@ const appRouter = createBrowserRouter([
       {
         path: "/privacy-policy",
         element: <PrivacyPolicy />,
+      },
+      {
+        path: "/form",
+        element: <AddQuote />,
       },
     ],
     errorElement: <Error />,

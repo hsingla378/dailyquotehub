@@ -12,6 +12,9 @@ exports.getAllAuthors = async (req, res) => {
       {
         $replaceRoot: { newRoot: "$author" },
       },
+      {
+        $sort: { x: -1 },
+      },
     ]);
 
     res.json(authors);
@@ -27,7 +30,7 @@ exports.getQuotesByAuthor = async (req, res) => {
 
     const quotes = await Quote.find({
       "author.name": { $regex: new RegExp(authorName, "i") },
-    });
+    }).sort({ x: -1 });
 
     if (quotes.length === 0) {
       res
