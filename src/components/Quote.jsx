@@ -22,6 +22,7 @@ import {
 } from "react-share";
 import Loading from "./Loading";
 import axios from "axios";
+import { FaRegCopy } from "react-icons/fa";
 
 const Quote = () => {
   const { id } = useParams();
@@ -73,11 +74,28 @@ const Quote = () => {
   };
 
   useEffect(() => {
-    
     fetchQuotes();
     fetchQuoteInfo();
     window.scrollTo(0, 0);
   }, [id]);
+
+  const copyToClipboard = () => {
+    const quoteTitle = capitalizeTitle(quoteInfo.title);
+    const authorName = capitalizeTitle(quoteInfo.author.name);
+    const currentLink = window.location.href;
+
+    const textToCopy = `${quoteTitle}\n - ${authorName}\nVisit Now: ${currentLink}`;
+
+    navigator.clipboard
+      .writeText(textToCopy)
+      .then(() => {
+        // Optional: You can add some UI feedback here, such as a toast or alert.
+        console.log("Text copied to clipboard:", textToCopy);
+      })
+      .catch((error) => {
+        console.error("Unable to copy text to clipboard.", error);
+      });
+  };
 
   return (
     <>
@@ -113,20 +131,29 @@ const Quote = () => {
 
                   {/* Author */}
                   {quoteInfo.author.name && (
-                    <Link to={generateAuthorLink(quoteInfo.author.name)}>
-                      <figcaption className="flex items-center my-6 space-x-3 rtl:space-x-reverse">
-                        <img
-                          className="w-6 h-6 rounded-full"
-                          src={quoteInfo.author.avatar}
-                          alt="profile picture"
-                        />
-                        <div className="flex items-center divide-x-2 rtl:divide-x-reverse divide-gray-300 dark:divide-gray-700">
-                          <cite className="pe-3 font-medium text-gray-900 dark:text-white">
-                            {capitalizeTitle(quoteInfo.author.name)}
-                          </cite>
+                    <figcaption className="flex items-center my-6 space-x-2 rtl:space-x-reverse">
+                      <Link to={generateAuthorLink(quoteInfo.author.name)}>
+                        <div className="flex gap-2 justify-center items-center">
+                          <img
+                            className="w-6 h-6 rounded-full"
+                            src={quoteInfo.author.avatar}
+                            alt="profile picture"
+                          />
+                          <div className="flex items-center divide-x-2 rtl:divide-x-reverse divide-gray-300 dark:divide-gray-700">
+                            <cite className="pe-3 font-medium text-gray-900 dark:text-white">
+                              {capitalizeTitle(quoteInfo.author.name)}
+                            </cite>
+                          </div>
                         </div>
-                      </figcaption>
-                    </Link>
+                      </Link>
+                      {/* Copy Button */}
+                      <button
+                        onClick={copyToClipboard}
+                        className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white focus:outline-none"
+                      >
+                        <FaRegCopy size={20} />
+                      </button>
+                    </figcaption>
                   )}
 
                   {/* Amazon Book Reference */}
