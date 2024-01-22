@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { navLinks } from "../utils/constants";
+import { Button, Navbar } from "flowbite-react";
 
-const Navbar = () => {
+const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [searchQuery, setSearchQuery] = useState("");
@@ -192,4 +193,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default Header;

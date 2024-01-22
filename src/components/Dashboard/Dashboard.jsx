@@ -6,6 +6,7 @@ import { SnackbarProvider } from "notistack";
 import { capitalizeTitle } from "../../utils/constants";
 import { deleteQuote } from "../../utils/constants";
 import AddQuote from "./AddQuote";
+import { Dropdown } from "flowbite-react";
 
 const Dashboard = () => {
   const [quotes, setQuotes] = useState([]);
@@ -286,71 +287,25 @@ const Dashboard = () => {
                         {quote.book.name}
                       </td>
                       <td className="px-4 py-3 flex items-center justify-end">
-                        {/* <button
-                          id={quote._id + "-button"}
-                          data-dropdown-toggle={quote._id + "-dropdown"}
-                          className="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
-                          type="button"
-                        >
-                          <svg
-                            className="w-5 h-5"
-                            aria-hidden="true"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg"
+                        <Dropdown label="Action " dismissOnClick={false}>
+                          <Dropdown.Item>Edit</Dropdown.Item>
+                          <Dropdown.Item
+                            onClick={() =>
+                              window.open("/quotes/" + quote._id, "_blank")
+                            }
                           >
-                            <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
-                          </svg>
-                        </button>
-                        <div
-                          id={quote._id + "-dropdown"}
-                          className="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
-                        >
-                          <ul
-                            className="py-1 text-sm text-gray-700 dark:text-gray-200"
-                            aria-labelledby={quote._id + "-dropdown-button"}
+                            Preview
+                          </Dropdown.Item>
+                          <Dropdown.Item
+                            onClick={() => {
+                              confirm(
+                                "Are you sure you want to delete this quote?"
+                              ) && deleteQuote(token, quote._id);
+                            }}
                           >
-                            <li>
-                              <Link
-                                to={"/quotes/" + quote._id}
-                                target="_blank"
-                                className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                              >
-                                Show
-                              </Link>
-                            </li>
-                            <li>
-                              <a
-                                href="#"
-                                className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                              >
-                                Edit
-                              </a>
-                            </li>
-                          </ul>
-                          <div className="py-1">
-                            <a
-                              href="#"
-                              className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                              onClick={() => deleteQuote(quote._id)}
-                            >
-                              Delete
-                            </a>
-                          </div>
-                        </div> */}
-                        <select
-                          name="cars"
-                          id={quote._id}
-                          onChange={(e) =>
-                            handleQuoteDropDown(e.target.value, quote._id)
-                          }
-                          className="cursor-pointer text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
-                        >
-                          <option value="">Select</option>
-                          <option value="edit">Edit</option>
-                          <option value="preview">Preview</option>
-                          <option value="delete">Delete</option>
-                        </select>
+                            Delete
+                          </Dropdown.Item>
+                        </Dropdown>
                       </td>
                     </tr>
                   ))}

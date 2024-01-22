@@ -1,5 +1,5 @@
 import { Link, useRouteError } from "react-router-dom";
-import Navbar from "./Navbar";
+import Navbar from "./Header";
 import Footer from "./Footer";
 
 const Error = () => {

@@ -1,6 +1,14 @@
 import { Link } from "react-router-dom";
 import Loading from "./Loading";
 
+const truncateText = (text, maxWords) => {
+  const words = text.split(" ");
+  if (words.length <= maxWords) {
+    return text;
+  }
+  return words.slice(0, maxWords).join(" ") + "...";
+};
+
 const QuotesContainer = ({ quotes }) => {
   const capitalizeTitle = function (title) {
     return title
@@ -31,7 +39,7 @@ const QuotesContainer = ({ quotes }) => {
 
                       <div className="p-5">
                         <h5 className="mb-2 font-bold tracking-tight text-gray-900 dark:text-white">
-                          {quote.title}
+                          {truncateText(quote.title, 11)}
                         </h5>
 
                         <p className="mb-3 text-sm font-normal text-gray-700 dark:text-gray-400">

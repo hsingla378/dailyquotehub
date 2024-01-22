@@ -26,10 +26,10 @@ const Author = () => {
       />
       {/* Author Details */}
       <section className="bg-white dark:bg-gray-900 py-4">
-        <div className="flex justify-center flex-col md:grid max-w-5xl px-4 py-8 lg:gap-8 xl:gap-0 lg:py-8 sm:grid-cols-12 sm:ml-0">
+        <div className="flex justify-center flex-col sm:flex-row mx-auto max-w-screen-xl px-4 lg:px-6 py-8 lg:gap-8 xl:gap-0 lg:py-8 sm:grid-cols-12">
           <div className="my-4 lg:mt-0 sm:col-span-6 ">
             <img
-              className="max-w-[90%] m-auto p-2 shadow-xl rounded md:mr-[3rem]"
+              className="max-w-[90%] m-auto rounded md:mr-[3rem] w-64"
               src={authorInfo.avatar}
               alt="Bonnie Avatar"
             />
