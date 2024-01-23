@@ -290,7 +290,7 @@ const Dashboard = () => {
                           </Dropdown.Item>
                           <Dropdown.Item
                             onClick={() =>
-                              window.open("/quotes/" + quote._id, "_blank")
+                              window.open("/quotes/" + quote.slug, "_blank")
                             }
                           >
                             Preview

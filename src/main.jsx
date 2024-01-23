@@ -35,7 +35,7 @@ const appRouter = createBrowserRouter([
         element: <Quotes />,
       },
       {
-        path: "/quotes/:id",
+        path: "/quotes/:slug",
         element: <Quote />,
       },
       {

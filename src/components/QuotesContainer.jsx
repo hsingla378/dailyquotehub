@@ -29,7 +29,7 @@ const QuotesContainer = ({ quotes }) => {
             <div className="grid gap-8 mb-6 lg:mb-8 grid-cols-2 lg:grid-cols-5 sm:grid-cols-3 items-stretch justify-center">
               {quotes.map((quote) => {
                 return (
-                  <Link to={`/quotes/${quote._id}`} key={quote._id}>
+                  <Link to={`/quotes/${quote.slug}`} key={quote._id}>
                     <div className="max-w-sm bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 shadow-md h-full">
                       <img
                         className="w-full rounded-lg"

@@ -25,17 +25,54 @@ exports.searchQuotes = async (req, res) => {
   }
 };
 
-exports.getQuoteById = async (req, res) => {
+exports.getQuoteBySlug = async (req, res) => {
   try {
-    const quote = await Quote.findById(req.params.id);
+    const quote = await Quote.findOne({ slug: req.params.slug });
+    if (!quote) {
+      return res.status(404).json({ message: "Quote not found" });
+    }
     res.json(quote);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
 
+// exports.createQuote = async (req, res) => {
+//   const quote = new Quote(req.body);
+
+//   try {
+//     const newQuote = await quote.save();
+//     res.status(201).json(newQuote);
+//   } catch (err) {
+//     res.status(400).json({ message: err.message });
+//   }
+// };
+
 exports.createQuote = async (req, res) => {
   const quote = new Quote(req.body);
+
+  // Generate a unique slug with a maximum of 10 words
+  let baseSlug = quote.title.toLowerCase().replace(/[^a-zA-Z0-9]/g, "-");
+  let words = baseSlug.split("-");
+  let finalSlug = words.slice(0, 10).join("-"); // Limit to the first 10 words
+  let count = 1;
+
+  while (true) {
+    try {
+      const existingQuote = await Quote.findOne({ slug: finalSlug });
+      if (!existingQuote) {
+        break;
+      }
+      // If slug exists, add a suffix and try again
+      finalSlug = `${baseSlug}-${count}`;
+      count++;
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+      return;
+    }
+  }
+
+  quote.slug = finalSlug;
 
   try {
     const newQuote = await quote.save();

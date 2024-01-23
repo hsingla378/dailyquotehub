@@ -24,7 +24,7 @@ import { FaRegCopy } from "react-icons/fa";
 import { SnackbarProvider, enqueueSnackbar } from "notistack";
 
 const Quote = () => {
-  const { id } = useParams();
+  const { slug } = useParams();
   const [quotes, setQuotes] = useState([]);
   const [quoteInfo, setQuoteInfo] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -62,7 +62,7 @@ const Quote = () => {
     setLoading(true);
     try {
       let response = await axios.get(
-        import.meta.env.VITE_BACKEND_URL + "/quotes/" + id
+        import.meta.env.VITE_BACKEND_URL + "/quotes/" + slug
       );
       let data = await response.data;
       setQuoteInfo(data);
@@ -76,7 +76,7 @@ const Quote = () => {
     fetchQuotes();
     fetchQuoteInfo();
     window.scrollTo(0, 0);
-  }, [id]);
+  }, [slug]);
 
   const copyToClipboard = () => {
     const quoteTitle = capitalizeTitle(quoteInfo.title);

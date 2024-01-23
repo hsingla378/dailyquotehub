@@ -7,8 +7,7 @@ const quoteRoutes = require("./routes/quoteRoutes");
 const authorRoutes = require("./routes/authorRoutes");
 const categoryRoutes = require("./routes/categoryRoutes");
 require("dotenv").config();
-const mongoSanitize = require('express-mongo-sanitize');
-
+const mongoSanitize = require("express-mongo-sanitize");
 
 const app = express();
 
@@ -17,12 +16,14 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(mongoSanitize());
 
-
 // Database connection
-mongoose.connect(process.env.MONGODB_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose
+  .connect(process.env.MONGODB_URL)
+  .then(() => console.log("Database Connected Successfully"))
+
+  .catch((err) => {
+    console.error(err);
+  });
 
 // Routes
 app.use("/auth", authRoutes);
