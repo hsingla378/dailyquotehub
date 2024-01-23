@@ -285,7 +285,7 @@ const Dashboard = () => {
                           <Dropdown.Item
                             onClick={() => {
                               setShowUpdateModal(true);
-                              setCurrentQuoteId(quote._id);
+                              setCurrentQuoteId(quote.slug);
                             }}
                           >
                             Edit
@@ -503,7 +503,7 @@ const Dashboard = () => {
                 </button>
               </div>
               {/* <!-- Modal body --> */}
-              <UpdateQoute quoteId={currentQuuoteId} />
+              <UpdateQoute slug={currentQuuoteId} />
             </div>
           </div>
         </div>

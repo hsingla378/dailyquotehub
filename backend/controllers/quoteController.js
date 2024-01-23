@@ -25,14 +25,14 @@ exports.searchQuotes = async (req, res) => {
   }
 };
 
-exports.getQuoteById = async (req, res) => {
-  try {
-    const quote = await Quote.findById(req.params.id);
-    res.json(quote);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
+// exports.getQuoteById = async (req, res) => {
+//   try {
+//     const quote = await Quote.findById(req.params.id);
+//     res.json(quote);
+//   } catch (err) {
+//     res.status(500).json({ message: err.message });
+//   }
+// };
 
 exports.getQuoteBySlug = async (req, res) => {
   try {

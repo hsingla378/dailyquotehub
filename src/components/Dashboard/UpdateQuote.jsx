@@ -28,9 +28,9 @@ const fetchAuthorsFromAPI = async () => {
   }
 };
 
-const UpdateQoute = ({ quoteId }) => {
+const UpdateQoute = ({ slug }) => {
   const [step, setStep] = useState(1);
-  const quoteInfo = useQuoteInfo(quoteId);
+  const quoteInfo = useQuoteInfo(slug);
   const [quoteDetails, setQuoteDetails] = useState({
     title: "",
     description: "",
@@ -196,7 +196,7 @@ const UpdateQoute = ({ quoteId }) => {
     let config = {
       method: "put",
       maxBodyLength: Infinity,
-      url: import.meta.env.VITE_BACKEND_URL + "/quotes/" + quoteId,
+      url: import.meta.env.VITE_BACKEND_URL + "/quotes/" + slug,
       headers: {
         Authorization: Cookies.get("token"),
       },
