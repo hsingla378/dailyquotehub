@@ -6,11 +6,13 @@ import { SnackbarProvider } from "notistack";
 import { capitalizeTitle } from "../../utils/constants";
 import { deleteQuote } from "../../utils/constants";
 import AddQuote from "./AddQuote";
-import {  Dropdown } from "flowbite-react";
+import { Dropdown } from "flowbite-react";
 import UpdateQoute from "./UpdateQuote";
 import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const [quotes, setQuotes] = useState([]);
   const [filteredQuotes, setFilteredQuotes] = useState([]);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
@@ -33,7 +35,7 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    fetchQuotes();
+    Cookies.get("token") && fetchQuotes();
   }, []);
 
   const performSearch = (searchTerm) => {

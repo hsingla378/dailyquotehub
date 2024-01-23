@@ -20,7 +20,7 @@ const QOTD = ({ quote }) => {
         </svg>
         <blockquote>
           <p className="text-2xl italic font-medium  dark:text-white">
-            {quote.description}
+            {quote.title}
           </p>
         </blockquote>
         <Link to={generateAuthorLink(quote.author.name)}>

@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  useNavigate,
+} from "react-router-dom";
 import Authors from "./components/Authors";
 import Quotes from "./components/Quotes.jsx";
 import Categories from "./components/Categories";
@@ -17,9 +21,23 @@ import Search from "./components/Search.jsx";
 // import function to register Swiper custom elements
 import { register } from "swiper/element/bundle";
 import PrivacyPolicy from "./components/PrivacyPolicy.jsx";
+import Cookies from "js-cookie";
 
 // register Swiper custom elements
 register();
+
+const PrivateRoute = ({ element }) => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = Cookies.get("token");
+    if (!token) {
+      navigate("/login");
+    }
+  }, [navigate]);
+
+  return element;
+};
 
 const appRouter = createBrowserRouter([
   {
@@ -64,7 +82,7 @@ const appRouter = createBrowserRouter([
       },
       {
         path: "/dashboard",
-        element: <Dashboard />,
+        element: <PrivateRoute element={<Dashboard />} />,
       },
       {
         path: "/privacy-policy",

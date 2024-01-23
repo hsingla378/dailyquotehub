@@ -18,15 +18,10 @@ const Author = () => {
 
   return (
     <div>
-      <HeadSection
-        heading={"Author Spotlight"}
-        subheading={
-          "Unveiling the Creative Mind of " + capitalizeTitle(authorInfo.name)
-        }
-      />
+      <HeadSection heading={"Author Spotlight"} />
       {/* Author Details */}
       <section className="bg-white dark:bg-gray-900 py-4">
-        <div className="flex justify-center flex-col sm:flex-row mx-auto max-w-screen-xl px-4 lg:px-6 py-8 lg:gap-8 xl:gap-0 lg:py-8 sm:grid-cols-12">
+        <div className="flex justify-center items-center flex-col sm:flex-row mx-auto max-w-screen-xl px-4 lg:px-6 py-8 lg:gap-8 xl:gap-0 lg:py-8 sm:grid-cols-12">
           <div className="my-4 lg:mt-0 sm:col-span-6 ">
             <img
               className="max-w-[90%] m-auto rounded md:mr-[3rem] w-64"
@@ -41,7 +36,7 @@ const Author = () => {
             <h3 className="max-w-2xl mb-4 text-sm font-semibold tracking-tight leading-none md:text-base xl:text-lg dark:text-white">
               {authorInfo.designation}
             </h3>
-            <p className="max-w-2xl mb-6 text-sm font-light text-gray-500 lg:mb-8 md:text-base lg:text-lg dark:text-gray-400">
+            <p className="max-w-2xl mb-6 text-sm font-light text-gray-500 lg:mb-8 md:text-base lg:text-base dark:text-gray-400">
               {authorInfo.description}
             </p>
           </div>

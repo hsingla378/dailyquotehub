@@ -116,7 +116,7 @@ const Quote = () => {
                   <img
                     src={quoteInfo.thumbnail}
                     alt="mockup"
-                    className="max-w-96 m-auto p-2 rounded md:mr-[3rem]"
+                    className="max-w-96 m-auto p-2 rounded md:mr-[3rem] max-h-[500px]"
                   />
                 </div>
                 <div className="flex justify-center flex-col items-center md:block mx-auto md:m-[unset] md:mr-auto place-self-center sm:col-span-6 text-center md:text-left ">
@@ -131,7 +131,7 @@ const Quote = () => {
                     >
                       <path d="M6 0H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4v1a3 3 0 0 1-3 3H2a1 1 0 0 0 0 2h1a5.006 5.006 0 0 0 5-5V2a2 2 0 0 0-2-2Zm10 0h-4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4v1a3 3 0 0 1-3 3h-1a1 1 0 0 0 0 2h1a5.006 5.006 0 0 0 5-5V2a2 2 0 0 0-2-2Z" />
                     </svg>
-                    <p>{quoteInfo.title}</p>
+                    <p className="max-w-[80%]">{quoteInfo.title}</p>
                   </blockquote>
 
                   {/* Author */}
@@ -145,7 +145,7 @@ const Quote = () => {
                             alt="profile picture"
                           />
                           <div className="flex items-center divide-x-2 rtl:divide-x-reverse divide-gray-300 dark:divide-gray-700">
-                            <cite className="pe-3 font-medium text-gray-900 dark:text-white">
+                            <cite className="pe-3 text-gray-900 dark:text-white font-bold">
                               {capitalizeTitle(quoteInfo.author.name)}
                             </cite>
                           </div>
@@ -164,7 +164,7 @@ const Quote = () => {
                   {/* Amazon Book Reference */}
                   {quoteInfo.book.amazonLink && (
                     <Link to={quoteInfo.book.amazonLink} target="_blank">
-                      <div className="items-center bg-gray-50 rounded-lg sm:flex dark:bg-gray-800 dark:border-gray-700 px-4 my-6 w-max flex shadow-md hover:shadow-lg max-w-80">
+                      <div className="items-center bg-gray-50 rounded-lg sm:flex dark:bg-gray-800 dark:border-gray-700 px-4 my-6 w-max flex shadow-md hover:shadow-lg max-w-96">
                         {quoteInfo.book.image ? (
                           <img
                             src={quoteInfo.book.image}
