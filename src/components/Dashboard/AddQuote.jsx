@@ -1,6 +1,7 @@
 // MultiStepForm.jsx
 
 import axios from "axios";
+import { Button } from "flowbite-react";
 import Cookies from "js-cookie";
 import { SnackbarProvider, enqueueSnackbar } from "notistack";
 import { useState, useEffect } from "react";
@@ -31,6 +32,7 @@ const fetchAuthorsFromAPI = async () => {
 
 const AddQuote = () => {
   const [step, setStep] = useState(1);
+  const [uploadingImage, setUploadingImage] = useState(false);
   const [quoteDetails, setQuoteDetails] = useState({
     title: "",
     description: "",
@@ -275,7 +277,11 @@ const AddQuote = () => {
                   import.meta.env.VITE_UPLOAD_PRESET
                 );
                 data.append("cloud_name", import.meta.env.VITE_CLOUD_NAME);
-
+                setUploadingImage(true);
+                enqueueSnackbar("Uploading Thumbnail", {
+                  variant: "warning",
+                  persist: false,
+                });
                 fetch(import.meta.env.VITE_CLOUDINARY_URL, {
                   method: "post",
                   body: data,
@@ -286,21 +292,46 @@ const AddQuote = () => {
                       ...prevDetails,
                       thumbnail: data.url,
                     }));
+                    setUploadingImage(false);
+                    enqueueSnackbar("Thumbnail Uploaded!", {
+                      variant: "success",
+                      persist: false,
+                    });
                   })
-                  .catch((err) => console.log(err));
+                  .catch((err) => {
+                    console.log(err);
+                    setUploadingImage(false);
+                    enqueueSnackbar(err, {
+                      variant: "error",
+                      persist: false,
+                    });
+                  });
               }}
               className="mt-1 p-2 border border-gray-300 rounded-md w-full"
             />
           </div>
 
           {/* Next Button */}
-          <button
+          {/* <button
             onClick={handleNext}
             className="btn"
-            // disabled={validateQuoteDetails ? true : false}
           >
             Next
-          </button>
+          </button> */}
+          <Button
+            size="sm"
+            onClick={handleNext}
+            isProcessing={uploadingImage}
+            disabled={
+              quoteDetails.title.trim() === "" ||
+              quoteDetails.description.trim() === "" ||
+              quoteDetails.thumbnail.trim() === ""
+                ? true
+                : false
+            }
+          >
+            Next
+          </Button>
         </div>
       )}
 
@@ -383,13 +414,14 @@ const AddQuote = () => {
             <button onClick={handlePrev} className="btn">
               Back
             </button>
-            <button
+            <Button
+              size="sm"
               onClick={handleNext}
-              className="btn"
-              // disabled={validateCategories ? true : false}
+              isProcessing={uploadingImage}
+              disabled={quoteDetails.categories.length === 0 ? true : false}
             >
               Next
-            </button>
+            </Button>
           </div>
         </div>
       )}
@@ -531,6 +563,11 @@ const AddQuote = () => {
                         import.meta.env.VITE_CLOUD_NAME
                       );
 
+                      setUploadingImage(true);
+                      enqueueSnackbar("Uploading Image", {
+                        variant: "warning",
+                        persist: false,
+                      });
                       fetch(import.meta.env.VITE_CLOUDINARY_URL, {
                         method: "post",
                         body: data,
@@ -544,8 +581,20 @@ const AddQuote = () => {
                               avatar: data.url,
                             },
                           }));
+                          setUploadingImage(false);
+                          enqueueSnackbar("Image Uploaded", {
+                            variant: "success",
+                            persist: false,
+                          });
                         })
-                        .catch((err) => console.log(err));
+                        .catch((err) => {
+                          console.log(err);
+                          setUploadingImage(false);
+                          enqueueSnackbar(err, {
+                            variant: "error",
+                            persist: false,
+                          });
+                        });
                     }}
                     className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                   />
@@ -559,13 +608,21 @@ const AddQuote = () => {
             <button onClick={handlePrev} className="btn">
               Back
             </button>
-            <button
+            <Button
+              size="sm"
               onClick={handleNext}
-              className="btn"
-              // disabled={validateAuthorDetails ? true : false}
+              isProcessing={uploadingImage}
+              disabled={
+                !quoteDetails.author.name.trim() ||
+                !quoteDetails.author.designation ||
+                !quoteDetails.author.description ||
+                !quoteDetails.author.avatar
+                  ? true
+                  : false
+              }
             >
               Next
-            </button>
+            </Button>
           </div>
         </div>
       )}
@@ -619,6 +676,11 @@ const AddQuote = () => {
                 );
                 data.append("cloud_name", import.meta.env.VITE_CLOUD_NAME);
 
+                setUploadingImage(true);
+                enqueueSnackbar("Uploading Image", {
+                  variant: "warning",
+                  persist: false,
+                });
                 fetch(import.meta.env.VITE_CLOUDINARY_URL, {
                   method: "post",
                   body: data,
@@ -632,8 +694,20 @@ const AddQuote = () => {
                         image: data.url,
                       },
                     }));
+                    setUploadingImage(false);
+                    enqueueSnackbar("Image Uploaded", {
+                      variant: "success",
+                      persist: false,
+                    });
                   })
-                  .catch((err) => console.log(err));
+                  .catch((err) => {
+                    console.log(err);
+                    setUploadingImage(false);
+                    enqueueSnackbar("Uploading Image", {
+                      variant: "error",
+                      persist: false,
+                    });
+                  });
               }}
               className="mt-1 p-2 border border-gray-300 rounded-md w-full"
             />
@@ -667,13 +741,19 @@ const AddQuote = () => {
             <button onClick={handlePrev} className="btn">
               Back
             </button>
-            <button
+            <Button
               onClick={handleSubmit}
               className="btn"
-              // disabled={validateBookDetails ? true : false}
+              disabled={
+                !quoteDetails.book.name.trim() ||
+                !quoteDetails.book.image ||
+                !quoteDetails.book.amazonLink
+                  ? true
+                  : false
+              }
             >
               Submit
-            </button>
+            </Button>
           </div>
         </div>
       )}

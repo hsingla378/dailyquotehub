@@ -2,21 +2,19 @@ import { useEffect, useState } from "react";
 import useAllCategories from "../../utils/useAllCategories";
 import useAllAuthors from "../../utils/useAllAuthors";
 import axios from "axios";
-import { SnackbarProvider } from "notistack";
+import { SnackbarProvider, enqueueSnackbar } from "notistack";
 import { capitalizeTitle } from "../../utils/constants";
-import { deleteQuote } from "../../utils/constants";
 import AddQuote from "./AddQuote";
 import { Dropdown } from "flowbite-react";
-import UpdateQoute from "./UpdateQuote";
+import UpdateQuote from "./UpdateQuote";
 import Cookies from "js-cookie";
-import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
-  const navigate = useNavigate();
   const [quotes, setQuotes] = useState([]);
   const [filteredQuotes, setFilteredQuotes] = useState([]);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [currentQuuoteId, setCurrentQuoteId] = useState(null);
+  const [currentQuoteSlug, setCurrentQuoteSlug] = useState(null);
   const categories = useAllCategories();
   const authors = useAllAuthors();
   const token = Cookies.get("token");
@@ -47,6 +45,43 @@ const Dashboard = () => {
       return quote.title.toLowerCase().includes(searchTerm.toLowerCase());
     });
     setFilteredQuotes(newQuotes);
+  };
+
+  const deleteQuote = (token, quoteId) => {
+    let data = "";
+
+    if (!token) {
+      enqueueSnackbar("Kindly login!", {
+        variant: "success",
+        persist: false,
+      });
+      return;
+    }
+
+    let config = {
+      method: "delete",
+      maxBodyLength: Infinity,
+      url: import.meta.env.VITE_BACKEND_URL + "/quotes/" + quoteId,
+      headers: {
+        Authorization: token,
+      },
+      data: data,
+    };
+
+    axios
+      .request(config)
+      .then((response) => {
+        enqueueSnackbar("Quote Deleted!", {
+          variant: "success",
+          persist: false,
+        });
+      })
+      .catch((error) => {
+        enqueueSnackbar(error, {
+          variant: "error",
+          persist: false,
+        });
+      });
   };
 
   return (
@@ -285,7 +320,8 @@ const Dashboard = () => {
                           <Dropdown.Item
                             onClick={() => {
                               setShowUpdateModal(true);
-                              setCurrentQuoteId(quote.slug);
+                              setCurrentQuoteId(quote._id);
+                              setCurrentQuoteSlug(quote.slug);
                             }}
                           >
                             Edit
@@ -484,6 +520,7 @@ const Dashboard = () => {
                   onClick={() => {
                     setShowUpdateModal(false);
                     setCurrentQuoteId(null);
+                    setCurrentQuoteSlug(null);
                   }}
                 >
                   <svg
@@ -503,7 +540,7 @@ const Dashboard = () => {
                 </button>
               </div>
               {/* <!-- Modal body --> */}
-              <UpdateQoute slug={currentQuuoteId} />
+              <UpdateQuote id={currentQuuoteId} slug={currentQuoteSlug} />
             </div>
           </div>
         </div>

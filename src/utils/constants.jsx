@@ -327,43 +327,6 @@ quotes.forEach((quote) => {
 // Converting sets to arrays if needed
 export const uniqueCategories = Array.from(allCategories);
 
-export const deleteQuote = (token, quoteId) => {
-  let data = "";
-
-  if (!token) {
-    enqueueSnackbar("Kindly login!", {
-      variant: "success",
-      persist: false,
-    });
-    return;
-  }
-
-  let config = {
-    method: "delete",
-    maxBodyLength: Infinity,
-    url: import.meta.env.VITE_BACKEND_URL + "/quotes/" + quoteId,
-    headers: {
-      Authorization: token,
-    },
-    data: data,
-  };
-
-  axios
-    .request(config)
-    .then((response) => {
-      enqueueSnackbar(response.data.message, {
-        variant: "success",
-        persist: false,
-      });
-    })
-    .catch((error) => {
-      enqueueSnackbar(error, {
-        variant: "error",
-        persist: false,
-      });
-    });
-};
-
 export const capitalizeTitle = function (title) {
   return title
     .split(" ")
