@@ -4,7 +4,10 @@ import Pagination from "./Pagination";
 import Heading from "./Heading";
 import { Link, useParams } from "react-router-dom";
 import { FaAmazon } from "react-icons/fa";
-import { capitalizeTitle } from "../utils/constants";
+import {
+  capitalizeTitle,
+  transformImageCloudinaryUrl,
+} from "../utils/constants";
 import {
   EmailShareButton,
   FacebookShareButton,
@@ -22,6 +25,10 @@ import Loading from "./Loading";
 import axios from "axios";
 import { FaRegCopy } from "react-icons/fa";
 import { SnackbarProvider, enqueueSnackbar } from "notistack";
+import { AdvancedImage } from "@cloudinary/react";
+import { Cloudinary } from "@cloudinary/url-gen";
+import { quality } from "@cloudinary/url-gen/actions/delivery";
+import { Helmet } from "react-helmet";
 
 const Quote = () => {
   const { slug } = useParams();
@@ -99,6 +106,13 @@ const Quote = () => {
       });
   };
 
+  // Image Optimization
+  // const cld = new Cloudinary({
+  //   cloud: { cloudName: import.meta.env.VITE_CLOUD_NAME },
+  // });
+
+  console.log("quoteInfo", quoteInfo);
+
   return (
     <>
       {loading ? (
@@ -108,6 +122,24 @@ const Quote = () => {
           {/* Quote Details */}
           {quoteInfo.title && (
             <section className="bg-white dark:bg-gray-900 py-4">
+              {/* Set dynamic meta title and description */}
+              {/* <Helmet>
+                <meta charSet="utf-8" />
+                <title>
+                  {" "}
+                  {quoteInfo.title
+                    ? `${quoteInfo.title} - DailyQuoteHub`
+                    : "Loading..."}
+                </title>
+                <meta
+                  name="description"
+                  content={
+                    quoteInfo.description ||
+                    quoteInfo.author.description ||
+                    "Loading..."
+                  }
+                />
+              </Helmet> */}
               <SnackbarProvider
                 anchorOrigin={{ vertical: "top", horizontal: "center" }}
               />
@@ -160,6 +192,9 @@ const Quote = () => {
                       </button>
                     </figcaption>
                   )}
+
+                  {/* Quote Description */}
+                  <p>{quoteInfo.description}</p>
 
                   {/* Amazon Book Reference */}
                   {quoteInfo.book.amazonLink && (

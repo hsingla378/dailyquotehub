@@ -337,3 +337,29 @@ export const capitalizeTitle = function (title) {
     )
     .join(" ");
 };
+
+export const transformCloudinaryUrl = (originalUrl, transformations = {}) => {
+  const cloudinaryUrlParts = originalUrl.split("/");
+
+  const cloudName = cloudinaryUrlParts[3];
+  const publicIdAndFormat =
+    cloudinaryUrlParts[cloudinaryUrlParts.length - 1].split(".");
+
+  const version = cloudinaryUrlParts[cloudinaryUrlParts.length - 2];
+
+  const newTransformations = Object.entries(transformations)
+    .map(([key, value]) => `${key}_${value}`)
+    .join(",");
+
+  const newUrl = `https://res.cloudinary.com/${cloudName}/image/upload/${newTransformations}/v${version}/${publicIdAndFormat[0]}.${publicIdAndFormat[1]}`;
+
+  return newUrl;
+};
+
+export const transformImageCloudinaryUrl = (
+  originalUrl,
+  transformations = {}
+) => {
+  const transformedUrl = transformCloudinaryUrl(originalUrl, transformations);
+  return transformedUrl;
+};
