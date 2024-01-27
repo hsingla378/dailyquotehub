@@ -386,7 +386,6 @@ const UpdateQuote = ({ id, slug }) => {
                 isProcessing={uploadingImage}
                 disabled={
                   quoteDetails.title.trim() === "" ||
-                  quoteDetails.description.trim() === "" ||
                   quoteDetails.thumbnail.trim() === ""
                     ? true
                     : false
@@ -834,13 +833,6 @@ const UpdateQuote = ({ id, slug }) => {
                 <Button
                   onClick={handleSubmit}
                   className="btn"
-                  disabled={
-                    !quoteDetails.book.name.trim() ||
-                    !quoteDetails.book.image ||
-                    !quoteDetails.book.amazonLink
-                      ? true
-                      : false
-                  }
                 >
                   Submit
                 </Button>

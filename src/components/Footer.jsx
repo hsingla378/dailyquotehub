@@ -1,7 +1,42 @@
 import { Link } from "react-router-dom";
 import { FaPinterest } from "react-icons/fa";
+import useAllQuotes from "../utils/useAllQuotes";
+import { useEffect, useState } from "react";
+import { capitalizeTitle } from "../utils/constants";
 
 const Footer = () => {
+  const quotes = useAllQuotes();
+  const [topCategories, setTopCategories] = useState([]);
+  const [topAuthors, setTopAuthors] = useState([]);
+
+  useEffect(() => {
+    // Calculate top categories
+    const categoryCounts = {};
+    quotes.forEach((quote) => {
+      quote.categories.forEach((category) => {
+        categoryCounts[category] = (categoryCounts[category] || 0) + 1;
+      });
+    });
+    const sortedCategories = Object.keys(categoryCounts).sort(
+      (a, b) => categoryCounts[b] - categoryCounts[a]
+    );
+    setTopCategories(sortedCategories.slice(0, 4));
+
+    // Calculate top authors
+    const authorCounts = {};
+    quotes.forEach((quote) => {
+      const authorName = quote.author.name.toLowerCase();
+      authorCounts[authorName] = (authorCounts[authorName] || 0) + 1;
+    });
+    const sortedAuthors = Object.keys(authorCounts).sort(
+      (a, b) => authorCounts[b] - authorCounts[a]
+    );
+    setTopAuthors(sortedAuthors.slice(0, 4));
+  }, [quotes]);
+
+  console.log("topCategories", topCategories);
+  console.log("topAuthors", topAuthors);
+
   return (
     <footer className="mt-4">
       <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
@@ -24,29 +59,16 @@ const Footer = () => {
                 Featured Categories
               </h2>
               <ul className="text-gray-500 text-sm dark:text-gray-400 font-medium">
-                <li className="mb-4 ">
-                  <Link
-                    to={"/categories/adventure"}
-                    className="hover:underline"
-                  >
-                    Adventure
-                  </Link>
-                </li>
-                <li className="mb-4">
-                  <Link to={"/categories/soul"} className="hover:underline">
-                    Soul
-                  </Link>
-                </li>
-                <li className="mb-4">
-                  <Link to={"/categories/infinity"} className="hover:underline">
-                    Infinity
-                  </Link>
-                </li>
-                <li className="mb-4">
-                  <Link to={"/categories/puzzles"} className="hover:underline">
-                    Puzzles
-                  </Link>
-                </li>
+                {topCategories.map((category) => (
+                  <li className="mb-4" key={category}>
+                    <Link
+                      to={`/categories/${category.split(" ").join("-")}`}
+                      className="hover:underline"
+                    >
+                      {capitalizeTitle(category)}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
             <div>
@@ -54,38 +76,16 @@ const Footer = () => {
                 Authors
               </h2>
               <ul className="text-gray-500 text-sm dark:text-gray-400 font-medium">
-                <li className="mb-4">
-                  <Link
-                    to={"/authors/athena-weaver"}
-                    className="hover:underline "
-                  >
-                    Athena Weaver
-                  </Link>
-                </li>
-                <li className="mb-4">
-                  <Link
-                    to={"/authors/lyra-melodica"}
-                    className="hover:underline "
-                  >
-                    Lyra Melodica
-                  </Link>
-                </li>
-                <li className="mb-4">
-                  <Link
-                    to={"/authors/luna-celestia"}
-                    className="hover:underline "
-                  >
-                    Luna Celestia
-                  </Link>
-                </li>
-                <li className="mb-4">
-                  <Link
-                    to={"/authors/elysia-dreamweaver"}
-                    className="hover:underline "
-                  >
-                    Elysia Dreamweaver
-                  </Link>
-                </li>
+                {topAuthors.map((author) => (
+                  <li className="mb-4" key={author.name}>
+                    <Link
+                      to={`/authors/${author.toLowerCase().split(" ").join("-")}`}
+                      className="hover:underline"
+                    >
+                      {capitalizeTitle(author)}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
             <div>

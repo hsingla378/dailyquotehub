@@ -324,7 +324,6 @@ const AddQuote = () => {
             isProcessing={uploadingImage}
             disabled={
               quoteDetails.title.trim() === "" ||
-              quoteDetails.description.trim() === "" ||
               quoteDetails.thumbnail.trim() === ""
                 ? true
                 : false
@@ -741,17 +740,7 @@ const AddQuote = () => {
             <button onClick={handlePrev} className="btn">
               Back
             </button>
-            <Button
-              onClick={handleSubmit}
-              className="btn"
-              disabled={
-                !quoteDetails.book.name.trim() ||
-                !quoteDetails.book.image ||
-                !quoteDetails.book.amazonLink
-                  ? true
-                  : false
-              }
-            >
+            <Button onClick={handleSubmit} className="btn">
               Submit
             </Button>
           </div>

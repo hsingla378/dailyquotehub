@@ -12,9 +12,6 @@ exports.getAllAuthors = async (req, res) => {
       {
         $replaceRoot: { newRoot: "$author" },
       },
-      {
-        $sort: { x: -1 },
-      },
     ]);
 
     res.json(authors);
@@ -28,17 +25,32 @@ exports.getQuotesByAuthor = async (req, res) => {
     const authorNameParam = req.params.authorName;
     const authorName = authorNameParam.toLowerCase().split("-").join(" ");
 
-    const quotes = await Quote.find({
-      "author.name": { $regex: new RegExp(authorName, "i") },
-    }).sort({ x: -1 });
+    const quotes = await Quote.aggregate([
+      { $match: { "author.name": { $regex: new RegExp(authorName, "i") } } },
+      { $sample: { size: 50000 } }, // Adjust the size as needed
+    ]);
 
     if (quotes.length === 0) {
-      res
-        .status(404)
-        .json({ message: "No quotes found for the specified author." });
+      res.status(404).json({ message: "No quotes found for the specified author." });
     } else {
       res.json(quotes);
     }
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.updateAuthorAvatar = async (req, res) => {
+  try {
+    const { authorName, newAvatarUrl } = req.body;
+
+    // Update all quotes by the specified author
+    await Quote.updateMany(
+      { "author.name": { $regex: new RegExp(authorName, "i") } },
+      { $set: { "author.avatar": newAvatarUrl } }
+    );
+
+    res.json({ message: "Author avatar updated successfully for all quotes." });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
