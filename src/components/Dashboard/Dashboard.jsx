@@ -552,7 +552,7 @@ const Dashboard = () => {
                 </button>
               </div>
               {/* <!-- Modal body --> */}
-              <UpdateQuote id={currentQuuoteId} slug={currentQuoteSlug} />
+              <UpdateQuote id={currentQuoteId} slug={currentQuoteSlug} />
             </div>
           </div>
         </div>

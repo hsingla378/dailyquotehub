@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import HeadSection from "./HeadSection";
 import Heading from "./Heading";
@@ -6,15 +7,93 @@ import useAuthorData from "../utils/useAuthorData";
 import { capitalizeTitle } from "../utils/constants";
 import Loading from "./Loading";
 
+const ITEMS_PER_PAGE = 10;
+
 const Author = () => {
   let { author } = useParams();
   const authorData = useAuthorData(author);
+  const [currentPage, setCurrentPage] = useState(1);
 
   if (!authorData.length) return <Loading />;
 
   const authorInfo = authorData[0].author;
 
   if (!authorData) return <Loading />;
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
+
+  const renderPagination = () => {
+    const totalPages = Math.ceil(authorData.length / ITEMS_PER_PAGE);
+    const maxPagesToShow = 10;
+    const maxPagesOnEachSide = Math.floor((maxPagesToShow - 1) / 2);
+    const isPrevButtonVisible = currentPage > 1;
+    const isNextButtonVisible = currentPage < totalPages && totalPages > 1;
+
+    if (totalPages <= 1) {
+      return null;
+    }
+
+    const getPagesToShow = () => {
+      const pagesToShow = [];
+      const startPage = Math.max(1, currentPage - maxPagesOnEachSide);
+      const endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
+
+      for (let i = startPage; i <= endPage; i++) {
+        pagesToShow.push(i);
+      }
+
+      return pagesToShow;
+    };
+
+    return (
+      <nav className="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 p-4">
+        <ul className="inline-flex items-stretch -space-x-px">
+          {isPrevButtonVisible && (
+            <li>
+              <a
+                href="#"
+                className="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                onClick={() => handlePageChange(currentPage - 1)}
+              >
+                Prev
+              </a>
+            </li>
+          )}
+          {getPagesToShow().map((pageIndex) => (
+            <li key={pageIndex}>
+              <a
+                href="#"
+                className={`flex items-center justify-center text-sm py-2 px-3 leading-tight ${
+                  currentPage === pageIndex
+                    ? "text-primary-600 bg-primary-50 border border-primary-300"
+                    : "text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                }`}
+                onClick={() => handlePageChange(pageIndex)}
+              >
+                {pageIndex}
+              </a>
+            </li>
+          ))}
+          {isNextButtonVisible && (
+            <li>
+              <a
+                href="#"
+                className="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                onClick={() => handlePageChange(currentPage + 1)}
+              >
+                Next
+              </a>
+            </li>
+          )}
+        </ul>
+      </nav>
+    );
+  };
+
+  const startItem = (currentPage - 1) * ITEMS_PER_PAGE;
+  const endItem = currentPage * ITEMS_PER_PAGE;
 
   return (
     <div>
@@ -50,7 +129,13 @@ const Author = () => {
         />
       </div>
       {/* Author Posts */}
-      <QuotesContainer quotes={authorData.slice(0, 10)} />
+      <div className="flex justify-end pt-4 px-4 mx-auto max-w-screen-xl lg:pt-8 lg:px-6 ">
+        {renderPagination()}
+      </div>
+      <QuotesContainer quotes={authorData.slice(startItem, endItem)} />
+      <div className="flex justify-end pt-4 px-4 mx-auto max-w-screen-xl lg:pt-8 lg:px-6 ">
+        {renderPagination()}
+      </div>
     </div>
   );
 };

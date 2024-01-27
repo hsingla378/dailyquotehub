@@ -12,6 +12,31 @@ const Pagination = ({
     }
   };
 
+  const visiblePages = () => {
+    const maxVisiblePages = 10;
+    const halfVisiblePages = Math.floor(maxVisiblePages / 2);
+
+    if (totalPages <= maxVisiblePages) {
+      return Array.from({ length: totalPages }, (_, index) => index + 1);
+    }
+
+    if (currentPage <= halfVisiblePages) {
+      return Array.from({ length: maxVisiblePages }, (_, index) => index + 1);
+    }
+
+    if (currentPage >= totalPages - halfVisiblePages) {
+      return Array.from(
+        { length: maxVisiblePages },
+        (_, index) => totalPages - maxVisiblePages + index + 1
+      );
+    }
+
+    return Array.from(
+      { length: maxVisiblePages },
+      (_, index) => currentPage - halfVisiblePages + index
+    );
+  };
+
   return (
     <section className="flex justify-center py-4">
       <nav aria-label="Page navigation example">
@@ -28,17 +53,17 @@ const Pagination = ({
               Previous
             </button>
           </li>
-          {Array.from({ length: totalPages }).map((_, index) => (
-            <li key={index}>
+          {visiblePages().map((page) => (
+            <li key={page}>
               <button
-                onClick={() => handlePageClick(index + 1)}
+                onClick={() => handlePageClick(page)}
                 className={`flex items-center justify-center px-4 h-10 ${
-                  currentPage === index + 1
+                  currentPage === page
                     ? "text-blue-600 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"
                     : "text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                 }`}
               >
-                {index + 1}
+                {page}
               </button>
             </li>
           ))}
