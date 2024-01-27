@@ -6,8 +6,9 @@ exports.getRssFeed = async (req, res) => {
     const quotes = await Quote.find().sort({ _id: -1 });
 
     const feed = new RSS({
-      title: "Your Quote RSS Feed",
-      description: "Latest quotes from your collection",
+      title: "Best Quotes from Renowned Authors | DailyQuoteHub - Your Source of Inspiration",
+      description:
+        "Explore a vast collection of inspirational quotes by famous authors and unique creations. Daily Quote Hub is your source for meaningful quotes, wisdom, and motivation. Discover a world of inspiration every day.",
       feed_url: "https://dailyquotehub-backend.onrender.com/rss", // Update with your actual domain and endpoint
       site_url: "https://dailyquotehub-backend.onrender.com", // Update with your actual domain
     });
