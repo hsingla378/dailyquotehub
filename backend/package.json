@@ -22,7 +22,8 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.1.0",
     "mongoose-slug-generator": "^1.0.4",
-    "nanoid": "^5.0.4"
+    "nanoid": "^5.0.4",
+    "rss": "^1.2.2"
   },
   "devDependencies": {
     "nodemon": "^3.0.2"

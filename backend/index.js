@@ -6,6 +6,7 @@ const authRoutes = require("./routes/authRoutes");
 const quoteRoutes = require("./routes/quoteRoutes");
 const authorRoutes = require("./routes/authorRoutes");
 const categoryRoutes = require("./routes/categoryRoutes");
+const rssRoutes = require("./routes/rssRoutes");
 require("dotenv").config();
 const mongoSanitize = require("express-mongo-sanitize");
 
@@ -30,6 +31,7 @@ app.use("/auth", authRoutes);
 app.use("/quotes", quoteRoutes);
 app.use("/authors", authorRoutes);
 app.use("/categories", categoryRoutes);
+app.use("/rss", rssRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 3000;
