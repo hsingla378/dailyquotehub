@@ -1,13 +1,13 @@
 import QuotesContainer from "./QuotesContainer";
 import Pagination from "./Pagination";
 import { useState } from "react";
-import useAllQuotes from "../utils/useAllQuotes";
 import Loading from "./Loading";
+import useAllRandomQuotes from "../utils/useAllRandomQuotes";
 
 const ITEMS_PER_PAGE = 10;
 
 const Quotes = () => {
-  const quotes = useAllQuotes();
+  const quotes = useAllRandomQuotes();
   const [currentPage, setCurrentPage] = useState(1);
 
   // Calculate the range of items to display on the current page

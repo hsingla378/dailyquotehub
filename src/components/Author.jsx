@@ -50,7 +50,7 @@ const Author = () => {
         />
       </div>
       {/* Author Posts */}
-      <QuotesContainer quotes={authorData} />
+      <QuotesContainer quotes={authorData.slice(0, 10)} />
     </div>
   );
 };

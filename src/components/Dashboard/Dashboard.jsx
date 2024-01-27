@@ -13,8 +13,10 @@ const Dashboard = () => {
   const [quotes, setQuotes] = useState([]);
   const [filteredQuotes, setFilteredQuotes] = useState([]);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
-  const [currentQuuoteId, setCurrentQuoteId] = useState(null);
+  const [currentQuoteId, setCurrentQuoteId] = useState(null);
   const [currentQuoteSlug, setCurrentQuoteSlug] = useState(null);
+  const [selectedAuthors, setSelectedAuthors] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
   const categories = useAllCategories();
   const authors = useAllAuthors();
   const token = Cookies.get("token");
@@ -45,6 +47,40 @@ const Dashboard = () => {
       return quote.title.toLowerCase().includes(searchTerm.toLowerCase());
     });
     setFilteredQuotes(newQuotes);
+  };
+
+  const handleAuthorChange = (authorName) => {
+    const updatedAuthors = selectedAuthors.includes(authorName)
+      ? selectedAuthors.filter((name) => name !== authorName)
+      : [...selectedAuthors, authorName];
+    setSelectedAuthors(updatedAuthors);
+    updateFilteredQuotes(updatedAuthors, selectedCategories);
+  };
+
+  const handleCategoryChange = (category) => {
+    const updatedCategories = selectedCategories.includes(category)
+      ? selectedCategories.filter((cat) => cat !== category)
+      : [...selectedCategories, category];
+    setSelectedCategories(updatedCategories);
+    updateFilteredQuotes(selectedAuthors, updatedCategories);
+  };
+
+  const updateFilteredQuotes = (authors, categories) => {
+    let newFilteredQuotes = quotes;
+
+    if (authors.length > 0) {
+      newFilteredQuotes = newFilteredQuotes.filter((quote) =>
+        authors.includes(quote.author.name)
+      );
+    }
+
+    if (categories.length > 0) {
+      newFilteredQuotes = newFilteredQuotes.filter((quote) =>
+        quote.categories.some((cat) => categories.includes(cat))
+      );
+    }
+
+    setFilteredQuotes(newFilteredQuotes);
   };
 
   const deleteQuote = (token, quoteId) => {
@@ -190,7 +226,8 @@ const Dashboard = () => {
                           <input
                             id={author.name}
                             type="checkbox"
-                            defaultValue=""
+                            checked={selectedAuthors.includes(author.name)}
+                            onChange={() => handleAuthorChange(author.name)}
                             className="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                           />
                           <label
@@ -253,7 +290,8 @@ const Dashboard = () => {
                           <input
                             id={category}
                             type="checkbox"
-                            defaultValue=""
+                            checked={selectedCategories.includes(category)}
+                            onChange={() => handleCategoryChange(category)}
                             className="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                           />
                           <label

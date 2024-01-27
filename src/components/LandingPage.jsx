@@ -3,14 +3,14 @@ import AuthorsContainer from "./AuthorsContainer";
 import QuotesContainer from "./QuotesContainer";
 import Heading from "./Heading";
 import CategoriesContainer from "./CategoriesContainer";
-import useAllQuotes from "../utils/useAllQuotes";
 import useAllAuthors from "../utils/useAllAuthors";
 import useAllCategories from "../utils/useAllCategories";
 import Loading from "./Loading";
 import ExploreMore from "./ExploreMore";
+import useAllRandomQuotes from "../utils/useAllRandomQuotes";
 
 const LandingPage = () => {
-  const quotes = useAllQuotes();
+  const quotes = useAllRandomQuotes();
   const authors = useAllAuthors();
   const categories = useAllCategories();
 

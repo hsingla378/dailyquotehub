@@ -34,9 +34,6 @@ const Footer = () => {
     setTopAuthors(sortedAuthors.slice(0, 4));
   }, [quotes]);
 
-  console.log("topCategories", topCategories);
-  console.log("topAuthors", topAuthors);
-
   return (
     <footer className="mt-4">
       <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">

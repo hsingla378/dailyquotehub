@@ -2,6 +2,15 @@ const Quote = require("../models/quote");
 
 exports.getAllQuotes = async (req, res) => {
   try {
+    const quotes = await Quote.find().sort({ _id: -1 });
+    res.json(quotes);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.getRandomQuotes = async (req, res) => {
+  try {
     const quotes = await Quote.aggregate([{ $sample: { size: 50000 } }]);
     res.json(quotes);
   } catch (err) {

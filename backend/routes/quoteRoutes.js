@@ -4,6 +4,7 @@ const quoteController = require("../controllers/quoteController");
 const authMiddleware = require("../middleware/authMiddleware");
 
 router.get("/", quoteController.getAllQuotes);
+router.get("/random", quoteController.getRandomQuotes);
 router.get("/search", quoteController.searchQuotes);
 
 // router.get("/:id", quoteController.getQuoteById);
