@@ -25,7 +25,7 @@ const Search = () => {
       })
       .filter((author) =>
         author.name.toLowerCase().includes(text.toLowerCase())
-      );
+      )
 
     setAuthors(filteredAuthors);
   };

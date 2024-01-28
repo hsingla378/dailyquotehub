@@ -22,6 +22,7 @@ import Search from "./components/Search.jsx";
 import { register } from "swiper/element/bundle";
 import PrivacyPolicy from "./components/PrivacyPolicy.jsx";
 import Cookies from "js-cookie";
+import AddMultipleQuotesPage from "./components/Dashboard/AddMultipleQuotesPage.jsx";
 
 // register Swiper custom elements
 register();
@@ -83,6 +84,10 @@ const appRouter = createBrowserRouter([
       {
         path: "/dashboard",
         element: <PrivateRoute element={<Dashboard />} />,
+      },
+      {
+        path: "/add-multiple-quotes",
+        element: <PrivateRoute element={<AddMultipleQuotesPage />} />,
       },
       {
         path: "/privacy-policy",
