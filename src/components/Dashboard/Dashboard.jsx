@@ -5,7 +5,7 @@ import axios from "axios";
 import { SnackbarProvider, enqueueSnackbar } from "notistack";
 import { capitalizeTitle } from "../../utils/constants";
 import AddQuote from "./AddQuote";
-import { Dropdown } from "flowbite-react";
+import { Button, Dropdown, Modal, Table } from "flowbite-react";
 import UpdateQuote from "./UpdateQuote";
 import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
@@ -21,6 +21,7 @@ const Dashboard = () => {
   const [selectedAuthors, setSelectedAuthors] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [openCategoriesModal, setOpenCategoriesModal] = useState(false);
   const categories = useAllCategories();
   const authors = useAllAuthors();
   const token = Cookies.get("token");
@@ -126,6 +127,84 @@ const Dashboard = () => {
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
+  };
+
+  const handleEditCategory = (category) => {
+    const newCategory = prompt("Enter the new category:");
+    if (newCategory) {
+      // Send a request to your backend to update the category
+      axios
+        .put(
+          import.meta.env.VITE_BACKEND_URL + "/categories/" + category,
+          { newCategory },
+          { headers: { Authorization: token } }
+        )
+        .then(() => {
+          enqueueSnackbar("Category updated successfully.", {
+            variant: "success",
+            persist: false,
+          });
+          fetchQuotes(); // Refresh quotes after editing category
+        })
+        .catch((error) => {
+          enqueueSnackbar(error.message, {
+            variant: "error",
+            persist: false,
+          });
+        });
+    }
+  };
+
+  const handleDeleteCategory = (category) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this category?"
+    );
+    if (confirmDelete) {
+      // Send a request to your backend to delete the category
+      axios
+        .delete(import.meta.env.VITE_BACKEND_URL + "/categories/" + category, {
+          headers: { Authorization: token },
+        })
+        .then(() => {
+          enqueueSnackbar("Category deleted successfully.", {
+            variant: "success",
+            persist: false,
+          });
+          fetchQuotes(); // Refresh quotes after deleting category
+        })
+        .catch((error) => {
+          enqueueSnackbar(error.message, {
+            variant: "error",
+            persist: false,
+          });
+        });
+    }
+  };
+
+  const handleAddCategory = (quoteId) => {
+    const category = prompt("Enter the new category:");
+    if (category) {
+      // Send a request to your backend to add the category
+      axios
+        .post(
+          import.meta.env.VITE_BACKEND_URL + "/categories/add/" + quoteId,
+          { category },
+          { headers: { Authorization: token } }
+        )
+        .then(() => {
+          enqueueSnackbar("Category added successfully.", {
+            variant: "success",
+            persist: false,
+          });
+          fetchQuotes(); // Refresh quotes after adding category
+        })
+        .catch((error) => {
+          enqueueSnackbar(error.message, {
+            variant: "error",
+            persist: false,
+          });
+        });
+    }
   };
 
   const renderPagination = () => {
@@ -496,7 +575,73 @@ const Dashboard = () => {
                           >
                             Delete
                           </Dropdown.Item>
+                          <Dropdown.Item
+                            onClick={() => setOpenCategoriesModal(true)}
+                          >
+                            Edit Catgories
+                          </Dropdown.Item>
                         </Dropdown>
+                        {/* Categories Modal */}
+                        <Modal
+                          show={openCategoriesModal}
+                          onClose={() => setOpenCategoriesModal(false)}
+                        >
+                          <Modal.Header>
+                            <div className="flex justify-between gap-4">
+                              <p>Edit Categories </p>
+                              <Button
+                                color="light"
+                                size="xs"
+                                onClick={() => handleAddCategory(quote._id)}
+                              >
+                                Add new Category
+                              </Button>
+                            </div>
+                          </Modal.Header>
+                          <Modal.Body>
+                            <Table>
+                              <Table.Head>
+                                <Table.HeadCell>Catgories</Table.HeadCell>
+                                <Table.HeadCell>Edit</Table.HeadCell>
+                                <Table.HeadCell>Delete</Table.HeadCell>
+                              </Table.Head>
+                              <Table.Body className="divide-y">
+                                {quote.categories.map((category) => (
+                                  <Table.Row
+                                    className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                                    key={category}
+                                  >
+                                    <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                                      {category}
+                                    </Table.Cell>
+                                    <Table.Cell>
+                                      <Button
+                                        color="success"
+                                        size="xs"
+                                        onClick={() =>
+                                          handleEditCategory(category)
+                                        }
+                                      >
+                                        Edit
+                                      </Button>
+                                    </Table.Cell>
+                                    <Table.Cell>
+                                      <Button
+                                        color="failure"
+                                        size="xs"
+                                        onClick={() =>
+                                          handleDeleteCategory(category)
+                                        }
+                                      >
+                                        Delete
+                                      </Button>
+                                    </Table.Cell>
+                                  </Table.Row>
+                                ))}
+                              </Table.Body>
+                            </Table>
+                          </Modal.Body>
+                        </Modal>
                       </td>
                     </tr>
                   ))}
@@ -550,6 +695,7 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
+
       {/* <!-- Update modal --> */}
       {showUpdateModal && (
         <div

@@ -15,4 +15,7 @@ router.put("/:category", authMiddleware, categoryController.updateCategory);
 // Delete category from all quotes
 router.delete("/:category", authMiddleware, categoryController.deleteCategory);
 
+// Add category to quote
+router.post("/add/:quoteId", authMiddleware, categoryController.addCategory);
+
 module.exports = router;
