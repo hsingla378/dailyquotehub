@@ -1,8 +1,12 @@
 const Quote = require("../models/quote");
+const RSS = require("rss");
 
 exports.getAllQuotes = async (req, res) => {
   try {
-    const quotes = await Quote.find().sort({ _id: -1 });
+    const quotes = await Quote.find()
+      .populate("author")
+      .populate("book")
+      .sort({ _id: -1 });
     res.json(quotes);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -97,6 +101,34 @@ exports.deleteQuote = async (req, res) => {
   try {
     await Quote.findByIdAndDelete(req.params.id);
     res.json({ message: "Quote deleted" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.getRssFeed = async (req, res) => {
+  try {
+    const quotes = await Quote.find().sort({ _id: -1 });
+
+    const feed = new RSS({
+      title: "Your Quote RSS Feed",
+      description: "Latest quotes from your collection",
+      feed_url: "http://yourdomain.com/api/quotes/rss", // Change this URL to your actual domain and endpoint
+      site_url: "http://yourdomain.com", // Change this URL to your actual domain
+    });
+
+    quotes.forEach((quote) => {
+      feed.item({
+        title: quote.title,
+        description: quote.description,
+        url: `http://yourdomain.com/api/quotes/${quote.slug}`, // Change this URL to your actual domain and quote endpoint
+        author: quote.author.name,
+        date: quote.createdAt,
+      });
+    });
+
+    res.set("Content-Type", "application/xml");
+    res.send(feed.xml({ indent: true }));
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

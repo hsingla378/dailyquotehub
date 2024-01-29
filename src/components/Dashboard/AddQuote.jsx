@@ -121,17 +121,14 @@ const AddQuote = () => {
         avatar: "",
       },
     }));
-    if (authorName === "other") {
-      setSelectedAuthor("other");
-    } else {
-      const author = existingAuthors.find(
-        (a) => a.name.toLowerCase() === authorName.toLowerCase()
-      );
-      setQuoteDetails((prevDetails) => ({
-        ...prevDetails,
-        author,
-      }));
-    }
+
+    const author = existingAuthors.find(
+      (a) => a.name.toLowerCase() === authorName.toLowerCase()
+    );
+    setQuoteDetails((prevDetails) => ({
+      ...prevDetails,
+      author,
+    }));
   };
 
   const handleSubmit = async () => {
@@ -390,7 +387,6 @@ const AddQuote = () => {
                 {author.name}
               </option>
             ))}
-            <option value="other">Other (Create New Author)</option>
           </select>
         </div>
 
@@ -533,144 +529,16 @@ const AddQuote = () => {
             </div>
           </div>
         )}
-
-        {/* Navigation Buttons */}
-        {/* <div className="mt-4 flex justify-between">
-          <button onClick={handlePrev} className="btn">
-            Back
-          </button>
-          <Button
-            size="sm"
-            onClick={handleNext}
-            isProcessing={uploadingImage}
-            disabled={
-              !quoteDetails.author.name.trim() ||
-              !quoteDetails.author.designation ||
-              !quoteDetails.author.description ||
-              !quoteDetails.author.avatar
-                ? true
-                : false
-            }
-          >
-            Next
-          </Button>
-        </div> */}
       </div>
 
-      <div className="my-4">
-        <h1 className="text-2xl font-bold mb-4">Book Details</h1>
-
-        {/* Book Name Input */}
-        <div className="mb-4">
-          <label
-            htmlFor="bookName"
-            className="block text-sm font-medium text-gray-600"
-          >
-            Book Name
-          </label>
-          <input
-            type="text"
-            id="bookName"
-            name="bookName"
-            value={quoteDetails.book.name}
-            onChange={(e) =>
-              setQuoteDetails((prevDetails) => ({
-                ...prevDetails,
-                book: { ...prevDetails.book, name: e.target.value },
-              }))
-            }
-            className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-          />
-        </div>
-
-        {/* Thumbnail Upload */}
-        <div className="mb-4">
-          <label
-            htmlFor="thumbnail"
-            className="block text-sm font-medium text-gray-600"
-          >
-            Thumbnail (Book Image)
-          </label>
-          <input
-            type="file"
-            id="thumbnail"
-            name="thumbnail"
-            accept="image/*"
-            onChange={(e) => {
-              const data = new FormData();
-              data.append("file", e.target.files[0]);
-              data.append("upload_preset", import.meta.env.VITE_UPLOAD_PRESET);
-              data.append("cloud_name", import.meta.env.VITE_CLOUD_NAME);
-
-              setUploadingImage(true);
-              enqueueSnackbar("Uploading Image", {
-                variant: "warning",
-                persist: false,
-              });
-              fetch(import.meta.env.VITE_CLOUDINARY_URL, {
-                method: "post",
-                body: data,
-              })
-                .then((res) => res.json())
-                .then((data) => {
-                  setQuoteDetails((prevDetails) => ({
-                    ...prevDetails,
-                    book: {
-                      ...prevDetails.book,
-                      image: data.url,
-                    },
-                  }));
-                  setUploadingImage(false);
-                  enqueueSnackbar("Image Uploaded", {
-                    variant: "success",
-                    persist: false,
-                  });
-                })
-                .catch((err) => {
-                  console.log(err);
-                  setUploadingImage(false);
-                  enqueueSnackbar("Uploading Image", {
-                    variant: "error",
-                    persist: false,
-                  });
-                });
-            }}
-            className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-          />
-        </div>
-
-        {/* Amazon Link Input */}
-        <div className="mb-4">
-          <label
-            htmlFor="amazonLink"
-            className="block text-sm font-medium text-gray-600"
-          >
-            Amazon Link
-          </label>
-          <input
-            type="text"
-            id="amazonLink"
-            name="amazonLink"
-            value={quoteDetails.book.amazonLink}
-            onChange={(e) =>
-              setQuoteDetails((prevDetails) => ({
-                ...prevDetails,
-                book: { ...prevDetails.book, amazonLink: e.target.value },
-              }))
-            }
-            className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-          />
-        </div>
-
-        {/* Navigation Buttons */}
-        <div className="mt-4 flex justify-between">
-          {/* <button onClick={handlePrev} className="btn">
+      {/* Navigation Buttons */}
+      <div className="mt-4 flex justify-between">
+        {/* <button onClick={handlePrev} className="btn">
             Back
           </button> */}
-          <Button onClick={handleSubmit} className="btn">
-            Submit
-          </Button>
-        </div>
+        <Button onClick={handleSubmit} className="btn">
+          Submit
+        </Button>
       </div>
     </div>
   );

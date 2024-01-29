@@ -6,15 +6,12 @@ const quoteSchema = new mongoose.Schema({
   categories: [String],
   thumbnail: String,
   author: {
-    name: { type: String, lowercase: true },
-    designation: String,
-    description: String,
-    avatar: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Author",
   },
   book: {
-    name: String,
-    image: String,
-    amazonLink: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Book",
   },
   slug: { type: String, unique: true, required: true },
 });

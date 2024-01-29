@@ -3,36 +3,31 @@ import { FaPinterest } from "react-icons/fa";
 import useAllQuotes from "../utils/useAllQuotes";
 import { useEffect, useState } from "react";
 import { capitalizeTitle } from "../utils/constants";
+import useAllAuthors from "../utils/useAllAuthors";
+import useAllCategories from "../utils/useAllCategories";
 
 const Footer = () => {
-  const quotes = useAllQuotes();
+  const authors = useAllAuthors();
+  const categories = useAllCategories();
   const [topCategories, setTopCategories] = useState([]);
   const [topAuthors, setTopAuthors] = useState([]);
 
   useEffect(() => {
     // Calculate top categories
-    const categoryCounts = {};
-    quotes.forEach((quote) => {
-      quote.categories.forEach((category) => {
-        categoryCounts[category] = (categoryCounts[category] || 0) + 1;
-      });
-    });
-    const sortedCategories = Object.keys(categoryCounts).sort(
-      (a, b) => categoryCounts[b] - categoryCounts[a]
-    );
+    const sortedCategories = categories.sort();
     setTopCategories(sortedCategories.slice(0, 4));
 
     // Calculate top authors
     const authorCounts = {};
-    quotes.forEach((quote) => {
-      const authorName = quote.author.name.toLowerCase();
+    authors.forEach((author) => {
+      const authorName = author.name.toLowerCase();
       authorCounts[authorName] = (authorCounts[authorName] || 0) + 1;
     });
     const sortedAuthors = Object.keys(authorCounts).sort(
       (a, b) => authorCounts[b] - authorCounts[a]
     );
     setTopAuthors(sortedAuthors.slice(0, 4));
-  }, [quotes]);
+  }, [authors]);
 
   return (
     <footer className="mt-4">
