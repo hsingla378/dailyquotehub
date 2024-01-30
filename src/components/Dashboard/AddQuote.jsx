@@ -1,546 +1,145 @@
-import axios from "axios";
-import { Button } from "flowbite-react";
+import { Button, Modal } from "flowbite-react";
+import React, { useState } from "react";
 import Cookies from "js-cookie";
 import { SnackbarProvider, enqueueSnackbar } from "notistack";
-import { useState, useEffect } from "react";
-
-const fetchCategoriesFromAPI = async () => {
-  try {
-    let response = await axios.get(
-      import.meta.env.VITE_BACKEND_URL + "/categories"
-    );
-    let data = await response.data;
-    return data;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-const fetchAuthorsFromAPI = async () => {
-  try {
-    let response = await axios.get(
-      import.meta.env.VITE_BACKEND_URL + "/authors"
-    );
-    let data = await response.data;
-    return data;
-  } catch (error) {
-    console.log(error);
-  }
-};
+import axios from "axios";
 
 const AddQuote = () => {
-  const [uploadingImage, setUploadingImage] = useState(false);
-  const [quoteDetails, setQuoteDetails] = useState({
+  const [quoteInfo, setQuoteInfo] = useState({
     title: "",
     description: "",
-    thumbnail: "",
     categories: [],
-    author: {
-      name: "",
-      designation: "",
-      description: "",
-      avatar: "",
-    },
-    book: {
-      name: "",
-      image: "",
-      amazonLink: "",
-    },
+    thumbnail: "",
+    author: "",
+    book: "",
   });
-  const [existingCategories, setExistingCategories] = useState([]);
-  const [newCategory, setNewCategory] = useState("");
-  const [existingAuthors, setExistingAuthors] = useState([]);
-  const [selectedAuthor, setSelectedAuthor] = useState(null);
+  const token = Cookies.get("token");
 
-  useEffect(() => {
-    // Fetch existing categories from the API when the component mounts
-    const fetchCategories = async () => {
-      const categories = await fetchCategoriesFromAPI();
-      setExistingCategories(categories);
-    };
-
-    fetchCategories();
-  }, []);
-
-  useEffect(() => {
-    // Fetch existing authors from the API when the component mounts
-    const fetchAuthors = async () => {
-      const authors = await fetchAuthorsFromAPI();
-      setExistingAuthors(authors);
-    };
-
-    fetchAuthors();
-  }, []);
-
-  const handleCategoryChange = (category) => {
-    setQuoteDetails((prevDetails) => {
-      const existingCategories = prevDetails.categories.includes(category)
-        ? prevDetails.categories.filter((cat) => cat !== category)
-        : [...prevDetails.categories, category];
-
-      return {
-        ...prevDetails,
-        categories: existingCategories,
-      };
-    });
-  };
-
-  const handleNewCategoryChange = (e) => {
-    setNewCategory(e.target.value);
-  };
-
-  const handleAddNewCategory = () => {
-    if (newCategory.trim() !== "") {
-      setQuoteDetails((prevDetails) => ({
-        ...prevDetails,
-        categories: [...prevDetails.categories, newCategory.trim()],
-      }));
-      setNewCategory("");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!token) {
+      enqueueSnackbar("Kindly login!", {
+        variant: "success",
+        persist: false,
+      });
+      return;
     }
-  };
 
-  const handleRemoveCategory = (index) => {
-    setQuoteDetails((prevDetails) => {
-      const updatedCategories = [...prevDetails.categories];
-      updatedCategories.splice(index, 1);
-
-      return {
-        ...prevDetails,
-        categories: updatedCategories,
-      };
-    });
-  };
-
-  const handleAuthorChange = (authorName) => {
-    setQuoteDetails((prevDetails) => ({
-      ...prevDetails,
-      author: {
-        name: "",
-        designation: "",
-        description: "",
-        avatar: "",
-      },
-    }));
-
-    const author = existingAuthors.find(
-      (a) => a.name.toLowerCase() === authorName.toLowerCase()
-    );
-    setQuoteDetails((prevDetails) => ({
-      ...prevDetails,
-      author,
-    }));
-  };
-
-  const handleSubmit = async () => {
     let config = {
       method: "post",
       maxBodyLength: Infinity,
       url: import.meta.env.VITE_BACKEND_URL + "/quotes",
       headers: {
-        Authorization:
-          Cookies.get("token") !== null ? `Bearer ${Cookies.get("token")}` : "",
-        "Content-Type": "application/json",
+        Authorization: token,
       },
-      data: quoteDetails,
+      data: quoteInfo,
     };
 
-    try {
-      await axios.request(config);
-
-      setQuoteDetails({
-        title: "",
-        description: "",
-        thumbnail: "",
-        categories: [],
-        author: {
-          name: "",
-          designation: "",
+    axios
+      .request(config)
+      .then((response) => {
+        enqueueSnackbar("Quote Added!", {
+          variant: "success",
+          persist: false,
+        });
+        setQuoteInfo({
+          title: "",
           description: "",
-          avatar: "",
-        },
-        book: {
-          name: "",
-          image: "",
-          amazonLink: "",
-        },
+          categories: [],
+          thumbnail: "",
+          author: "",
+          book: "",
+        });
+      })
+      .catch((error) => {
+        enqueueSnackbar(error, {
+          variant: "error",
+          persist: false,
+        });
       });
-      setSelectedAuthor(null);
-      setUploadingImage(false);
-      enqueueSnackbar("Quote details submitted successfully", {
-        variant: "success",
-        persist: false,
-      });
-    } catch (error) {
-      enqueueSnackbar(error, {
-        variant: "error",
-        persist: false,
-      });
-    }
   };
 
   return (
-    <div className="max-w-md mx-auto my-8 p-8 bg-white rounded shadow overflow-y-auto max-h-[500px]">
-      <SnackbarProvider
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-      />
-
-      <div className="my-4">
-        <h1 className="text-2xl font-bold mb-4">General Quote Details</h1>
-
-        {/* Title Input */}
-        <div className="mb-4">
+    <>
+      <Modal.Header>Add a Quote</Modal.Header>
+      <Modal.Body>
+        <SnackbarProvider
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        />
+        <div className="mb-6">
           <label
             htmlFor="title"
-            className="block text-sm font-medium text-gray-600"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >
-            Title
+            Name
           </label>
           <input
             type="text"
             id="title"
-            name="title"
-            value={quoteDetails.title}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            value={quoteInfo.title}
             onChange={(e) =>
-              setQuoteDetails((prevDetails) => ({
-                ...prevDetails,
-                title: e.target.value,
-              }))
+              setQuoteInfo({ ...quoteInfo, title: e.target.value })
             }
-            className="mt-1 p-2 border border-gray-300 rounded-md w-full"
           />
         </div>
-
-        {/* Description Textarea */}
-        <div className="mb-4">
+        <div className="mb-6">
           <label
             htmlFor="description"
-            className="block text-sm font-medium text-gray-600"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >
+            Designation
+          </label>
+          <input
+            type="text"
+            id="description"
+            value={quoteInfo.description}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            onChange={(e) =>
+              setQuoteInfo({ ...quoteInfo, description: e.target.value })
+            }
+          />
+        </div>
+        {/* <div className="mb-6">
+          <label
+            htmlFor="categories"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >
             Description
           </label>
-          <textarea
-            id="description"
-            name="description"
-            value={quoteDetails.description}
+          <input
+            type="text"
+            id="categories"
+            value={quoteInfo.categories}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             onChange={(e) =>
-              setQuoteDetails((prevDetails) => ({
-                ...prevDetails,
-                description: e.target.value,
-              }))
+              setQuoteInfo({ ...quoteInfo, description: e.target.value })
             }
-            rows="4"
-            className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-          ></textarea>
-        </div>
-
-        {/* Thumbnail Upload */}
-        <div className="mb-4">
+          />
+        </div> */}
+        <div className="mb-6">
           <label
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             htmlFor="thumbnail"
-            className="block text-sm font-medium text-gray-600"
           >
-            Thumbnail
+            Upload Avatar
           </label>
           <input
-            type="file"
+            className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
             id="thumbnail"
-            name="thumbnail"
+            type="file"
             accept="image/*"
             onChange={(e) => {
-              const data = new FormData();
-              data.append("file", e.target.files[0]);
-              data.append("upload_preset", import.meta.env.VITE_UPLOAD_PRESET);
-              data.append("cloud_name", import.meta.env.VITE_CLOUD_NAME);
-              setUploadingImage(true);
-              enqueueSnackbar("Uploading Thumbnail", {
-                variant: "warning",
-                persist: false,
-              });
-              fetch(import.meta.env.VITE_CLOUDINARY_URL, {
-                method: "post",
-                body: data,
-              })
-                .then((res) => res.json())
-                .then((data) => {
-                  setQuoteDetails((prevDetails) => ({
-                    ...prevDetails,
-                    thumbnail: data.url,
-                  }));
-                  setUploadingImage(false);
-                  enqueueSnackbar("Thumbnail Uploaded!", {
-                    variant: "success",
-                    persist: false,
-                  });
-                })
-                .catch((err) => {
-                  console.log(err);
-                  setUploadingImage(false);
-                  enqueueSnackbar(err, {
-                    variant: "error",
-                    persist: false,
-                  });
-                });
+              console.log(e.target.files[0]);
+              setQuoteInfo({ ...quoteInfo, avatar: e.target.files[0].name });
             }}
-            className="mt-1 p-2 border border-gray-300 rounded-md w-full"
           />
         </div>
-      </div>
-
-      <div className="my-4">
-        <h1 className="text-2xl font-bold mb-4">Categories</h1>
-
-        {/* Existing Categories */}
-        <label
-          htmlFor="categories"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white mt-4"
-        >
-          Select Categories
-        </label>
-        <select
-          id="categories"
-          className="bg-gray-50 border my-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          onChange={(e) => handleCategoryChange(e.target.value)}
-        >
-          <option selected disabled value={""}>
-            Choose a category
-          </option>
-          {existingCategories.map((category) => (
-            <option value={category} key={category}>
-              {category}
-            </option>
-          ))}
-        </select>
-
-        {/* New Category Input */}
-        <div className="mt-4">
-          <label
-            htmlFor="newCategory"
-            className="block text-sm font-medium text-gray-600"
-          >
-            Add New Category
-          </label>
-          <div className="flex">
-            <input
-              type="text"
-              id="newCategory"
-              value={newCategory}
-              onChange={handleNewCategoryChange}
-              className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-            />
-            <button onClick={handleAddNewCategory} className="ml-2 btn">
-              Add
-            </button>
-          </div>
-        </div>
-
-        {/* Selected Categories */}
-        {quoteDetails.categories.length > 0 && (
-          <div className="my-4">
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white mt-4">
-              Selected Categories
-            </label>
-
-            {quoteDetails.categories.map((category, index) => (
-              <span
-                type="button"
-                key={category}
-                className="relative text-black border-gray-300 border-2 hover:shadow-xl focus:ring-4 focus:ring-blue-300 font-normal rounded-lg text-xs sm:text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none"
-              >
-                {category}
-                <button
-                  type="button"
-                  className="absolute top-0 right-0 p-1 text-red-500 hover:text-red-700"
-                  onClick={() => handleRemoveCategory(index)}
-                >
-                  &#10006;
-                </button>
-              </span>
-            ))}
-          </div>
-        )}
-      </div>
-
-      <div className="my-4">
-        <h1 className="text-2xl font-bold mb-4">Author Details</h1>
-
-        {/* Dropdown for Existing Authors */}
-
-        <div className="mb-4">
-          <label
-            htmlFor="existingAuthor"
-            className="block text-sm font-medium text-gray-600"
-          >
-            Select Existing Author
-          </label>
-          <select
-            id="existingAuthor"
-            name="existingAuthor"
-            // value={selectedAuthor ? selectedAuthor.value : ""}
-            onChange={(e) => handleAuthorChange(e.target.value)}
-            className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-          >
-            <option selected value="">
-              Select an existing author
-            </option>
-            {existingAuthors.map((author) => (
-              <option key={author.name} value={author.name}>
-                {author.name}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {/* Conditional Rendering for New Author Form */}
-        {selectedAuthor === "other" && (
-          <div className="mb-4">
-            <h2 className="text-lg font-semibold mb-2">Create a New Author</h2>
-
-            {/* New Author Details */}
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label
-                  htmlFor="newAuthorName"
-                  className="block text-sm font-medium text-gray-600"
-                >
-                  Name
-                </label>
-                <input
-                  type="text"
-                  id="newAuthorName"
-                  name="name"
-                  value={quoteDetails.author.name}
-                  onChange={(e) =>
-                    setQuoteDetails((prevDetails) => ({
-                      ...prevDetails,
-                      author: {
-                        ...prevDetails.author,
-                        name: e.target.value,
-                      },
-                    }))
-                  }
-                  className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-                />
-              </div>
-              <div>
-                <label
-                  htmlFor="newAuthorDesignation"
-                  className="block text-sm font-medium text-gray-600"
-                >
-                  Designation
-                </label>
-                <input
-                  type="text"
-                  id="newAuthorDesignation"
-                  name="designation"
-                  value={quoteDetails.author.designation}
-                  onChange={(e) =>
-                    setQuoteDetails((prevDetails) => ({
-                      ...prevDetails,
-                      author: {
-                        ...prevDetails.author,
-                        designation: e.target.value,
-                      },
-                    }))
-                  }
-                  className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-                />
-              </div>
-              <div className="col-span-2">
-                <label
-                  htmlFor="newAuthorDescription"
-                  className="block text-sm font-medium text-gray-600"
-                >
-                  Description
-                </label>
-                <textarea
-                  id="newAuthorDescription"
-                  name="description"
-                  value={quoteDetails.author.description}
-                  onChange={(e) =>
-                    setQuoteDetails((prevDetails) => ({
-                      ...prevDetails,
-                      author: {
-                        ...prevDetails.author,
-                        description: e.target.value,
-                      },
-                    }))
-                  }
-                  rows="4"
-                  className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-                ></textarea>
-              </div>
-              <div className="col-span-2">
-                <label
-                  htmlFor="newAuthorAvatar"
-                  className="block text-sm font-medium text-gray-600"
-                >
-                  Avatar (Image Upload)
-                </label>
-                <input
-                  type="file"
-                  id="newAuthorAvatar"
-                  name="avatar"
-                  accept="image/*"
-                  onChange={(e) => {
-                    const data = new FormData();
-                    data.append("file", e.target.files[0]);
-                    data.append(
-                      "upload_preset",
-                      import.meta.env.VITE_UPLOAD_PRESET
-                    );
-                    data.append("cloud_name", import.meta.env.VITE_CLOUD_NAME);
-
-                    setUploadingImage(true);
-                    enqueueSnackbar("Uploading Image", {
-                      variant: "warning",
-                      persist: false,
-                    });
-                    fetch(import.meta.env.VITE_CLOUDINARY_URL, {
-                      method: "post",
-                      body: data,
-                    })
-                      .then((res) => res.json())
-                      .then((data) => {
-                        setQuoteDetails((prevDetails) => ({
-                          ...prevDetails,
-                          author: {
-                            ...prevDetails.author,
-                            avatar: data.url,
-                          },
-                        }));
-                        setUploadingImage(false);
-                        enqueueSnackbar("Image Uploaded", {
-                          variant: "success",
-                          persist: false,
-                        });
-                      })
-                      .catch((err) => {
-                        console.log(err);
-                        setUploadingImage(false);
-                        enqueueSnackbar(err, {
-                          variant: "error",
-                          persist: false,
-                        });
-                      });
-                  }}
-                  className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-                />
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* Navigation Buttons */}
-      <div className="mt-4 flex justify-between">
-        {/* <button onClick={handlePrev} className="btn">
-            Back
-          </button> */}
-        <Button onClick={handleSubmit} className="btn">
+        <Button color="blue" className="m-auto w-full" onClick={handleSubmit}>
           Submit
         </Button>
-      </div>
-    </div>
+      </Modal.Body>
+    </>
   );
 };
 
