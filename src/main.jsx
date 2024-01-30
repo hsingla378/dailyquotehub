@@ -22,7 +22,7 @@ import Search from "./components/Search.jsx";
 import { register } from "swiper/element/bundle";
 import PrivacyPolicy from "./components/PrivacyPolicy.jsx";
 import Cookies from "js-cookie";
-import AddMultipleQuotesPage from "./components/Dashboard/AddMultipleQuotesPage.jsx";
+import AddMultipleQuotesPage from "./components/Dashboard/AddMultipleQuotes.jsx";
 import AuthorsPage from "./components/Dashboard/AuthorsPage.jsx";
 import BooksPage from "./components/Dashboard/BooksPage.jsx";
 

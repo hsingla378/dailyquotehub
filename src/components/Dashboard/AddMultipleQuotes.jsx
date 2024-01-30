@@ -5,7 +5,7 @@ import { SnackbarProvider, enqueueSnackbar } from "notistack";
 import axios from "axios";
 import Select from "react-select";
 
-const AddQuote = () => {
+const AddMultipleQuotes = () => {
   const [quoteInfo, setQuoteInfo] = useState({
     title: "",
     description: "",
@@ -115,7 +115,6 @@ const AddQuote = () => {
           description: "",
           categories: [],
           thumbnail: "",
-          author: "",
           book: "",
         });
       })
@@ -154,80 +153,12 @@ const AddQuote = () => {
 
   return (
     <>
-      <Modal.Header>Add a Quote</Modal.Header>
+      <Modal.Header>Add Multiple Quotes</Modal.Header>
       <Modal.Body>
         <SnackbarProvider
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
         />
         <div className="mb-6">
-          <label
-            htmlFor="title"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >
-            Title
-          </label>
-          <input
-            type="text"
-            id="title"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-            value={quoteInfo.title}
-            onChange={(e) =>
-              setQuoteInfo({ ...quoteInfo, title: e.target.value })
-            }
-          />
-        </div>
-        <div className="mb-6">
-          <label
-            htmlFor="description"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >
-            Description
-          </label>
-          <input
-            type="text"
-            id="description"
-            value={quoteInfo.description}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-            onChange={(e) =>
-              setQuoteInfo({ ...quoteInfo, description: e.target.value })
-            }
-          />
-        </div>
-        <div className="mb-6">
-          <label
-            htmlFor="categories"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >
-            Categories
-          </label>
-          <Select
-            id="categories"
-            className="bg-gray-50 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full"
-            isMulti
-            options={[
-              ...existingCategories.map((category) => ({
-                value: category,
-                label: category,
-              })),
-              // Add an option to add a new category
-              { value: newCategory, label: newCategory },
-            ]}
-            value={quoteInfo.categories.map((category) => ({
-              value: category,
-              label: category,
-            }))}
-            onChange={handleCategoryChange}
-            onInputChange={handleNewCategoryChange}
-            styles={customStyles}
-          />
-        </div>
-        <div className="mb-6">
-          <label
-            htmlFor="author"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >
-            Author
-          </label>
           <select
             id="author"
             className="bg-gray-50 border border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -245,47 +176,73 @@ const AddQuote = () => {
             ))}
           </select>
         </div>
-        <div className="mb-6">
-          <label
-            htmlFor="book"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >
-            Book
-          </label>
-          <select
-            id="book"
-            className="bg-gray-50 border border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            onChange={(e) =>
-              setQuoteInfo({ ...quoteInfo, book: e.target.value })
-            }
-          >
-            <option selected disabled>
-              Choose a Book
-            </option>
-            {books.map((book) => (
-              <option key={book._id} value={book._id}>
-                {book.name}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="mb-6">
-          <label
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            htmlFor="thumbnail"
-          >
-            Upload Thumbnail
-          </label>
-          <input
-            className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-            id="thumbnail"
-            type="file"
-            accept="image/*"
-            onChange={(e) => {
-              console.log(e.target.files[0]);
-              setQuoteInfo({ ...quoteInfo, thumbnail: e.target.files[0].name });
-            }}
-          />
+        <div className="flex justify-between">
+          {" "}
+          <div className="mb-6">
+            <input
+              type="text"
+              id="title"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              placeholder="Title"
+              value={quoteInfo.title}
+              onChange={(e) =>
+                setQuoteInfo({ ...quoteInfo, title: e.target.value })
+              }
+            />
+          </div>
+          <div className="mb-6">
+            <input
+              type="text"
+              id="description"
+              value={quoteInfo.description}
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              placeholder="Description"
+              onChange={(e) =>
+                setQuoteInfo({
+                  ...quoteInfo,
+                  description: e.target.value,
+                })
+              }
+            />
+          </div>
+          <div className="mb-6">
+            <Select
+              id="categories"
+              className="bg-gray-50 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full"
+              placeholder="Select Categories"
+              isMulti
+              options={[
+                ...existingCategories.map((category) => ({
+                  value: category,
+                  label: category,
+                })),
+                // Add an option to add a new category
+                { value: newCategory, label: newCategory },
+              ]}
+              value={quoteInfo.categories.map((category) => ({
+                value: category,
+                label: category,
+              }))}
+              onChange={handleCategoryChange}
+              onInputChange={handleNewCategoryChange}
+              styles={customStyles}
+            />
+          </div>
+          <div className="mb-6">
+            <input
+              className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+              id="thumbnail"
+              type="file"
+              accept="image/*"
+              onChange={(e) => {
+                console.log(e.target.files[0]);
+                setQuoteInfo({
+                  ...quoteInfo,
+                  thumbnail: e.target.files[0].name,
+                });
+              }}
+            />
+          </div>
         </div>
         <Button color="blue" className="m-auto w-full" onClick={handleSubmit}>
           Submit
@@ -295,4 +252,4 @@ const AddQuote = () => {
   );
 };
 
-export default AddQuote;
+export default AddMultipleQuotes;

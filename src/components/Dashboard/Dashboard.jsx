@@ -5,7 +5,7 @@ import axios from "axios";
 import { SnackbarProvider, enqueueSnackbar } from "notistack";
 import { capitalizeTitle } from "../../utils/constants";
 import AddQuote from "./AddQuote";
-import AddMultipleQuotesPage from "./AddMultipleQuotesPage";
+import AddMultipleQuotes from "./AddMultipleQuotes";
 import { Button, Dropdown, Modal, Table } from "flowbite-react";
 import UpdateQuote from "./UpdateQuote";
 import Cookies from "js-cookie";
@@ -344,10 +344,7 @@ const Dashboard = () => {
                     size={"7xl"}
                     onClose={() => setOpenMultipleQuotesModal(false)}
                   >
-                    <Modal.Header>Add Multiple Quotes</Modal.Header>
-                    <Modal.Body>
-                      <AddMultipleQuotesPage />
-                    </Modal.Body>
+                    <AddMultipleQuotes />
                   </Modal>
                 </>
                 {/* Add a Quote */}
@@ -364,10 +361,7 @@ const Dashboard = () => {
                     size={"2xl"}
                     onClose={() => setOpenAddQuoteModal(false)}
                   >
-                    <Modal.Header>Add a Quote</Modal.Header>
-                    <Modal.Body>
-                      <AddQuote />{" "}
-                    </Modal.Body>
+                    <AddQuote />{" "}
                   </Modal>
                 </>
                 {/* Add Author */}
@@ -562,41 +556,119 @@ const Dashboard = () => {
                           {quote.title}
                         </th>
                         <td className="px-4 py-3 truncate max-w-[12rem]">
-                          {quote.categories.join(" ")}
+                          {quote.categories
+                            .map((category) => capitalizeTitle(category))
+                            .join(", ")}
                         </td>
                         <td className="px-4 py-3 truncate max-w-[12rem]">
                           {capitalizeTitle(quote.author.name)}
                         </td>
-                        <td className="px-4 py-3 truncate max-w-[12rem]">
+                        <td className="px-4 py-3 max-w-[12rem] truncate">
                           {quote.book.name}
                         </td>
                         <td className="px-4 py-3 flex items-center justify-end">
                           <Dropdown
-                            color="dark"
-                            size="sm"
-                            label="Action "
+                            label="Action"
+                            size={"sm"}
+                            color={"dark"}
                             dismissOnClick={false}
                           >
                             <Dropdown.Item
                               onClick={() => {
-                                setOpenUpdateQuoteModal(true);
+                                setShowUpdateModal(true);
                               }}
                             >
                               Edit
                             </Dropdown.Item>
                             <Dropdown.Item
+                              onClick={() =>
+                                window.open("/quotes/" + quote.slug, "_blank")
+                              }
+                            >
+                              Preview
+                            </Dropdown.Item>
+                            <Dropdown.Item
                               onClick={() => {
-                                deleteQuote(quote._id);
+                                confirm(
+                                  "Are you sure you want to delete this quote?"
+                                ) && deleteQuote(token, quote._id);
                               }}
                             >
                               Delete
                             </Dropdown.Item>
+                            <Dropdown.Item
+                              onClick={() => setOpenCategoriesModal(true)}
+                            >
+                              Edit Catgories
+                            </Dropdown.Item>
                           </Dropdown>
+                          {/* Update Quote Modal */}
                           <Modal
-                            show={openUpdateQuoteModal}
-                            onClose={() => setOpenUpdateQuoteModal(false)}
+                            show={showUpdateModal}
+                            onClose={() => setShowUpdateModal(false)}
                           >
-                            <UpdateQuoteModal bookId={quote._id} />
+                            <UpdateQuoteModal quoteId={quote._id} />
+                          </Modal>
+                          {/* Categories Modal */}
+                          <Modal
+                            show={openCategoriesModal}
+                            onClose={() => setOpenCategoriesModal(false)}
+                          >
+                            <Modal.Header>
+                              <div className="flex justify-between gap-4">
+                                <p>Edit Categories </p>
+                                <Button
+                                  color="light"
+                                  size="xs"
+                                  onClick={() => handleAddCategory(quote._id)}
+                                >
+                                  Add new Category
+                                </Button>
+                              </div>
+                            </Modal.Header>
+                            <Modal.Body>
+                              <Table>
+                                <Table.Head>
+                                  <Table.HeadCell>Catgories</Table.HeadCell>
+                                  <Table.HeadCell>Edit</Table.HeadCell>
+                                  <Table.HeadCell>Delete</Table.HeadCell>
+                                </Table.Head>
+                                <Table.Body className="divide-y">
+                                  {quote.categories.map((category) => (
+                                    <Table.Row
+                                      className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                                      key={category}
+                                    >
+                                      <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                                        {category}
+                                      </Table.Cell>
+                                      <Table.Cell>
+                                        <Button
+                                          color="success"
+                                          size="xs"
+                                          onClick={() =>
+                                            handleEditCategory(category)
+                                          }
+                                        >
+                                          Edit
+                                        </Button>
+                                      </Table.Cell>
+                                      <Table.Cell>
+                                        <Button
+                                          color="failure"
+                                          size="xs"
+                                          onClick={() =>
+                                            handleDeleteCategory(category)
+                                          }
+                                        >
+                                          Delete
+                                        </Button>
+                                      </Table.Cell>
+                                    </Table.Row>
+                                  ))}
+                                </Table.Body>
+                              </Table>
+                            </Modal.Body>
                           </Modal>
                         </td>
                       </tr>
@@ -609,57 +681,6 @@ const Dashboard = () => {
         </div>
       </section>
       {/* <!-- End block --> */}
-
-      {/* <!-- Update modal --> */}
-      {showUpdateModal && (
-        <div
-          id="updateProductModal"
-          tabIndex="-1"
-          aria-hidden="true"
-          className={
-            "flex overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
-          }
-        >
-          <div className="relative p-4 w-full max-w-2xl max-h-full">
-            {/* <!-- Modal content --> */}
-            <div className="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
-              {/* <!-- Modal header --> */}
-              <div className="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                  Update Product
-                </h3>
-                <button
-                  type="button"
-                  className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                  data-modal-toggle="updateProductModal"
-                  onClick={() => {
-                    setShowUpdateModal(false);
-                    setCurrentQuoteId(null);
-                    setCurrentQuoteSlug(null);
-                  }}
-                >
-                  <svg
-                    aria-hidden="true"
-                    className="w-5 h-5"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                  <span className="sr-only">Close modal</span>
-                </button>
-              </div>
-              {/* <!-- Modal body --> */}
-              <UpdateQuote id={currentQuoteId} slug={currentQuoteSlug} />
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

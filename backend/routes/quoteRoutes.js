@@ -7,7 +7,7 @@ router.get("/", quoteController.getAllQuotes);
 router.get("/random", quoteController.getRandomQuotes);
 router.get("/search", quoteController.searchQuotes);
 
-// router.get("/:id", quoteController.getQuoteById);
+router.get("/id/:id", quoteController.getQuoteById);
 router.get("/:slug", quoteController.getQuoteBySlug);
 router.post("/", authMiddleware, quoteController.createQuote);
 router.put("/:id", authMiddleware, quoteController.updateQuote);

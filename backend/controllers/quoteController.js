@@ -38,6 +38,22 @@ exports.searchQuotes = async (req, res) => {
   }
 };
 
+exports.getQuoteById = async (req, res) => {
+  try {
+    const quote = await Quote.findById(req.params.id)
+      .populate("author")
+      .populate("book");
+
+    if (!quote) {
+      return res.status(404).json({ message: "Quote not found" });
+    }
+
+    res.json(quote);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 exports.getQuoteBySlug = async (req, res) => {
   try {
     const quote = await Quote.findOne({ slug: req.params.slug });
@@ -74,6 +90,7 @@ exports.createQuote = async (req, res) => {
     }
   }
 
+  quote.book = quote.book ? quote.book : "65b8e5ecb99d964e6894974d";
   quote.slug = finalSlug;
 
   try {
