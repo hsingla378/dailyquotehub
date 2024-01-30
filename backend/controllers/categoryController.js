@@ -22,9 +22,10 @@ exports.getAllCategories = async (req, res) => {
 exports.getQuotesByCategory = async (req, res) => {
   try {
     const category = req.params.category;
-    const quotes = await Quote.find({ categories: { $in: [category] } }).sort({
-      _id: -1,
-    });
+    const quotes = await Quote.find({ categories: { $in: [category] } })
+      .populate("author")
+      .populate("book")
+      .sort({ _id: -1 });
 
     // Return the quotes in the response
     res.json(quotes);

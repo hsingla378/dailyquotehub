@@ -1,13 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-const useAuthorData = (author) => {
+const useAuthorData = (authorId) => {
   const [authorData, setAuthorData] = useState([]);
 
   const getAuthorData = async () => {
     try {
       let response = await axios.get(
-        import.meta.env.VITE_BACKEND_URL + "/authors/" + author
+        import.meta.env.VITE_BACKEND_URL + "/authors/get/" + authorId
       );
       let data = await response.data;
       setAuthorData(data);

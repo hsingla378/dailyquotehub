@@ -8,44 +8,84 @@ import useAllCategories from "../utils/useAllCategories";
 import Loading from "./Loading";
 import ExploreMore from "./ExploreMore";
 import useAllRandomQuotes from "../utils/useAllRandomQuotes";
+import React from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const LandingPage = () => {
-  const quotes = useAllRandomQuotes();
-  const authors = useAllAuthors();
-  const categories = useAllCategories();
+  const [quotes, setQuotes] = useState([]);
+  const [loadingQuotes, setLoadingQuotes] = useState(false);
+  const [authors, setAuthors] = useState([]);
+  const [loadingAuthors, setLoadingAuthors] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [loadingCategories, setLoadingCategories] = useState(false);
 
-  if (!quotes.length) return <Loading />;
+  const fetchQuotes = async () => {
+    setLoadingQuotes(true);
+    const res = await axios.get(import.meta.env.VITE_BACKEND_URL + "/quotes");
+    const data = res.data;
+    setQuotes(data);
+    setLoadingQuotes(false);
+  };
+
+  const fetchAuthors = async () => {
+    setLoadingAuthors(true);
+    const res = await axios.get(import.meta.env.VITE_BACKEND_URL + "/authors");
+    const data = res.data;
+    setAuthors(data);
+    setLoadingAuthors(false);
+  };
+
+  const fetchCategories = async () => {
+    setLoadingCategories(true);
+    const res = await axios.get(
+      import.meta.env.VITE_BACKEND_URL + "/categories"
+    );
+    const data = res.data;
+    setCategories(data);
+    setLoadingCategories(false);
+  };
+
+  useEffect(() => {
+    fetchQuotes();
+  }, []);
+
+  useEffect(() => {
+    fetchAuthors();
+  }, []);
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  console.log("quotes", quotes);
+  console.log("authors", authors);
+  console.log("categories", categories);
+
+  if (quotes.length === 0 || authors.length === 0 || categories.length === 0) {
+    return <Loading />;
+  }
 
   return (
     <div>
-      {quotes.length && (
-        <QOTD quote={quotes[Math.floor(Math.random() * quotes.length)]} />
-      )}
+      <QOTD quote={quotes[Math.floor(Math.random() * quotes.length)]} />
+
       {/* Authors */}
-      {authors.length && (
-        <>
-          <AuthorsContainer authors={authors.slice(0, 10)} />
-        </>
-      )}
-      {/*  Heading - Featured Quotes */}
-      {quotes.length && (
-        <>
-          <div className="flex items-baseline mb-8 mt-16 m-auto justify-between max-w-[90%] xl:max-w-screen-xl">
-            <Heading right={"Featured Quotes"} />
-            <ExploreMore text={"Quotes"} link={"/quotes"} />
-          </div>
-          <QuotesContainer quotes={quotes.slice(0, 10)} />
-        </>
-      )}
-      {categories.length && (
-        <>
-          <div className="flex items-baseline mb-8 mt-16 m-auto justify-between max-w-[90%] xl:lg:max-w-6xl">
-            <Heading right={"Categories"} />
-            <ExploreMore text={"Categories"} link={"/categories"} />
-          </div>
-          <CategoriesContainer categories={categories.slice(0, 20)} />
-        </>
-      )}
+      <AuthorsContainer authors={authors.slice(0, 10)} />
+
+      {/* Heading - Featured Quotes */}
+      <div className="flex items-baseline mb-8 mt-16 m-auto justify-between max-w-[90%] xl:max-w-screen-xl">
+        <Heading right={"Featured Quotes"} />
+        <ExploreMore text={"Quotes"} link={"/quotes"} />
+      </div>
+      <QuotesContainer quotes={quotes.slice(0, 10)} />
+
+      {/* Categories */}
+      <div className="flex items-baseline mb-8 mt-16 m-auto justify-between max-w-[90%] xl:lg:max-w-6xl">
+        <Heading right={"Categories"} />
+        <ExploreMore text={"Categories"} link={"/categories"} />
+      </div>
+      <CategoriesContainer categories={categories.slice(0, 20)} />
     </div>
   );
 };

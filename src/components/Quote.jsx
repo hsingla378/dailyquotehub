@@ -194,7 +194,7 @@ const Quote = () => {
                   )}
 
                   {/* Quote Description */}
-                  <p>{quoteInfo.description}</p>
+                  <p className="my-4">{quoteInfo.description}</p>
 
                   {/* Amazon Book Reference */}
                   {quoteInfo.book.amazonLink && (

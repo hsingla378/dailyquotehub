@@ -16,7 +16,10 @@ exports.getAllQuotes = async (req, res) => {
 exports.getRandomQuotes = async (req, res) => {
   try {
     const quotes = await Quote.aggregate([{ $sample: { size: 50000 } }]);
-    res.json(quotes);
+    const populatedQuotes = await Quote.populate(quotes, {
+      path: "author book",
+    });
+    res.json(populatedQuotes);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -31,7 +34,10 @@ exports.searchQuotes = async (req, res) => {
         { "author.name": { $regex: value, $options: "i" } },
         { categories: { $in: [new RegExp(value, "i")] } },
       ],
-    }).sort({ _id: -1 });
+    })
+      .populate("author")
+      .populate("book")
+      .sort({ _id: -1 });
     res.json(quotes);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -56,7 +62,9 @@ exports.getQuoteById = async (req, res) => {
 
 exports.getQuoteBySlug = async (req, res) => {
   try {
-    const quote = await Quote.findOne({ slug: req.params.slug });
+    const quote = await Quote.findOne({ slug: req.params.slug })
+      .populate("author")
+      .populate("book");
     if (!quote) {
       return res.status(404).json({ message: "Quote not found" });
     }

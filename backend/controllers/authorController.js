@@ -16,9 +16,17 @@ exports.getQuotesByAuthor = async (req, res) => {
     const authorNameParam = req.params.authorName;
     const authorName = authorNameParam.toLowerCase().split("-").join(" ");
 
-    const quotes = await Quote.find({
-      "author.name": { $regex: new RegExp(authorName, "i") },
-    }).sort({ x: -1 });
+    const author = await Author.findOne({ name: authorName });
+    if (!author) {
+      res
+        .status(404)
+        .json({ message: "Author not found with the specified name." });
+      return;
+    }
+
+    const quotes = await Quote.find({ "author.name": author.name }).sort({
+      _id: -1,
+    });
 
     if (quotes.length === 0) {
       res
@@ -120,6 +128,55 @@ exports.updateAuthorDetails = async (req, res) => {
     await existingAuthor.save();
 
     res.json(existingAuthor);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// Get all quotes by author
+exports.getAllQuotesByAuthor = async (req, res) => {
+  try {
+    const authorNameParam = req.params.authorName;
+    const authorName = authorNameParam.toLowerCase().split("-").join(" ");
+
+    const author = await Author.findOne({ name: authorName });
+    if (!author) {
+      res
+        .status(404)
+        .json({ message: "Author not found with the specified name." });
+      return;
+    }
+
+    const quotes = await Quote.find({ "author.name": author.name })
+      .populate("author")
+      .populate("book")
+      .sort({ _id: -1 });
+
+    if (quotes.length === 0) {
+      res
+        .status(404)
+        .json({ message: "No quotes found for the specified author." });
+    } else {
+      res.json(quotes);
+    }
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.getAuthorInfoByName = async (req, res) => {
+  try {
+    const authorNameParam = req.params.authorName;
+    const authorName = authorNameParam.toLowerCase().split("-").join(" ");
+
+    const author = await Author.findOne({ name: authorName });
+    if (!author) {
+      res
+        .status(404)
+        .json({ message: "Author not found with the specified name." });
+    } else {
+      res.json(author);
+    }
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

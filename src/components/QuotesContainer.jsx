@@ -25,6 +25,7 @@ const QuotesContainer = ({ quotes }) => {
     <>
       {quotes.length ? (
         <section>
+          {console.log("quotes", quotes)}
           <div className="pt-4 px-4 mx-auto max-w-screen-xl lg:pt-8 lg:px-6 ">
             <div className="grid gap-8 mb-6 lg:mb-8 grid-cols-2 lg:grid-cols-5 sm:grid-cols-3 items-stretch justify-center">
               {quotes.map((quote) => {

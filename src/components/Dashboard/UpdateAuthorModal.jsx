@@ -22,7 +22,7 @@ const UpdateAuthorModal = ({ authorId }) => {
     let config = {
       method: "get",
       maxBodyLength: Infinity,
-      url: import.meta.env.VITE_BACKEND_URL + "/authors/get/" + authorId,
+      url: import.meta.env.VITE_BACKEND_URL + "/authors/id/" + authorId,
       headers: {
         Authorization: token,
       },
@@ -59,7 +59,7 @@ const UpdateAuthorModal = ({ authorId }) => {
 
     // Fetch the original author data from the server
     const originalAuthorData = await axios.get(
-      import.meta.env.VITE_BACKEND_URL + "/authors/get/" + authorId,
+      import.meta.env.VITE_BACKEND_URL + "/authors/id/" + authorId,
       { headers: { Authorization: token } }
     );
 
