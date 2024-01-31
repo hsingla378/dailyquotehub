@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 const useAuthorData = (author) => {
   const [authorData, setAuthorData] = useState([]);
 
+  author = author.replaceAll("-", " ");
+
   const getAuthorData = async () => {
     try {
       let response = await axios.get(

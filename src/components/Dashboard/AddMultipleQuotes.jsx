@@ -83,6 +83,40 @@ const AddMultipleQuotes = () => {
 
   const token = Cookies.get("token");
 
+  const handleQuoteImageChange = async (e) => {
+    console.log(e.target.files[0]);
+    const imageData = new FormData();
+    imageData.append("image", e.target.files[0]);
+
+    try {
+      enqueueSnackbar("Uploading image...", {
+        variant: "info",
+        persist: false,
+      });
+
+      let response = await axios.post(
+        import.meta.env.VITE_BACKEND_URL + "/upload/quote",
+        imageData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      enqueueSnackbar("Image uploaded!", {
+        variant: "success",
+        persist: false,
+      });
+      setQuoteInfo({ ...quoteInfo, thumbnail: response.data.filename });
+    } catch (error) {
+      console.log("error", error);
+      enqueueSnackbar("Error uploading image!", {
+        variant: "error",
+        persist: false,
+      });
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!token) {
@@ -234,13 +268,7 @@ const AddMultipleQuotes = () => {
               id="thumbnail"
               type="file"
               accept="image/*"
-              onChange={(e) => {
-                console.log(e.target.files[0]);
-                setQuoteInfo({
-                  ...quoteInfo,
-                  thumbnail: e.target.files[0].name,
-                });
-              }}
+              onChange={handleQuoteImageChange}
             />
           </div>
         </div>

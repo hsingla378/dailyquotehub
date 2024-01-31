@@ -45,6 +45,40 @@ const UpdateBookModal = ({ bookId }) => {
       });
   };
 
+  const handleBookImageChange = async (e) => {
+    console.log(e.target.files[0]);
+    const imageData = new FormData();
+    imageData.append("image", e.target.files[0]);
+
+    try {
+      enqueueSnackbar("Uploading image...", {
+        variant: "info",
+        persist: false,
+      });
+
+      let response = await axios.post(
+        import.meta.env.VITE_BACKEND_URL + "/upload/book",
+        imageData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      enqueueSnackbar("Image uploaded!", {
+        variant: "success",
+        persist: false,
+      });
+      setBookInfo({ ...bookInfo, image: response.data.filename });
+    } catch (error) {
+      console.log("error", error);
+      enqueueSnackbar("Error uploading image!", {
+        variant: "error",
+        persist: false,
+      });
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!token) {
@@ -172,10 +206,7 @@ const UpdateBookModal = ({ bookId }) => {
             id="image"
             type="file"
             accept="image/*"
-            onChange={(e) => {
-              console.log(e.target.files[0]);
-              setBookInfo({ ...bookInfo, avatar: e.target.files[0].name });
-            }}
+            onChange={handleBookImageChange}
           />
         </div>
         <Button color="blue" className="m-auto w-full" onClick={handleSubmit}>

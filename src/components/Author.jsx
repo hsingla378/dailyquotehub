@@ -14,6 +14,9 @@ const Author = () => {
   const authorData = useAuthorData(author);
   const [currentPage, setCurrentPage] = useState(1);
 
+  console.log("authorData", authorData);
+  // console.log("authorInfo", authorInfo);
+
   if (!authorData.length) return <Loading />;
 
   const authorInfo = authorData[0].author;
@@ -104,7 +107,7 @@ const Author = () => {
           <div className="my-4 lg:mt-0 sm:col-span-6 ">
             <img
               className="max-w-[90%] m-auto rounded md:mr-[3rem] w-64"
-              src={authorInfo.avatar}
+              src={"../src/assets/images/authors/" + authorInfo.avatar}
               alt="Bonnie Avatar"
             />
           </div>

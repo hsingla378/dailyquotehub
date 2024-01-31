@@ -145,8 +145,9 @@ const Quote = () => {
               />
               <div className="flex justify-center flex-col items-center md:grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-8 sm:grid-cols-12">
                 <div className="my-4 lg:mt-0 sm:col-span-6 flex items-center">
+                  {console.log("quoteInfo", quoteInfo.thumbnail)}
                   <img
-                    src={quoteInfo.thumbnail}
+                    src={"../src/assets/images/quotes/" + quoteInfo.thumbnail}
                     alt={quoteInfo.title}
                     className="max-w-96 m-auto p-2 rounded md:mr-[3rem] max-h-[500px]"
                   />
@@ -173,7 +174,10 @@ const Quote = () => {
                         <div className="flex gap-2 justify-center items-center">
                           <img
                             className="w-6 h-6 rounded-full"
-                            src={quoteInfo.author.avatar}
+                            src={
+                              "../src/assets/images/authors/" +
+                              quoteInfo.author.avatar
+                            }
                             alt="profile picture"
                           />
                           <div className="flex items-center divide-x-2 rtl:divide-x-reverse divide-gray-300 dark:divide-gray-700">
@@ -202,7 +206,10 @@ const Quote = () => {
                       <div className="items-center bg-gray-50 rounded-lg sm:flex dark:bg-gray-800 dark:border-gray-700 px-4 my-6 w-max flex shadow-md hover:shadow-lg max-w-96">
                         {quoteInfo.book.image ? (
                           <img
-                            src={quoteInfo.book.image}
+                            src={
+                              "../src/assets/images/books/" +
+                              quoteInfo.book.image
+                            }
                             className="w-11 rounded-md"
                           />
                         ) : (

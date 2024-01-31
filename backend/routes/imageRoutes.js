@@ -3,9 +3,9 @@ const router = express.Router();
 const multer = require("multer");
 const imageController = require("../controllers/imageController");
 
-const storage = multer.diskStorage({
+const storageForQuoteImage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "../../src/assets/images/");
+    cb(null, "../src/assets/images/quotes/");
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now();
@@ -13,8 +13,48 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage: storage });
+const uploadQuoteImage = multer({ storage: storageForQuoteImage });
 
-router.post("/upload", upload.single("image"), imageController.uploadImage);
+router.post(
+  "/quote",
+  uploadQuoteImage.single("image"),
+  imageController.uploadQuoteImage
+);
+
+const storageForAuthorImage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "../src/assets/images/authors/");
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now();
+    cb(null, uniqueSuffix + file.originalname);
+  },
+});
+
+const uploadAuthorImage = multer({ storage: storageForAuthorImage });
+
+router.post(
+  "/author",
+  uploadAuthorImage.single("image"),
+  imageController.uploadAuthorImage
+);
+
+const storageForBookImage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "../src/assets/images/books/");
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now();
+    cb(null, uniqueSuffix + file.originalname);
+  },
+});
+
+const uploadBookImage = multer({ storage: storageForBookImage });
+
+router.post(
+  "/book",
+  uploadBookImage.single("image"),
+  imageController.uploadBookImage
+);
 
 module.exports = router;

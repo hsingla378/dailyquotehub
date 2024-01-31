@@ -83,7 +83,7 @@ const AddQuote = () => {
 
   const token = Cookies.get("token");
 
-  const handleThumbnailChange = async (e) => {
+  const handleQuoteImageChange = async (e) => {
     console.log(e.target.files[0]);
     const imageData = new FormData();
     imageData.append("image", e.target.files[0]);
@@ -95,7 +95,7 @@ const AddQuote = () => {
       });
 
       let response = await axios.post(
-        import.meta.env.VITE_BACKEND_URL + "/images/upload",
+        import.meta.env.VITE_BACKEND_URL + "/upload/quote",
         imageData,
         {
           headers: {
@@ -341,7 +341,7 @@ const AddQuote = () => {
             type="file"
             accept="image/*"
             onChange={(e) => {
-              handleThumbnailChange(e);
+              handleQuoteImageChange(e);
             }}
           />
         </div>

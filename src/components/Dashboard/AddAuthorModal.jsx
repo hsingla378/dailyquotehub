@@ -13,6 +13,40 @@ const AddAuthorModal = () => {
   });
   const token = Cookies.get("token");
 
+  const handleAuthorImageChange = async (e) => {
+    console.log(e.target.files[0]);
+    const imageData = new FormData();
+    imageData.append("image", e.target.files[0]);
+
+    try {
+      enqueueSnackbar("Uploading image...", {
+        variant: "info",
+        persist: false,
+      });
+
+      let response = await axios.post(
+        import.meta.env.VITE_BACKEND_URL + "/upload/author",
+        imageData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      enqueueSnackbar("Image uploaded!", {
+        variant: "success",
+        persist: false,
+      });
+      setAuthorInfo({ ...authorInfo, avatar: response.data.filename });
+    } catch (error) {
+      console.log("error", error);
+      enqueueSnackbar("Error uploading image!", {
+        variant: "error",
+        persist: false,
+      });
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!token) {
@@ -125,10 +159,7 @@ const AddAuthorModal = () => {
             id="avatar"
             type="file"
             accept="image/*"
-            onChange={(e) => {
-              console.log(e.target.files[0]);
-              setAuthorInfo({ ...authorInfo, avatar: e.target.files[0].name });
-            }}
+            onChange={handleAuthorImageChange}
           />
         </div>
         <Button color="blue" className="m-auto w-full" onClick={handleSubmit}>

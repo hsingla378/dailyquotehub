@@ -27,7 +27,7 @@ const QOTD = ({ quote }) => {
           <figcaption className="flex items-center justify-center mt-6 space-x-3 rtl:space-x-reverse">
             <img
               className="w-6 h-6 rounded-full"
-              src={quote.author.avatar}
+              src={"../src/assets/images/authors/" + quote.author.avatar}
               alt="profile picture"
             />
 

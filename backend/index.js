@@ -35,7 +35,7 @@ app.use("/authors", authorRoutes);
 app.use("/categories", categoryRoutes);
 app.use("/rss", rssRoutes);
 app.use("/books", bookRoutes);
-app.use("/images", imageRoutes);
+app.use("/upload", imageRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 3000;

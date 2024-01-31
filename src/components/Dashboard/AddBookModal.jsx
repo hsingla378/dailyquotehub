@@ -12,6 +12,40 @@ const AddBookModal = () => {
   });
   const token = Cookies.get("token");
 
+  const handleBookImageChange = async (e) => {
+    console.log(e.target.files[0]);
+    const imageData = new FormData();
+    imageData.append("image", e.target.files[0]);
+
+    try {
+      enqueueSnackbar("Uploading image...", {
+        variant: "info",
+        persist: false,
+      });
+
+      let response = await axios.post(
+        import.meta.env.VITE_BACKEND_URL + "/upload/book",
+        imageData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      enqueueSnackbar("Image uploaded!", {
+        variant: "success",
+        persist: false,
+      });
+      setBookInfo({ ...bookInfo, image: response.data.filename });
+    } catch (error) {
+      console.log("error", error);
+      enqueueSnackbar("Error uploading image!", {
+        variant: "error",
+        persist: false,
+      });
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!token) {
@@ -87,10 +121,7 @@ const AddBookModal = () => {
             id="book-image"
             type="file"
             accept="image/*"
-            onChange={(e) => {
-              console.log(e.target.files[0]);
-              setBookInfo({ ...bookInfo, image: e.target.files[0].name });
-            }}
+            onChange={handleBookImageChange}
           />
         </div>
         <div className="mb-6">

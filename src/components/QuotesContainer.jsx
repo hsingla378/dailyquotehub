@@ -21,6 +21,8 @@ const QuotesContainer = ({ quotes }) => {
       .join(" ");
   };
 
+  // src\assets\images\1706731293174download_zrtnra.jpg
+
   return (
     <>
       {quotes.length ? (
@@ -32,9 +34,10 @@ const QuotesContainer = ({ quotes }) => {
                 return (
                   <Link to={`/quotes/${quote.slug}`} key={quote._id}>
                     <div className="max-w-sm bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 shadow-md h-full">
+                      {console.log("quote", quote)}
                       <img
                         className="w-full rounded-lg"
-                        // src={require(`../assets/images/${quote.thumbnail}`)}
+                        src={"../src/assets/images/quotes/" + quote.thumbnail}
                         alt={capitalizeTitle(quote.title)}
                       />
 

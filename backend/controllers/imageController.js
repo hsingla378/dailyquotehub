@@ -1,7 +1,18 @@
-const multer = require("multer");
-const upload = multer({ dest: "uploads/" });
+exports.uploadQuoteImage = async (req, res) => {
+  res.json({
+    message: "Image uploaded successfully",
+    filename: req.file.filename,
+  });
+};
 
-exports.uploadImage = async (req, res) => {
+exports.uploadAuthorImage = async (req, res) => {
+  res.json({
+    message: "Image uploaded successfully",
+    filename: req.file.filename,
+  });
+};
+
+exports.uploadBookImage = async (req, res) => {
   res.json({
     message: "Image uploaded successfully",
     filename: req.file.filename,
