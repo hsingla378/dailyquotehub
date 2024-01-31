@@ -44,7 +44,7 @@ const Authors = () => {
                       <img
                         className="mx-auto mb-4 rounded-full w-24 h-24 object-cover"
                         src={author.avatar}
-                        alt="Bonnie Avatar"
+                        alt={capitalizeTitle(author.name)}
                       />
                       <h3 className="mb-1 text-md font-bold tracking-tight text-gray-900 dark:text-white">
                         {capitalizeTitle(author.name)}

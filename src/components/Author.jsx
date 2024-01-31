@@ -6,17 +6,13 @@ import QuotesContainer from "./QuotesContainer";
 import useAuthorData from "../utils/useAuthorData";
 import { capitalizeTitle } from "../utils/constants";
 import Loading from "./Loading";
-import useAllRandomQuotes from "../utils/useAllRandomQuotes";
 
 const ITEMS_PER_PAGE = 10;
 
 const Author = () => {
   let { author } = useParams();
-  let authorData = useAllRandomQuotes();
-  authorData = authorData.filter((quote) => quote.author.name === author);
+  const authorData = useAuthorData(author);
   const [currentPage, setCurrentPage] = useState(1);
-
-  console.log("authorData", authorData);
 
   if (!authorData.length) return <Loading />;
 

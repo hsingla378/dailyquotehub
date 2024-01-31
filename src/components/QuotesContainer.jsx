@@ -34,8 +34,8 @@ const QuotesContainer = ({ quotes }) => {
                     <div className="max-w-sm bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 shadow-md h-full">
                       <img
                         className="w-full rounded-lg"
-                        src={quote.thumbnail}
-                        alt={capitalizeTitle(quote.author.name)}
+                        // src={require(`../assets/images/${quote.thumbnail}`)}
+                        alt={capitalizeTitle(quote.title)}
                       />
 
                       <div className="p-5">

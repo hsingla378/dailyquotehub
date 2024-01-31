@@ -147,7 +147,7 @@ const Quote = () => {
                 <div className="my-4 lg:mt-0 sm:col-span-6 flex items-center">
                   <img
                     src={quoteInfo.thumbnail}
-                    alt="mockup"
+                    alt={quoteInfo.title}
                     className="max-w-96 m-auto p-2 rounded md:mr-[3rem] max-h-[500px]"
                   />
                 </div>
