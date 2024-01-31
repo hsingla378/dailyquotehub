@@ -564,7 +564,7 @@ const Dashboard = () => {
                           {capitalizeTitle(quote.author.name)}
                         </td>
                         <td className="px-4 py-3 max-w-[12rem] truncate">
-                          {quote.book.name}
+                          {quote.book && quote.book.name && quote.book.name}
                         </td>
                         <td className="px-4 py-3 flex items-center justify-end">
                           <Dropdown

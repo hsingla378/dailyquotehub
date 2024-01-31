@@ -7,6 +7,7 @@ import useAllQuotes from "../utils/useAllQuotes";
 import { enqueueSnackbar } from "notistack";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
+import Skeleton from "react-loading-skeleton";
 import Loading from "./Loading";
 
 const Search = () => {
@@ -25,7 +26,7 @@ const Search = () => {
       })
       .filter((author) =>
         author.name.toLowerCase().includes(text.toLowerCase())
-      )
+      );
 
     setAuthors(filteredAuthors);
   };
@@ -48,7 +49,6 @@ const Search = () => {
       );
 
       const filteredQuotes = response.data.filter((quote) => {
-        // Check if the search text is present in author name, quote title, or category name
         const matchAuthor = quote.author.name
           .toLowerCase()
           .includes(text.toLowerCase());
@@ -98,9 +98,10 @@ const Search = () => {
 
   return (
     <>
-      {" "}
       {loading ? (
-        <Loading />
+        <div className="my-4">
+          <Skeleton height={400} count={5} style={{ marginBottom: '20px' }} />
+        </div>
       ) : (
         <div className="my-4">
           {filteredQuotes.length === 0 ? (
