@@ -19,7 +19,7 @@ const Search = () => {
   const location = useLocation();
   const [loading, setLoading] = useState(true);
 
-  const filterAuthors = (text) => {
+  let filterAuthors = (text) => {
     const filteredAuthors = quotes
       .map((quote) => {
         return quote.author;
@@ -27,8 +27,15 @@ const Search = () => {
       .filter((author) =>
         author.name.toLowerCase().includes(text.toLowerCase())
       );
-
-    setAuthors(filteredAuthors);
+    let set = new Set();
+    let authors = [];
+    filteredAuthors.forEach((author) => {
+      if (!set.has(author._id)) {
+        set.add(author._id);
+        authors.push(author);
+      }
+    });
+    setAuthors(authors);
   };
 
   const filterCategories = (text) => {
@@ -100,7 +107,7 @@ const Search = () => {
     <>
       {loading ? (
         <div className="my-4">
-          <Skeleton height={400} count={5} style={{ marginBottom: '20px' }} />
+          <Skeleton height={400} count={5} style={{ marginBottom: "20px" }} />
         </div>
       ) : (
         <div className="my-4">

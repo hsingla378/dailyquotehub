@@ -7,7 +7,6 @@ import { capitalizeTitle } from "../../utils/constants";
 import AddQuote from "./AddQuote";
 import AddMultipleQuotes from "./AddMultipleQuotes";
 import { Button, Dropdown, Modal, Table } from "flowbite-react";
-import UpdateQuote from "./UpdateQuote";
 import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
 import AddBookModal from "./AddBookModal";
@@ -22,7 +21,7 @@ const Dashboard = () => {
   const [filteredQuotes, setFilteredQuotes] = useState([]);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [currentQuoteId, setCurrentQuoteId] = useState(null);
-  const [currentQuoteSlug, setCurrentQuoteSlug] = useState(null);
+  const [currentQuote, setCurrentQuote] = useState(null);
   const [selectedAuthors, setSelectedAuthors] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -575,6 +574,7 @@ const Dashboard = () => {
                           >
                             <Dropdown.Item
                               onClick={() => {
+                                setCurrentQuoteId(quote._id);
                                 setShowUpdateModal(true);
                               }}
                             >
@@ -597,79 +597,14 @@ const Dashboard = () => {
                               Delete
                             </Dropdown.Item>
                             <Dropdown.Item
-                              onClick={() => setOpenCategoriesModal(true)}
+                              onClick={() => {
+                                setCurrentQuote(quote);
+                                setOpenCategoriesModal(true);
+                              }}
                             >
-                              Edit Catgories
+                              Edit Categories
                             </Dropdown.Item>
                           </Dropdown>
-                          {/* Update Quote Modal */}
-                          <Modal
-                            show={showUpdateModal}
-                            onClose={() => setShowUpdateModal(false)}
-                          >
-                            <UpdateQuoteModal quoteId={quote._id} />
-                          </Modal>
-                          {/* Categories Modal */}
-                          <Modal
-                            show={openCategoriesModal}
-                            onClose={() => setOpenCategoriesModal(false)}
-                          >
-                            <Modal.Header>
-                              <div className="flex justify-between gap-4">
-                                <p>Edit Categories </p>
-                                <Button
-                                  color="light"
-                                  size="xs"
-                                  onClick={() => handleAddCategory(quote._id)}
-                                >
-                                  Add new Category
-                                </Button>
-                              </div>
-                            </Modal.Header>
-                            <Modal.Body>
-                              <Table>
-                                <Table.Head>
-                                  <Table.HeadCell>Catgories</Table.HeadCell>
-                                  <Table.HeadCell>Edit</Table.HeadCell>
-                                  <Table.HeadCell>Delete</Table.HeadCell>
-                                </Table.Head>
-                                <Table.Body className="divide-y">
-                                  {quote.categories.map((category) => (
-                                    <Table.Row
-                                      className="bg-white dark:border-gray-700 dark:bg-gray-800"
-                                      key={category}
-                                    >
-                                      <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                                        {category}
-                                      </Table.Cell>
-                                      <Table.Cell>
-                                        <Button
-                                          color="success"
-                                          size="xs"
-                                          onClick={() =>
-                                            handleEditCategory(category)
-                                          }
-                                        >
-                                          Edit
-                                        </Button>
-                                      </Table.Cell>
-                                      <Table.Cell>
-                                        <Button
-                                          color="failure"
-                                          size="xs"
-                                          onClick={() =>
-                                            handleDeleteCategory(category)
-                                          }
-                                        >
-                                          Delete
-                                        </Button>
-                                      </Table.Cell>
-                                    </Table.Row>
-                                  ))}
-                                </Table.Body>
-                              </Table>
-                            </Modal.Body>
-                          </Modal>
                         </td>
                       </tr>
                     ))}
@@ -681,6 +616,69 @@ const Dashboard = () => {
         </div>
       </section>
       {/* <!-- End block --> */}
+      {/* Update Quote Modal */}
+      <Modal show={showUpdateModal} onClose={() => setShowUpdateModal(false)}>
+        <UpdateQuoteModal quoteId={currentQuoteId} />
+      </Modal>
+      {/* Categories Modal */}
+      {openCategoriesModal && (
+        <Modal
+          show={openCategoriesModal}
+          onClose={() => setOpenCategoriesModal(false)}
+        >
+          <Modal.Header>
+            <div className="flex justify-between gap-4">
+              <p>Edit Categories </p>
+              <Button
+                color="light"
+                size="xs"
+                onClick={() => handleAddCategory(currentQuote._id)}
+              >
+                Add new Category
+              </Button>
+            </div>
+          </Modal.Header>
+          <Modal.Body>
+            <Table>
+              <Table.Head>
+                <Table.HeadCell>Catgories</Table.HeadCell>
+                <Table.HeadCell>Edit</Table.HeadCell>
+                <Table.HeadCell>Delete</Table.HeadCell>
+              </Table.Head>
+              <Table.Body className="divide-y">
+                {currentQuote.categories.map((category) => (
+                  <Table.Row
+                    className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                    key={category}
+                  >
+                    <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                      {category}
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Button
+                        color="success"
+                        size="xs"
+                        onClick={() => handleEditCategory(category)}
+                      >
+                        Edit
+                      </Button>
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Button
+                        color="failure"
+                        size="xs"
+                        onClick={() => handleDeleteCategory(category)}
+                      >
+                        Delete
+                      </Button>
+                    </Table.Cell>
+                  </Table.Row>
+                ))}
+              </Table.Body>
+            </Table>
+          </Modal.Body>
+        </Modal>
+      )}
     </div>
   );
 };

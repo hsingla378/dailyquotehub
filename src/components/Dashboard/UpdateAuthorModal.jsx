@@ -5,6 +5,7 @@ import { SnackbarProvider, enqueueSnackbar } from "notistack";
 import axios from "axios";
 
 const UpdateAuthorModal = ({ authorId }) => {
+  console.log(authorId);
   const [authorInfo, setAuthorInfo] = useState({
     name: "",
     designation: "",
@@ -86,6 +87,22 @@ const UpdateAuthorModal = ({ authorId }) => {
     if (!token) {
       enqueueSnackbar("Kindly login!", {
         variant: "success",
+        persist: false,
+      });
+      return;
+    }
+
+    if (!authorInfo.avatar) {
+      enqueueSnackbar("Kindly upload an image!", {
+        variant: "error",
+        persist: false,
+      });
+      return;
+    }
+
+    if (!authorInfo.name) {
+      enqueueSnackbar("Name is required!", {
+        variant: "error",
         persist: false,
       });
       return;

@@ -201,7 +201,7 @@ const Quote = () => {
                   <p className="my-4">{quoteInfo.description}</p>
 
                   {/* Amazon Book Reference */}
-                  {quoteInfo.book && quote.book.amazonLink && (
+                  {quoteInfo.book && quoteInfo.book.amazonLink && (
                     <Link to={quoteInfo.book.amazonLink} target="_blank">
                       <div className="items-center bg-gray-50 rounded-lg sm:flex dark:bg-gray-800 dark:border-gray-700 px-4 my-6 w-max flex shadow-md hover:shadow-lg max-w-96">
                         {quoteInfo.book.image ? (

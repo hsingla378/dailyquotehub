@@ -127,29 +127,37 @@ const AddQuote = () => {
       return;
     }
 
-    // await axios
-    //   .post(import.meta.env.VITE_BACKEND_URL + "/images/upload", imageData, {
-    //     headers: {
-    //       "Content-Type": "multipart/form-data",
-    //     },
-    //   })
-    //   .then((response) => {
-    //     console.log("response", response);
-    //     setQuoteInfo({ ...quoteInfo, thumbnail: response.data.filename });
-    //   })
-    //   .catch((error) => {
-    //     console.log("error", error);
-    //   });
+    if (!quoteInfo.title) {
+      enqueueSnackbar("Title is required!", {
+        variant: "error",
+        persist: false,
+      });
+      return;
+    }
 
-    // if (!quoteInfo.title) {
-    //   enqueueSnackbar("Title is required!", {
-    //     variant: "error",
-    //     persist: false,
-    //   });
-    //   return;
-    // }
+    if (!quoteInfo.categories.length) {
+      enqueueSnackbar("Categories are required!", {
+        variant: "error",
+        persist: false,
+      });
+      return;
+    }
 
-    console.log("quoteInfo", quoteInfo);
+    if (!quoteInfo.author) {
+      enqueueSnackbar("Author is required!", {
+        variant: "error",
+        persist: false,
+      });
+      return;
+    }
+
+    if (!quoteInfo.thumbnail) {
+      enqueueSnackbar("Thumbnail is required!", {
+        variant: "error",
+        persist: false,
+      });
+      return;
+    }
 
     let config = {
       method: "post",
@@ -321,11 +329,15 @@ const AddQuote = () => {
             <option selected disabled>
               Choose a Book
             </option>
-            {books.map((book) => (
-              <option key={book._id} value={book._id}>
-                {book.name}
-              </option>
-            ))}
+            {books.map(
+              (book) =>
+                // Add condition to check if book.name is not an empty string
+                book.name !== "" && (
+                  <option key={book._id} value={book._id}>
+                    {book.name}
+                  </option>
+                )
+            )}
           </select>
         </div>
         <div className="mb-6">

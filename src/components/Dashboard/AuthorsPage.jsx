@@ -18,6 +18,7 @@ const AuthorsPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [openAddAuthorModal, setOpenAddAuthorModal] = useState(false);
   const [openUpdateAuthorModal, setOpenUpdateAuthorModal] = useState(false);
+  const [currentAuthorId, setCurrentAuthorId] = useState("");
   const token = Cookies.get("token");
 
   const fetchAuthors = async () => {
@@ -267,6 +268,7 @@ const AuthorsPage = () => {
                           >
                             <Dropdown.Item
                               onClick={() => {
+                                setCurrentAuthorId(author._id);
                                 setOpenUpdateAuthorModal(true);
                               }}
                             >
@@ -290,19 +292,19 @@ const AuthorsPage = () => {
                               Delete
                             </Dropdown.Item>
                           </Dropdown>
-                          {/* <!-- Update modal --> */}
-                          <Modal
-                            show={openUpdateAuthorModal}
-                            onClose={() => setOpenUpdateAuthorModal(false)}
-                          >
-                            <UpdateAuthorModal authorId={author._id} />
-                          </Modal>
                         </td>
                       </tr>
                     ))}
                 </tbody>
               </table>
             </div>
+            {/* <!-- Update modal --> */}
+            <Modal
+              show={openUpdateAuthorModal}
+              onClose={() => setOpenUpdateAuthorModal(false)}
+            >
+              <UpdateAuthorModal authorId={currentAuthorId} />
+            </Modal>
             <div className="flex justify-end">{renderPagination()}</div>
           </div>
         </div>

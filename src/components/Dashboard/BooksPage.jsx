@@ -16,6 +16,7 @@ const BooksPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [openAddBookModal, setOpenAddBookModal] = useState(false);
   const [openUpdateBookModal, setOpenUpdateBookModal] = useState(false);
+  const [currentBookId, setCurrentBookId] = useState("");
   const token = Cookies.get("token");
 
   const fetchBooks = async () => {
@@ -231,54 +232,52 @@ const BooksPage = () => {
                 </thead>
                 <tbody>
                   {filteredBooks.length > 0 &&
-                    filteredBooks.slice(startItem, endItem).map((book) => (
-                      <tr
-                        className="border-b dark:border-gray-700"
-                        key={book._id}
-                      >
-                        <th
-                          scope="row"
-                          className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white truncate max-w-[12rem]"
-                        >
-                          {capitalizeTitle(book.name)}
-                        </th>
-                        <td className="px-4 py-3 truncate max-w-[12rem]">
-                          {book.amazonLink}
-                        </td>
-                        <td className="px-4 py-3 truncate max-w-[12rem]">
-                          {book.image}
-                        </td>
-                        <td className="px-4 py-3 flex items-center justify-end">
-                          <Dropdown
-                            color="dark"
-                            size="sm"
-                            label="Action "
-                            dismissOnClick={false}
+                    filteredBooks.slice(startItem, endItem).map(
+                      (book) =>
+                        book.name !== "" && (
+                          <tr
+                            className="border-b dark:border-gray-700"
+                            key={book._id}
                           >
-                            <Dropdown.Item
-                              onClick={() => {
-                                setOpenUpdateBookModal(true);
-                              }}
+                            <th
+                              scope="row"
+                              className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white truncate max-w-[12rem]"
                             >
-                              Edit
-                            </Dropdown.Item>
-                            <Dropdown.Item
-                              onClick={() => {
-                                deleteBook(book._id);
-                              }}
-                            >
-                              Delete
-                            </Dropdown.Item>
-                          </Dropdown>
-                          <Modal
-                            show={openUpdateBookModal}
-                            onClose={() => setOpenUpdateBookModal(false)}
-                          >
-                            <UpdateBookModal bookId={book._id} />
-                          </Modal>
-                        </td>
-                      </tr>
-                    ))}
+                              {capitalizeTitle(book.name)}
+                            </th>
+                            <td className="px-4 py-3 truncate max-w-[12rem]">
+                              {book.amazonLink}
+                            </td>
+                            <td className="px-4 py-3 truncate max-w-[12rem]">
+                              {book.image}
+                            </td>
+                            <td className="px-4 py-3 flex items-center justify-end">
+                              <Dropdown
+                                color="dark"
+                                size="sm"
+                                label="Action "
+                                dismissOnClick={false}
+                              >
+                                <Dropdown.Item
+                                  onClick={() => {
+                                    setCurrentBookId(book._id);
+                                    setOpenUpdateBookModal(true);
+                                  }}
+                                >
+                                  Edit
+                                </Dropdown.Item>
+                                <Dropdown.Item
+                                  onClick={() => {
+                                    deleteBook(book._id);
+                                  }}
+                                >
+                                  Delete
+                                </Dropdown.Item>
+                              </Dropdown>
+                            </td>
+                          </tr>
+                        )
+                    )}
                 </tbody>
               </table>
             </div>
@@ -286,6 +285,12 @@ const BooksPage = () => {
           </div>
         </div>
       </section>
+      <Modal
+        show={openUpdateBookModal}
+        onClose={() => setOpenUpdateBookModal(false)}
+      >
+        <UpdateBookModal bookId={currentBookId} />
+      </Modal>
       {/* <!-- End block --> */}
     </div>
   );

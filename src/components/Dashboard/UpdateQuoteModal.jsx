@@ -152,6 +152,38 @@ const UpdateQuoteModal = ({ quoteId }) => {
       return;
     }
 
+    if (!quoteInfo.title) {
+      enqueueSnackbar("Title is required!", {
+        variant: "error",
+        persist: false,
+      });
+      return;
+    }
+
+    if (!quoteInfo.categories.length) {
+      enqueueSnackbar("Categories are required!", {
+        variant: "error",
+        persist: false,
+      });
+      return;
+    }
+
+    if (!quoteInfo.author) {
+      enqueueSnackbar("Author is required!", {
+        variant: "error",
+        persist: false,
+      });
+      return;
+    }
+
+    if (!quoteInfo.thumbnail) {
+      enqueueSnackbar("Thumbnail is required!", {
+        variant: "error",
+        persist: false,
+      });
+      return;
+    }
+
     // Fetch the original quote data from the server
     const originalQuoteData = await axios.get(
       import.meta.env.VITE_BACKEND_URL + "/quotes/id/" + quoteId,

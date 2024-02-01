@@ -89,6 +89,22 @@ const UpdateBookModal = ({ bookId }) => {
       return;
     }
 
+    if (!bookInfo.name) {
+      enqueueSnackbar("Name is required!", {
+        variant: "error",
+        persist: false,
+      });
+      return;
+    }
+
+    if (!bookInfo.image) {
+      enqueueSnackbar("Kindly upload an image!", {
+        variant: "error",
+        persist: false,
+      });
+      return;
+    }
+
     // Fetch the original author data from the server
     const originalBookData = await axios.get(
       import.meta.env.VITE_BACKEND_URL + "/books/" + bookId,

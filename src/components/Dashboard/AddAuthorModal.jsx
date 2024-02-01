@@ -57,6 +57,22 @@ const AddAuthorModal = () => {
       return;
     }
 
+    if (!authorInfo.avatar) {
+      enqueueSnackbar("Kindly upload an image!", {
+        variant: "error",
+        persist: false,
+      });
+      return;
+    }
+
+    if (!authorInfo.name) {
+      enqueueSnackbar("Name is required!", {
+        variant: "error",
+        persist: false,
+      });
+      return;
+    }
+
     let config = {
       method: "post",
       maxBodyLength: Infinity,

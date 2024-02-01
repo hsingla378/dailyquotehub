@@ -56,6 +56,30 @@ const AddBookModal = () => {
       return;
     }
 
+    if (!bookInfo.name) {
+      enqueueSnackbar("Name is required!", {
+        variant: "error",
+        persist: false,
+      });
+      return;
+    }
+
+    if (!bookInfo.image) {
+      enqueueSnackbar("Kindly upload an image!", {
+        variant: "error",
+        persist: false,
+      });
+      return;
+    }
+
+    if (!bookInfo.amazonLink) {
+      enqueueSnackbar("Amazon Link is required!", {
+        variant: "error",
+        persist: false,
+      });
+      return;
+    }
+
     let config = {
       method: "post",
       maxBodyLength: Infinity,
