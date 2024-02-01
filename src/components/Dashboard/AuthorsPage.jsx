@@ -2,11 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { SnackbarProvider, enqueueSnackbar } from "notistack";
 import { capitalizeTitle } from "../../utils/constants";
-import AddQuote from "./AddQuote";
-import { Button, Dropdown, Modal, Table } from "flowbite-react";
+import { Button, Dropdown, Modal } from "flowbite-react";
 import Cookies from "js-cookie";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 import AddAuthorModal from "./AddAuthorModal";
 import UpdateAuthorModal from "./UpdateAuthorModal";
 

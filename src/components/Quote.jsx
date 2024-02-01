@@ -25,10 +25,6 @@ import Loading from "./Loading";
 import axios from "axios";
 import { FaRegCopy } from "react-icons/fa";
 import { SnackbarProvider, enqueueSnackbar } from "notistack";
-import { AdvancedImage } from "@cloudinary/react";
-import { Cloudinary } from "@cloudinary/url-gen";
-import { quality } from "@cloudinary/url-gen/actions/delivery";
-import { Helmet } from "react-helmet";
 
 const Quote = () => {
   const { slug } = useParams();
@@ -106,13 +102,6 @@ const Quote = () => {
       });
   };
 
-  // Image Optimization
-  // const cld = new Cloudinary({
-  //   cloud: { cloudName: import.meta.env.VITE_CLOUD_NAME },
-  // });
-
-  console.log("quoteInfo", quoteInfo);
-
   return (
     <>
       {loading ? (
@@ -122,30 +111,11 @@ const Quote = () => {
           {/* Quote Details */}
           {quoteInfo.title && (
             <section className="bg-white dark:bg-gray-900 py-4">
-              {/* Set dynamic meta title and description */}
-              {/* <Helmet>
-                <meta charSet="utf-8" />
-                <title>
-                  {" "}
-                  {quoteInfo.title
-                    ? `${quoteInfo.title} - DailyQuoteHub`
-                    : "Loading..."}
-                </title>
-                <meta
-                  name="description"
-                  content={
-                    quoteInfo.description ||
-                    quoteInfo.author.description ||
-                    "Loading..."
-                  }
-                />
-              </Helmet> */}
               <SnackbarProvider
                 anchorOrigin={{ vertical: "top", horizontal: "center" }}
               />
               <div className="flex justify-center flex-col items-center md:grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-8 sm:grid-cols-12">
                 <div className="my-4 lg:mt-0 sm:col-span-6 flex items-center">
-                  {console.log("quoteInfo", quoteInfo.thumbnail)}
                   <img
                     src={"../src/assets/images/quotes/" + quoteInfo.thumbnail}
                     alt={quoteInfo.title}

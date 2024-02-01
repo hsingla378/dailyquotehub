@@ -84,7 +84,6 @@ const AddQuote = () => {
   const token = Cookies.get("token");
 
   const handleQuoteImageChange = async (e) => {
-    console.log(e.target.files[0]);
     const imageData = new FormData();
     imageData.append("image", e.target.files[0]);
 
@@ -172,7 +171,6 @@ const AddQuote = () => {
     axios
       .request(config)
       .then((response) => {
-        console.log("request submit");
         enqueueSnackbar("Quote Added!", {
           variant: "success",
           persist: false,

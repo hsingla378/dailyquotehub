@@ -35,9 +35,6 @@ const QOTD = ({ quote }) => {
               <cite className="pe-3 font-medium dark:text-white">
                 {capitalizeTitle(quote.author.name)}
               </cite>
-              {/* <cite className="ps-3 text-sm text-gray-500 dark:text-gray-400">
-              CEO at Google
-            </cite> */}
             </div>
           </figcaption>
         </Link>

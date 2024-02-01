@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { FaPinterest } from "react-icons/fa";
-import useAllQuotes from "../utils/useAllQuotes";
 import { useEffect, useState } from "react";
 import { capitalizeTitle } from "../utils/constants";
 import useAllAuthors from "../utils/useAllAuthors";

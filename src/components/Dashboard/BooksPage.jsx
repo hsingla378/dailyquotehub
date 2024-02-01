@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { SnackbarProvider, enqueueSnackbar } from "notistack";
 import { capitalizeTitle } from "../../utils/constants";
-import AddQuote from "./AddQuote";
-import { Button, Dropdown, Modal, Table } from "flowbite-react";
+import { Button, Dropdown, Modal } from "flowbite-react";
 import Cookies from "js-cookie";
 import AddBookModal from "./AddBookModal";
 import UpdateBookModal from "./UpdateBookModal";
@@ -142,8 +141,6 @@ const BooksPage = () => {
 
   const startItem = (currentPage - 1) * ITEMS_PER_PAGE;
   const endItem = currentPage * ITEMS_PER_PAGE;
-
-  console.log("filteredBooks", filteredBooks);
 
   return (
     <div>

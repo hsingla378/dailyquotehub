@@ -5,7 +5,6 @@ import { SnackbarProvider, enqueueSnackbar } from "notistack";
 import axios from "axios";
 
 const UpdateAuthorModal = ({ authorId }) => {
-  console.log(authorId);
   const [authorInfo, setAuthorInfo] = useState({
     name: "",
     designation: "",
@@ -49,7 +48,6 @@ const UpdateAuthorModal = ({ authorId }) => {
   };
 
   const handleAuthorImageChange = async (e) => {
-    console.log(e.target.files[0]);
     const imageData = new FormData();
     imageData.append("image", e.target.files[0]);
 

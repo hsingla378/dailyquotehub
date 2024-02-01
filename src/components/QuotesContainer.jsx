@@ -21,20 +21,16 @@ const QuotesContainer = ({ quotes }) => {
       .join(" ");
   };
 
-  // src\assets\images\1706731293174download_zrtnra.jpg
-
   return (
     <>
       {quotes.length ? (
         <section>
-          {console.log("quotes", quotes)}
           <div className="pt-4 px-4 mx-auto max-w-screen-xl lg:pt-8 lg:px-6 ">
             <div className="grid gap-8 mb-6 lg:mb-8 grid-cols-2 lg:grid-cols-5 sm:grid-cols-3 items-stretch justify-center">
               {quotes.map((quote) => {
                 return (
                   <Link to={`/quotes/${quote.slug}`} key={quote._id}>
                     <div className="max-w-sm bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 shadow-md h-full">
-                      {console.log("quote", quote)}
                       <img
                         className="w-full rounded-lg"
                         src={"../src/assets/images/quotes/" + quote.thumbnail}

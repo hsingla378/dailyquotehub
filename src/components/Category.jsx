@@ -22,8 +22,6 @@ const Category = () => {
     setCurrentPage(newPage);
   };
 
-  console.log("categoryData", categoryData);
-
   return (
     <div>
       <HeadSection heading={"Quotes on " + capitalizeTitle(category)} />

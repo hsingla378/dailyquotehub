@@ -41,9 +41,6 @@ const AuthorsContainer = ({ authors }) => {
             slidesPerView={2}
             spaceBetween={30}
             freeMode={true}
-            // pagination={{
-            //   clickable: true,
-            // }}
             modules={[FreeMode, Pagination, Autoplay, Navigation]}
             className="mySwiper"
             grabCursor={true}

@@ -13,7 +13,6 @@ const AddBookModal = () => {
   const token = Cookies.get("token");
 
   const handleBookImageChange = async (e) => {
-    console.log(e.target.files[0]);
     const imageData = new FormData();
     imageData.append("image", e.target.files[0]);
 

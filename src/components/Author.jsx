@@ -14,9 +14,6 @@ const Author = () => {
   const authorData = useAuthorData(author);
   const [currentPage, setCurrentPage] = useState(1);
 
-  console.log("authorData", authorData);
-  // console.log("authorInfo", authorInfo);
-
   if (!authorData.length) return <Loading />;
 
   const authorInfo = authorData[0].author;

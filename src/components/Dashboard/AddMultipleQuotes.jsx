@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Button, Modal } from "flowbite-react";
-import { SnackbarProvider, enqueueSnackbar } from "notistack";
+import { SnackbarProvider } from "notistack";
 import AddMultipleQuote from "./AddMultipleQuote";
 
 const AddMultipleQuotes = () => {

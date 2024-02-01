@@ -8,10 +8,8 @@ import AddQuote from "./AddQuote";
 import AddMultipleQuotes from "./AddMultipleQuotes";
 import { Button, Dropdown, Modal, Table } from "flowbite-react";
 import Cookies from "js-cookie";
-import { Link } from "react-router-dom";
 import AddBookModal from "./AddBookModal";
 import AddAuthorModal from "./AddAuthorModal";
-import UpdateBookModal from "./UpdateBookModal";
 import UpdateQuoteModal from "./UpdateQuoteModal";
 
 const ITEMS_PER_PAGE = 10;
@@ -27,7 +25,6 @@ const Dashboard = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [openCategoriesModal, setOpenCategoriesModal] = useState(false);
   const [openAddQuoteModal, setOpenAddQuoteModal] = useState(false);
-  const [openUpdateQuoteModal, setOpenUpdateQuoteModal] = useState(false);
   const [openMultipleQuotesModal, setOpenMultipleQuotesModal] = useState(false);
   const [openAddAuthorModal, setOpenAddAuthorModal] = useState(false);
   const [openAddBookModal, setOpenAddBookModal] = useState(false);
@@ -537,7 +534,6 @@ const Dashboard = () => {
                     </th>
                     <th scope="col" className="px-4 py-3 text-right">
                       Actions
-                      {/* <span className="sr-only">Actions</span> */}
                     </th>
                   </tr>
                 </thead>

@@ -109,7 +109,6 @@ const UpdateQuoteModal = ({ quoteId }) => {
   }, [quoteId]);
 
   const handleAuthorImageChange = async (e) => {
-    console.log(e.target.files[0]);
     const imageData = new FormData();
     imageData.append("image", e.target.files[0]);
 
