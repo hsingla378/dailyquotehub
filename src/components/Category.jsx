@@ -28,7 +28,7 @@ const Category = () => {
       {/* Quotes */}
       <QuotesContainer quotes={currentCategories} />
       {/* Pagination */}
-      {categoryData.length && (
+      {categoryData.length > 0 && (
         <Pagination
           currentPage={currentPage}
           itemsPerPage={ITEMS_PER_PAGE}

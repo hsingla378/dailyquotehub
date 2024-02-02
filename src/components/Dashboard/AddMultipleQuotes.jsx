@@ -7,7 +7,7 @@ import AddMultipleQuote from "./AddMultipleQuote";
 const AddMultipleQuotes = () => {
   const [currentAuthor, setCurrentAuthor] = useState("");
   const [quoteDescription, setQuoteDescription] = useState("");
-  const [mutlipleQuotesLength, setMultipleQuotesLength] = useState(1);
+  const [mutlipleQuotesLength, setMultipleQuotesLength] = useState(3);
   const [authors, setAuthors] = useState([]);
 
   const fetchAuthorsFromAPI = async () => {

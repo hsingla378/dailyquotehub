@@ -24,7 +24,9 @@ import {
 import Loading from "./Loading";
 import axios from "axios";
 import { FaRegCopy } from "react-icons/fa";
+import { FaDownload } from "react-icons/fa";
 import { SnackbarProvider, enqueueSnackbar } from "notistack";
+import { Helmet } from "react-helmet";
 
 const Quote = () => {
   const { slug } = useParams();
@@ -102,6 +104,14 @@ const Quote = () => {
       });
   };
 
+  const downloadThumbnail = () => {
+    const imageUrl = `../src/assets/images/quotes/${quoteInfo.thumbnail}`;
+    const link = document.createElement("a");
+    link.href = imageUrl;
+    link.download = "quote_dailyquotehub.jpg";
+    link.click();
+  };
+
   return (
     <>
       {loading ? (
@@ -114,13 +124,38 @@ const Quote = () => {
               <SnackbarProvider
                 anchorOrigin={{ vertical: "top", horizontal: "center" }}
               />
+              <Helmet>
+                <meta charSet="utf-8" />
+                <meta property="og:title" content={quoteInfo.title} />
+                <meta
+                  property="og:description"
+                  content={quoteInfo.description}
+                />
+                <meta
+                  property="og:image"
+                  content={`https://www.dailyquotehub.com/src/assets/images/quotes/${quoteInfo.thumbnail}`}
+                />
+                <meta
+                  property="og:url"
+                  content={`https://dailyquotehub.com/quotes/${slug}`}
+                />
+                <title>{quoteInfo.title} - DailyQuoteHub</title>
+              </Helmet>
+
               <div className="flex justify-center flex-col items-center md:grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-8 sm:grid-cols-12">
-                <div className="my-4 lg:mt-0 sm:col-span-6 flex items-center">
+                <div className="my-4 lg:mt-0 sm:col-span-6 flex items-center relative">
                   <img
                     src={"../src/assets/images/quotes/" + quoteInfo.thumbnail}
                     alt={quoteInfo.title}
                     className="max-w-96 m-auto p-2 rounded md:mr-[3rem] max-h-[500px]"
                   />
+                  {/* Download Button */}
+                  <button
+                    onClick={downloadThumbnail}
+                    className="absolute bottom-4 right-4 md:right-[65px] bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white p-2 rounded-sm focus:outline-none"
+                  >
+                    <FaDownload size={20} />
+                  </button>
                 </div>
                 <div className="flex justify-center flex-col items-center md:block mx-auto md:m-[unset] md:mr-auto place-self-center sm:col-span-6 text-center md:text-left ">
                   {/* Quote */}
