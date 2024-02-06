@@ -98,7 +98,7 @@ exports.createQuote = async (req, res) => {
     }
   }
 
-  quote.book = quote.book ? quote.book : "65b8e5ecb99d964e6894974d";
+  quote.book = quote.book ? quote.book : "65c28ccc5f15e23bc8bb9f6d";
   quote.slug = finalSlug;
 
   try {

@@ -110,6 +110,11 @@ const Quote = () => {
     link.href = imageUrl;
     link.download = "quote_dailyquotehub.jpg";
     link.click();
+
+    enqueueSnackbar("Quote downloaded! 🎉", {
+      persist: false,
+      variant: "success",
+    });
   };
 
   return (
@@ -120,7 +125,7 @@ const Quote = () => {
         <div>
           {/* Quote Details */}
           {quoteInfo.title && (
-            <section className="bg-white dark:bg-gray-900 py-4">
+            <section className="bg-white dark:bg-gray-900">
               <SnackbarProvider
                 anchorOrigin={{ vertical: "top", horizontal: "center" }}
               />
@@ -142,12 +147,12 @@ const Quote = () => {
                 <title>{quoteInfo.title} - DailyQuoteHub</title>
               </Helmet>
 
-              <div className="flex justify-center flex-col items-center md:grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-8 sm:grid-cols-12">
+              <div className="flex justify-center flex-col items-center md:grid max-w-screen-xl px-4 pt-8 mx-auto lg:gap-8 xl:gap-0 sm:grid-cols-12">
                 <div className="my-4 lg:mt-0 sm:col-span-6 flex items-center relative">
                   <img
                     src={"../src/assets/images/quotes/" + quoteInfo.thumbnail}
                     alt={quoteInfo.title}
-                    className="max-w-96 m-auto p-2 rounded md:mr-[3rem] max-h-[500px]"
+                    className="max-w-96 m-auto rounded md:mr-[3rem] max-h-[500px]"
                   />
                   {/* Download Button */}
                   <button

@@ -63,13 +63,13 @@ const AddBookModal = () => {
       return;
     }
 
-    if (!bookInfo.image) {
-      enqueueSnackbar("Kindly upload an image!", {
-        variant: "error",
-        persist: false,
-      });
-      return;
-    }
+    // if (!bookInfo.image) {
+    //   enqueueSnackbar("Kindly upload an image!", {
+    //     variant: "error",
+    //     persist: false,
+    //   });
+    //   return;
+    // }
 
     if (!bookInfo.amazonLink) {
       enqueueSnackbar("Amazon Link is required!", {
