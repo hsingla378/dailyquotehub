@@ -104,7 +104,7 @@ const Author = () => {
           <div className="my-4 lg:mt-0 sm:col-span-6 ">
             <img
               className="max-w-[90%] m-auto rounded md:mr-[3rem] w-64"
-              src={"../src/assets/images/authors/" + authorInfo.avatar}
+              src={"../../backend/images/authors/" + authorInfo.avatar}
               alt={capitalizeTitle(authorInfo.name)}
             />
           </div>

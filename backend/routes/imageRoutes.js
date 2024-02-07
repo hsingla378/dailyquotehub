@@ -5,7 +5,7 @@ const imageController = require("../controllers/imageController");
 
 const storageForQuoteImage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "../src/assets/images/quotes/");
+    cb(null, "../images/quotes/");
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now();
@@ -23,7 +23,7 @@ router.post(
 
 const storageForAuthorImage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "../src/assets/images/authors/");
+    cb(null, "../images/authors/");
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now();
@@ -41,7 +41,7 @@ router.post(
 
 const storageForBookImage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "../src/assets/images/books/");
+    cb(null, "../images/books/");
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now();

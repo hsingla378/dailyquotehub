@@ -43,7 +43,7 @@ const Authors = () => {
                     <div className="text-center text-gray-500 dark:text-gray-400 h-full">
                       <img
                         className="mx-auto mb-4 rounded-full w-24 h-24 object-cover"
-                        src={"../src/assets/images/authors/" + author.avatar}
+                        src={"../../backend/images/authors/" + author.avatar}
                         alt={capitalizeTitle(author.name)}
                       />
                       <h3 className="mb-1 text-md font-bold tracking-tight text-gray-900 dark:text-white">

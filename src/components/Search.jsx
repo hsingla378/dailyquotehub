@@ -107,7 +107,7 @@ const Search = () => {
     <>
       {loading ? (
         <div className="my-4">
-          <Skeleton height={400} count={5} style={{ marginBottom: "20px" }} />
+          <Loading />
         </div>
       ) : (
         <div className="my-4">

@@ -138,7 +138,7 @@ const Quote = () => {
                 />
                 <meta
                   property="og:image"
-                  content={`https://www.dailyquotehub.com/src/assets/images/quotes/${quoteInfo.thumbnail}`}
+                  content={`https://www.dailyquotehub.com/backend/images/quotes/${quoteInfo.thumbnail}`}
                 />
                 <meta
                   property="og:url"
@@ -150,7 +150,7 @@ const Quote = () => {
               <div className="flex justify-center flex-col items-center md:grid max-w-screen-xl px-4 pt-8 mx-auto lg:gap-8 xl:gap-0 sm:grid-cols-12">
                 <div className="my-4 lg:mt-0 sm:col-span-6 flex items-center relative">
                   <img
-                    src={"../src/assets/images/quotes/" + quoteInfo.thumbnail}
+                    src={"../../backend/images/quotes/" + quoteInfo.thumbnail}
                     alt={quoteInfo.title}
                     className="max-w-96 m-auto rounded md:mr-[3rem] max-h-[500px]"
                   />
@@ -185,7 +185,7 @@ const Quote = () => {
                           <img
                             className="w-6 h-6 rounded-full"
                             src={
-                              "../src/assets/images/authors/" +
+                              "../../backend/images/authors/" +
                               quoteInfo.author.avatar
                             }
                             alt="profile picture"
@@ -217,7 +217,7 @@ const Quote = () => {
                         {quoteInfo.book.image ? (
                           <img
                             src={
-                              "../src/assets/images/books/" +
+                              "../../backend/images/books/" +
                               quoteInfo.book.image
                             }
                             className="w-11 rounded-md"

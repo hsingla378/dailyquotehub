@@ -33,7 +33,7 @@ const QuotesContainer = ({ quotes }) => {
                     <div className="max-w-sm bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 shadow-md h-full">
                       <img
                         className="w-full rounded-lg"
-                        src={"../src/assets/images/quotes/" + quote.thumbnail}
+                        src={"../../backend/images/quotes/" + quote.thumbnail}
                         alt={capitalizeTitle(quote.title)}
                       />
 
