@@ -51,6 +51,8 @@ const UpdateAuthorModal = ({ authorId }) => {
     const imageData = new FormData();
     imageData.append("image", e.target.files[0]);
 
+    if (!e.target.files[0]) return;
+
     try {
       enqueueSnackbar("Uploading image...", {
         variant: "info",
